@@ -1,0 +1,7 @@
+#footer{
+    display: flex;
+    position: relative;
+    height: 20vh;
+    background: linear-gradient(to bottom,#563F7D, #3A2E4E);
+    bottom: 0px;
+}

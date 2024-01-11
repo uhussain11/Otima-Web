@@ -6,13 +6,13 @@ function navbar(){
     return(
         <section id='navbar'>
             <div className='title-container'>
-                <Link className='nav-btn'><p>Otima Web</p></Link>
+                <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link>
             </div>
             <div className='btn-container'>
-                <Link className='nav-btn'>Contact</Link>
+                <Link className='nav-btn' >Contact</Link>
             </div>
             <div className='btn-container'>
-                <Link className='nav-btn'>Services</Link>
+                <Link className='nav-btn' to={'/services'}>Services</Link>
             </div>
             <div className='btn-container'>
                 <Link className='nav-btn'>Career</Link>

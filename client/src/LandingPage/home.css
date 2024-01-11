@@ -1,0 +1,32 @@
+
+#const{
+    display: flex;
+    position: sticky;
+    width: 100%;
+    height: fit-content;
+    justify-content: right;
+    align-items: center;
+    overflow: visible;
+    bottom: 5%;
+    right: 0px;
+    z-index: 5;
+  
+    & button{
+      position: absolute;
+      display: flex;
+      bottom: 0px;
+      right: 5%;
+      margin-bottom: 20px;
+      background-color: whitesmoke;
+      box-shadow: 0 0 5px black;
+      color: black;
+      overflow: visible;
+      border: none;
+      font-weight: 600;
+      font-size: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+  

@@ -1,0 +1,76 @@
+#section5{
+    height: fit-content;
+    position: relative;
+    height: 40vh;
+
+    & .triangle{
+        clip-path: polygon(0% 0%, 100% 170%, 0% 100%, 0% 0%);
+        background-color: #402d62;
+        position: relative;
+        height: 100%;
+        display: flex;
+        z-index: 3;
+        animation: triangle-animation 1s ease 0s 1 alternate;
+        /* animation-play-state: paused; */
+
+        & .left{
+            color: whitesmoke;
+            position: absolute;
+            left: 5%;
+            bottom: 20%;
+            font-size: 28px;
+            width: 20%;
+        }
+    }    
+    
+    & .right{
+        display: flex;
+        flex-direction: column;
+        color: black;
+        position: absolute;
+        width: 50%;
+        right: 5%;
+        top: 20%;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Khula';
+
+        & h3{
+            font-size: 30px;
+            color: #4C3672;
+        }
+
+        & p{
+            text-align: right;
+            font-size: 20px;
+        }
+
+        & .shift-left{
+            display: flex;
+            width: 90%;
+            justify-content: right;
+
+            & a{
+                text-decoration: none;
+                color: #4C3672;
+                border-bottom:0px solid black;
+                transition: 200ms;
+                font-weight: 500;
+
+                &:hover{
+                    border-bottom:2px solid #4C3672;
+                    color: black;
+                }
+            }
+        }
+    }
+}
+
+@keyframes triangle-animation {
+    0%{
+        clip-path: polygon(0% 0%, 100% 170%, 58.8% 100%, 0% 0%);
+    }
+    100%{
+        clip-path: polygon(0% 0%, 100% 170%, 0% 100%, 0% 0%);
+    }
+}
