@@ -1,34 +1,40 @@
-#service-section1{
+#service-section2{
     display: flex;
     flex-direction: column;
     background-color: transparent;
+    position: relative;
     padding: 2%;
     padding-inline:4%;
-    position: relative;
-
-    animation: flow-left 1s ease 0s 1 alternate;
+    justify-content:flex-end;
+    text-align: right;
+    animation: flow-right 1s ease 0s 1 alternate;
 
     & h2{
         font-size: 50px;
         font-family: 'Outfit';
         color: #4C3672;
-        width: fit-content;
+        width: 100%;
+        text-align: right;
+
     }
 
     & p{
+        display: flex;
         font-size: 20px;
         width: 70%;
         font-family: 'Khula';
+        margin-inline: auto;
+        margin-right: 0px;
     }
 }
 
-@keyframes flow-left {
+@keyframes flow-right {
     0%{
-        left:-20%;
+        right:-20%;
         opacity: 0;
     }
     100%{
-        left:0%;
+        right:0%;
         opacity: 1;
     }
 }

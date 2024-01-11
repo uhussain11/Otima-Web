@@ -8,15 +8,15 @@ function navbar(){
             <div className='title-container'>
                 <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link>
             </div>
-            <div className='btn-container'>
-                <Link className='nav-btn' >Contact</Link>
-            </div>
-            <div className='btn-container'>
-                <Link className='nav-btn' to={'/services'}>Services</Link>
-            </div>
-            <div className='btn-container'>
-                <Link className='nav-btn'>Career</Link>
-            </div>
+            <Link className='btn-container'>
+                <p className='nav-btn' >Contact</p>
+            </Link>
+            <Link className='btn-container' to={'/services'}>
+                <p className='nav-btn' >Services</p>
+            </Link>
+            <Link className='btn-container'>
+                <p className='nav-btn'>Career</p>
+            </Link>
             <div className='about-container'>
                 <Link className='nav-btn'>About Us</Link>
             </div>
