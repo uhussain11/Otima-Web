@@ -4,6 +4,7 @@ import React,{useState} from 'react';
 
 const SERVER = 'http://localhost:8080/api'
 const TOTALQUESTIONS = 4;
+const multiOptions = new Map();
 
 function TextBox({setViewBox}){
     const [currQuestion, setCurrQuestion] = useState('What type of Website Format are you looking for');
@@ -55,7 +56,58 @@ function TextBox({setViewBox}){
     }
 
     function toggle(e){
+        console.log(e.target);
+        
+        if(e.target.value === 'true'){
+            multiOptions.set(e.target.id, false);
+            e.target.className = 'selection';
+            e.target.value = 'false';
+        }
+        else{
+            multiOptions.set(e.target.id, true);
+            e.target.className = 'selected';
+            e.target.value = 'true';
+        }
+    }
 
+    function next(){
+        if(multiOptions.size < 1){
+            return
+        }
+        
+        const selected=[];
+
+        const data = {
+            selected: selected,
+            price: price,
+            question: question,
+            maitnance: maitnancefee,
+        };
+
+        try{
+            fetch(`${SERVER}/text`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({data})
+              })
+              .then((res) => res.json())
+              .then((data)=>{
+                if(data.success){
+                   setPrice(data.price)
+                   setCurrQuestion(data.question)
+                   setOptions(data.options)
+                   setMaitnance(data.maitnance)
+                   setMultiSelect(data.multiSelect)
+                }
+              });
+        }
+        catch{
+            alert("Something went wrong on our end. Please try again later")
+            return;
+        }
+        setQuestion(question+1)
     }
 
     return(
@@ -70,9 +122,9 @@ function TextBox({setViewBox}){
                         {multiSelect ?
                         <div className='mutli-selections'>
                             {options.map((item, index) => (
-                            < button className='selection' onClick={e =>toggle(e)} value={index} key={index}> {item}</button>
+                            < button className='selection' id={item} onClick={e =>toggle(e)} value={false} key={index}> {item}</button>
                             ))}
-                            <button className='continue'>Next</button>
+                            <button className='continue' onClick={next}>Next</button>
                         </div>:
                         <div className='selections'>
                             {options.map((item, index) => (
@@ -82,8 +134,9 @@ function TextBox({setViewBox}){
                         }
                     </section>:
                     <section>
-                        <h3 className='question'>Your inital Payment Estimate is ~ <strong>${price}</strong></h3>
-                        <h3 className='question'>Your yearly Maintnace estimate is ~ <strong>${maitnancefee}</strong></h3>
+                        <h3 className='result'>Your inital Payment Estimate is ~ <strong>${price}</strong></h3>
+                        <h3 className='result'>Your yearly Maintnace estimate is ~ <strong>${maitnancefee}</strong></h3>
+                        <p className='warn'>These values are meant to offer an estimate, prices are not exact and will most likely vary</p>
                     </section>
                 }
             </span>

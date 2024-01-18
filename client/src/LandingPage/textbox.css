@@ -3,7 +3,7 @@
     padding: 20px;
     box-shadow: 0 0 5px 0px black;
     border-radius: 10px;
-
+    cursor:auto;
     max-width: 450px;
 
     & .welcome{
@@ -21,6 +21,7 @@
         gap: 5px;
         flex-wrap: wrap;
         transition: 300ms;
+        font-weight: 500;
 
         & .selection{
             background-color: whitesmoke;
@@ -30,19 +31,43 @@
             cursor: pointer;
             transition: 200ms;
             border-radius: 3px;
+            font-weight: 500;
 
             &:hover{
                 background-color: rgb(233, 233, 233);
             }
         }
 
+        & .selected{
+            background-color: rgb(88, 62, 125);
+            color: whitesmoke;
+            font-weight: 500;
+            border: none;
+            font-size: 15px;
+            padding: 5px;
+            cursor: pointer;
+            transition: 200ms;
+            border-radius: 3px;
+        }
+
         & .continue{
             background-color: transparent;
             border: none;
             font-weight: 700;
+            font-size: 15px;
+            color: rgb(92, 56, 126);
+            border-radius: 10px;
             cursor: pointer;
         }
     }
+    & .warn{
+        color: rgb(78, 48, 108);
+        font-weight: 300;
+        font-size: 14px;
+        text-align: center;
+    }
 
-
+    & .result{
+        font-weight: 300;
+    }
 }
