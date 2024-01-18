@@ -5,6 +5,8 @@
     border-radius: 10px;
     cursor:auto;
     max-width: 450px;
+    opacity: 0;
+    animation: chatBox 400ms ease 0s 1 forwards;
 
     & .welcome{
         font-size: 18px;
@@ -24,7 +26,7 @@
         font-weight: 500;
 
         & .selection{
-            background-color: whitesmoke;
+            background-color: rgb(240, 240, 240);
             border: none;
             font-size: 15px;
             padding: 5px;
@@ -34,7 +36,7 @@
             font-weight: 500;
 
             &:hover{
-                background-color: rgb(233, 233, 233);
+                background-color: rgb(229, 229, 229);
             }
         }
 
@@ -69,5 +71,14 @@
 
     & .result{
         font-weight: 300;
+    }
+}
+
+@keyframes chatBox{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity:1;
     }
 }

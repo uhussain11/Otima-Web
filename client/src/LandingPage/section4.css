@@ -83,13 +83,17 @@
             & .submit-btn{
                 width:fit-content;
                 margin: auto;
-                background-color: rgba(0, 0, 0, 0.095);
+                background-color: rgba(0, 0, 0, 0.085);
                 font-weight: 700;
                 font-size: 20px;
                 border: none;
                 cursor: pointer;
                 padding: 10px;
+                transition: 300ms;
 
+                &:hover{
+                background-color: rgba(0, 0, 0, 0.15);
+                }
             }
         }
 

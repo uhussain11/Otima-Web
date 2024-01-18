@@ -10,6 +10,8 @@
     bottom: 2%;
     right: 0px;
     z-index: 5;
+    opacity: 0;
+    animation: const 500ms ease 1s 1 forwards;
 
     & .textBox{
       position: absolute;
@@ -67,3 +69,11 @@
 
   }
   
+  @keyframes const{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity:1;
+    }
+}

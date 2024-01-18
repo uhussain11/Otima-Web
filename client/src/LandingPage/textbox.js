@@ -4,7 +4,6 @@ import React,{useState} from 'react';
 
 const SERVER = 'http://localhost:8080/api'
 const TOTALQUESTIONS = 4;
-const multiOptions = new Map();
 
 function TextBox({setViewBox}){
     const [currQuestion, setCurrQuestion] = useState('What type of Website Format are you looking for');
@@ -12,8 +11,10 @@ function TextBox({setViewBox}){
     const [question, setQuestion] = useState(1);
     const [price, setPrice] = useState(0);
     const [complete, setComplete] = useState(false);
-    const [maitnancefee, setMaitnance] = useState(90);
+    const [maitnancefee, setMaitnance] = useState(80);
     const [multiSelect, setMultiSelect] = useState(false);
+
+    const multiOptions = new Map();
 
     function removeBubble(){
         setViewBox(false);
@@ -74,8 +75,14 @@ function TextBox({setViewBox}){
         if(multiOptions.size < 1){
             return
         }
-        
+
         const selected=[];
+
+        for (let [key, value] of multiOptions) {
+            if(value){
+                selected.push(key);
+            }
+        }
 
         const data = {
             selected: selected,
@@ -122,7 +129,7 @@ function TextBox({setViewBox}){
                         {multiSelect ?
                         <div className='mutli-selections'>
                             {options.map((item, index) => (
-                            < button className='selection' id={item} onClick={e =>toggle(e)} value={false} key={index}> {item}</button>
+                            < button className='selection' onClick={e =>toggle(e)} value={false} id={index} key={index}> {item}</button>
                             ))}
                             <button className='continue' onClick={next}>Next</button>
                         </div>:
@@ -135,7 +142,7 @@ function TextBox({setViewBox}){
                     </section>:
                     <section>
                         <h3 className='result'>Your inital Payment Estimate is ~ <strong>${price}</strong></h3>
-                        <h3 className='result'>Your yearly Maintnace estimate is ~ <strong>${maitnancefee}</strong></h3>
+                        <h3 className='result'>Your yearly Maintnace Estimate is ~ <strong>${maitnancefee}</strong></h3>
                         <p className='warn'>These values are meant to offer an estimate, prices are not exact and will most likely vary</p>
                     </section>
                 }

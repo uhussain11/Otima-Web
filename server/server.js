@@ -91,7 +91,7 @@ app.post("/api/text", async (req, res) => {
       question = 'Time Window for production build'
 selected
       if(selected === 0){
-        price += 400;
+        price += 350;
       }
       else if(selected === 1){
         price += 1100;
@@ -120,8 +120,28 @@ selected
     case 3:
       options = ['Yes', 'No']
       question = 'Do you have your own Domain aquired'
+      
+      for(let option in selected){
+        option -= '0';
 
-      console.log(selected)
+        if(option === 0){
+          price += 100;
+        }
+        else if(option === 1){
+          price += 40;
+        }
+        else if(option === 2){
+          price += 65;
+        }
+        else if(option === 3){
+          price += 70;
+          maitnance += 100;
+        }
+        else if(option === 4){
+          price += 100;
+          maitnance += 20;
+        }
+      }
 
       break;
 
@@ -129,13 +149,12 @@ selected
       console.log(selected);
       if(selected === 1){
         maitnance += 30;
-        price += 30;
+        price += 20;
       }
       complete = true;
       break;
   }
 
-  console.log(data)
   return res.json({
     'success':true,
     'complete': complete,
