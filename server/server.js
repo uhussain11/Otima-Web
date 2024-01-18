@@ -24,7 +24,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 
-app.post("/interest", async (req, res) => {
+app.post("/api/interest", async (req, res) => {
   const data = req.body.data; // This will contain the JSON data sent in the request
 
   var receipt = {
@@ -66,6 +66,88 @@ app.post("/interest", async (req, res) => {
 
 });
 
+app.post("/api/text", async (req, res) => {
+  const data = req.body.data; // This will contain the JSON data sent in the request
+
+  let selected;
+  if(data.selected.length===1){
+    selected = parseInt(data.selected, 10);
+  }
+  else{
+    selected = data.selected;
+  }
+
+  let options=[]
+  let question='';
+  let price = data.price;
+  let domain = false;
+  let complete = false;
+  let maitnance = data.maitnance;
+  let multiSelect = false;
+
+  switch(data.question){
+    case 1:
+      options = ['< 1 Month', '1-3 Months', '1-3+ Months']
+      question = 'Time Window for production build'
+selected
+      if(selected === 0){
+        price += 400;
+      }
+      else if(selected === 1){
+        price += 1100;
+      }
+      else if(selected === 2){
+        price += 600;
+      }
+      else if(selected === 3){
+        price += 650;
+      }
+      break;
+
+    case 2:
+      options = ['Payments', 'Mobile Implementation', 'Automated Emails', 'OpenAI', 'Image Upload', 'User Handling', 'None']
+      question = 'Which features are you looking to implement'
+      multiSelect = true;
+
+      if(selected === 0){
+        price *= 1.2;
+      }
+      else if(selected === 1){
+        price *= 1.1;
+      }
+      break;
+
+    case 3:
+      options = ['Yes', 'No']
+      question = 'Do you have your own Domain aquired'
+
+      console.log(selected)
+
+      break;
+
+    case 4:
+      console.log(selected);
+      if(selected === 1){
+        maitnance += 30;
+        price += 30;
+      }
+      complete = true;
+      break;
+  }
+
+  console.log(data)
+  return res.json({
+    'success':true,
+    'complete': complete,
+    'question': question,
+    'options': options,
+    'price': Math.trunc(price),
+    'maitnance': maitnance,
+    'domain': domain,
+    'multiSelect':multiSelect,
+  }) 
+
+});
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });

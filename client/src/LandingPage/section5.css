@@ -6,12 +6,13 @@
     & .triangle{
         clip-path: polygon(0% 0%, 100% 170%, 0% 100%, 0% 0%);
         background-color: #402d62;
+        opacity: 0;
         position: relative;
         height: 100%;
         display: flex;
         z-index: 3;
-        animation: triangle-animation 1s ease 0s 1 alternate;
-        /* animation-play-state: paused; */
+        animation: triangle-animation 1s ease 500ms 1 forwards;
+        animation-play-state: paused;
 
         & .left{
             color: whitesmoke;
@@ -69,8 +70,10 @@
 @keyframes triangle-animation {
     0%{
         clip-path: polygon(0% 0%, 100% 170%, 58.8% 100%, 0% 0%);
+        opacity: 1;
     }
     100%{
         clip-path: polygon(0% 0%, 100% 170%, 0% 100%, 0% 0%);
+        opacity: 1;
     }
 }

@@ -1,0 +1,48 @@
+#chatBox{
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 5px 0px black;
+    border-radius: 10px;
+
+    max-width: 450px;
+
+    & .welcome{
+        font-size: 18px;
+    }
+    & .question{
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    & .selections, .mutli-selections{
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+        gap: 5px;
+        flex-wrap: wrap;
+        transition: 300ms;
+
+        & .selection{
+            background-color: whitesmoke;
+            border: none;
+            font-size: 15px;
+            padding: 5px;
+            cursor: pointer;
+            transition: 200ms;
+            border-radius: 3px;
+
+            &:hover{
+                background-color: rgb(233, 233, 233);
+            }
+        }
+
+        & .continue{
+            background-color: transparent;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+        }
+    }
+
+
+}
