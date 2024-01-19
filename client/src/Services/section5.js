@@ -47,9 +47,9 @@ function Section5(){
             <div className='option'>
                 <dd className={question5 ? 'header-down': 'header'} onClick={()=>{showQuestion5(!question5)}}> <span class="material-symbols-outlined"> arrow_drop_down </span> <h3>Paying for prototype</h3> </dd>
                 <p className={question5 ? 'content': 'hide-content'}>
-                    It's not 100% accurate. In order to try and provide you with the most accurate pricing for your project we would need to schedule a brief meeting or receive a brief report explaining
-                    what your company does and what they plan to achieve with obtaining a website. The cost Estimate is meant to show you a estimate of possible prices, based off what most business' we worked
-                    with desire.
+                    Your <strong>Initial fee includes the protype fee</strong> you must pay prior to us creating the production build. This price is typically less than 10% of the entire
+                    initial payment fee. For this price we provide you with a prototype of what the website would look and function like. If you would like you may choose to opt out of the prototype payment, however
+                    you will be required to accept the entire initial payment at the end of the development cycle.
                 </p>
                 <dl className='line'></dl>
             </div>
