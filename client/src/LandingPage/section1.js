@@ -6,7 +6,13 @@ function section1(){
         <section id='section1'>
             <div className='container'>
                 <img src="images/bg1.png" alt="" />   
-                <h1 className='header'>Modernizing Business's One Application at a time</h1> 
+                <div className='header'>
+                    <h1 className='text'>Modernizing Business's One Application at a time</h1>
+                <section className='bottom'>
+                    <p>Expand your Business to the Globe</p>
+                </section>
+                </div> 
+
             </div>
         </section>
     )

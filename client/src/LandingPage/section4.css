@@ -1,4 +1,4 @@
-#section4{
+#section4l{
     display: flex;
     justify-content: space-between;
     padding: 3vw;
@@ -67,6 +67,7 @@
                 &::placeholder{
                     color: rgba(255, 255, 255, 0.802);
                     font-size: 26px;
+                    transition: 300ms;
                 }
 
                 &:focus{
@@ -76,6 +77,11 @@
                     text-align: left;
                     cursor:text;
                     outline: none;
+
+                    &::placeholder{
+                        color: #5a477c;
+                        font-size: 18px;
+                    }
 
                 }
             }

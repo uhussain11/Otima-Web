@@ -8,4 +8,5 @@ body{
     padding-top: 30px;
     background-color: whitesmoke;
     height: 100%;
+    max-width: 100vw;
 }

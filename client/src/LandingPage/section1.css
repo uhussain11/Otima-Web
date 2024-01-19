@@ -7,6 +7,8 @@
     .container{
         width: 100%;
         height: fit-content;
+        display: flex;
+        flex-direction: column;
         max-height: 65vh;
         overflow: hidden;
         position: relative;
@@ -25,11 +27,34 @@
             top: 10%;
             font-weight: 600;
             right: 5%;
-            color: whitesmoke;
             width: 40%;
-            font-size: 50px;
-            text-align: right;
-            text-shadow: 0 0 10px black;
+
+            & .text{
+                font-size: 50px;
+                text-align: right;
+                text-shadow: 0 0 10px black;
+                color: whitesmoke;
+                margin-bottom: 0;
+
+            }
+
+            & .bottom{
+                width: 100%;
+                height: fit-content;
+                justify-content: flex-end;
+                display: flex;
+                margin: auto;
+
+                & p{
+                    font-size: 22px;
+                    height: fit-content;
+                    width: fit-content;
+                    background-color: white;
+                    padding: 8px;
+                    padding-inline: 14px;
+                    border-radius: 10px;
+                }
+            }
         }
     }
 

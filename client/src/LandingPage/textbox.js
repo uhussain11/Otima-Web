@@ -11,7 +11,7 @@ function TextBox({setViewBox}){
     const [question, setQuestion] = useState(1);
     const [price, setPrice] = useState(0);
     const [complete, setComplete] = useState(false);
-    const [maitnancefee, setMaitnance] = useState(80);
+    const [maitnancefee, setMaitnance] = useState(60);
     const [multiSelect, setMultiSelect] = useState(false);
 
     const multiOptions = new Map();
@@ -119,12 +119,12 @@ function TextBox({setViewBox}){
 
     return(
         <div className='textBox'>
-            <button onClick={removeBubble} className='remove'><span id='exit' class="material-symbols-outlined">close</span></button>
+            <button onClick={removeBubble} className='remove'><span id='exit' class="material-symbols-outlined">arrow_back</span></button>
             <span id='chatBox'>
                 <h2 className='welcome'>Welcome to Otima. Select your interests <br /> We'll try our best to provide you with a price estimate or more info</h2>
                 {
                     question<=TOTALQUESTIONS && !complete ? 
-                    <section>
+                    <section id='content'>
                         <h3 className='question'>{currQuestion}?</h3>
                         {multiSelect ?
                         <div className='mutli-selections'>
