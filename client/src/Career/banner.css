@@ -1,0 +1,38 @@
+.banner{
+    background-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 0 5px 0px rgb(72, 35, 101);
+    padding: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+
+    & .header{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & h1{
+            margin: 0;
+            color: rgb(72, 35, 101);
+        }
+
+        & .available, .unavailable{
+            margin-block: 0;
+            margin-inline:2%;
+            padding: 8px;
+            font-weight: 500;
+            border-radius: 5px;
+        }
+        & .unavailable{
+            background-color: rgba(252, 83, 83, 0.376);
+        }
+        & .available{
+            background-color: rgba(87, 179, 91, 0.442);
+        }
+    }
+
+    & .price{
+        margin-top: 0;
+        font-weight: 300;
+    }
+}

@@ -14,7 +14,7 @@ function navbar(){
             <Link className='btn-container' to={'/services'}>
                 <p className='nav-btn' >Services</p>
             </Link>
-            <Link className='btn-container'>
+            <Link className='btn-container' to={'/career'}>
                 <p className='nav-btn'>Career</p>
             </Link>
             <div className='about-container'>

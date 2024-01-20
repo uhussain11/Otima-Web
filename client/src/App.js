@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React from 'react';
 import Main from './LandingPage/home';
 import Service from './Services/main';
-import Navbar from './constants/navbar'
-import Footer from './constants/footer'
+import Career from './Career/main';
+import Navbar from './constants/navbar';
+import Footer from './constants/footer';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Main/>} />
           <Route path='/services' element={<Service/>} />
+          <Route path='/career' element={<Career/>} />
         </Routes>
         <Footer/>
       </Router>
