@@ -5,8 +5,8 @@ function Section5(){
     const [question1, showQuestion1] = useState(false);
     const [question2, showQuestion2] = useState(false);
     const [question3, showQuestion3] = useState(false);
-    const [question4, showQuestion4] = useState(true);
-    const [question5, showQuestion5] = useState(true);
+    const [question4, showQuestion4] = useState(false);
+    const [question5, showQuestion5] = useState(false);
 
     return(
         <section id="section5s">
@@ -15,7 +15,7 @@ function Section5(){
                  <dd className={question1 ? 'header-down': 'header'} onClick={()=>{showQuestion1(!question1)}}> <span class="material-symbols-outlined"> arrow_drop_down </span> <h3>What is the Yearly Maintenance Fee?</h3> </dd>
                 <p className={question1 ? 'content': 'hide-content'}>
                     The yearly maintnace fee covers all hosting and maintnace costs for your website. Any issues with the website will result in our immediate efforts to restore it back at no additional cost. This also includes costs to reserving your domain.
-                    Your <strong>first month of Maintnace fees is free</strong> and you will be charged yearly following a month from your production build.
+                    Your <strong>first month of Maintnace fees is free</strong> and you will be charged yearly following a month from the deployment of your production build.
                 </p>
                 <dl className='line'></dl>
             </div>
@@ -30,7 +30,7 @@ function Section5(){
             <div className='option'>
                 <dd className={question3 ? 'header-down': 'header'} onClick={()=>{showQuestion3(!question3)}}> <span class="material-symbols-outlined"> arrow_drop_down </span> <h3>Refer a friend</h3> </dd>
                 <p className={question3 ? 'content': 'hide-content'}>
-                    Refering a friend earns you and your friend credits to save on yearly maintance fees. For each friend you refer, you each receive $40 credit towards maintnace fees. 
+                    Refering a friend earns you and your friend credits to save on yearly maintance fees. For each friend you refer, you each receive <strong>$40 credit</strong> towards maintnace fees. 
                     Keep in mind if your credits go over your yearly maintance fee they transfer over to the next year until they're depleted.
                 </p>
                 <dl className='line'></dl>
@@ -48,7 +48,7 @@ function Section5(){
                 <dd className={question5 ? 'header-down': 'header'} onClick={()=>{showQuestion5(!question5)}}> <span class="material-symbols-outlined"> arrow_drop_down </span> <h3>Paying for prototype</h3> </dd>
                 <p className={question5 ? 'content': 'hide-content'}>
                     Your <strong>Initial fee includes the protype fee</strong> you must pay prior to us creating the production build. This price is typically less than 10% of the entire
-                    initial payment fee. For this price we provide you with a prototype of what the website would look and function like. If you would like you may choose to opt out of the prototype payment, however
+                    initial payment fee. For this price we provide you with a prototype of what the website would look and function like. If you would like, you may choose to opt out of the prototype payment, however
                     you will be required to accept the entire initial payment at the end of the development cycle.
                 </p>
                 <dl className='line'></dl>

@@ -1,15 +1,14 @@
 #service-section3{
     display: flex;
     flex-direction: column;
-    width: 100%;
-    justify-content: space-around;
+    width: auto;
     margin: auto;
     align-items: center;
     background: linear-gradient(to top, #57407E, #352354);
     color: whitesmoke;
     font-family: 'Khula';
     font-size: 30px;
-    padding-block: 3vh;
+    padding: 3vh;
 
     & .list{
         display: flex;

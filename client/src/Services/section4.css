@@ -6,32 +6,35 @@
     flex-wrap: wrap;
     padding: 70px;
     padding-block: 100px;
+    gap: 15px;
 
     & .container{
         display: flex;
         position: relative;
-        height: 40vh;
+        height: 50vw;
         width: fit-content;
+        max-height: 35vh;
+        max-width: 90vw;
         border-radius: 10px;
-        overflow: hidden;
         border: 3px solid rgb(98, 52, 130);
         box-shadow: 0 0 4px 0px black;
 
         & img{
             display: flex;
-            object-fit: contain;
+            position: relative;
+            object-fit:contain;
             height: 100%;
             border: none;
-
+            border-radius: 10px;
         }
 
         & p{
             position: absolute;
-            bottom: 0;
+            bottom: -3%;
             margin: 0;
-            right: 0;
+            right: -6%;
             background-color: rgb(98, 52, 130);
-            border-top-left-radius: 4px;
+            border-radius: 6px;
             color: whitesmoke;
             font-weight: 600;
             padding: 8px;
