@@ -6,9 +6,8 @@ function section2(){
         <section id="service-section2">
             <h2>What we offer</h2>
             <p>
-                Tellus primis. Semper penatibus elit dapibus placerat sodales. Nisi montes. Accumsan euismod ullamcorper gravida 
-                lacinia risus sit. Phasellus cum rhoncus magna tristique Congue. Magna vehicula sagittis taciti duis. Integer molestie. 
-                Ac tristique id posuere ultricies porttitor duis risus fringilla torquent ut odio. Pede arcu rutrum vitae netus 
+                We offer full website development from scratch at an affordable price. Our team of bright minded developers are eager to help your company stand out.
+                We offer a variety of implementations into websites that can cater to almost any need you could have from a website.
             </p>
         </section>
     )

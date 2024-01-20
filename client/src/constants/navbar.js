@@ -7,6 +7,7 @@ function navbar(){
         <section id='navbar'>
             <div className='title-container'>
                 <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link>
+                {/* <img src="./logo.png" alt="" /> */}
             </div>
             <Link className='btn-container'>
                 <p className='nav-btn' >API's</p>
