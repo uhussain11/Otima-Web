@@ -4,6 +4,8 @@ import React from 'react';
 import Main from './LandingPage/home';
 import Service from './Services/main';
 import Career from './Career/main';
+import Application from './Career/application';
+
 import Navbar from './constants/navbar';
 import Footer from './constants/footer';
 
@@ -18,6 +20,7 @@ function App() {
           <Route path='/' element={<Main/>} />
           <Route path='/services' element={<Service/>} />
           <Route path='/career' element={<Career/>} />
+          <Route path='/application' element={<Application/>} />
         </Routes>
         <Footer/>
       </Router>

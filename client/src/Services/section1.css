@@ -5,7 +5,7 @@
     padding: 2%;
     padding-inline:4%;
     position: relative;
-
+    padding-top: 80px;
     animation: flow-left 1s ease 0s 1 alternate;
 
     & h2{
