@@ -1,24 +1,60 @@
 import './section4.css'
-import React from 'react';
+import React, {useState} from 'react';
 
-function section4(){
+const SERVER = 'http://localhost:8080/api'
+
+function Section4(){
+    const [fn, setfn] = useState('Bob');
+    const [ln, setln] = useState('Randel');
+    const [company, setCompany] = useState('Tester');
+    const [email, setEmail] = useState('Taco@gmail.com');
+    const [phone, setPhone] = useState('123456789');
+    const [brief, setBrief] = useState('Something brief');
+
 
     const handleSubmit = event =>{
         event.preventDefault();
+
+        const data={
+            firstName: fn,
+            lastName: ln,
+            company: company,
+            email: email,
+            phone:phone
+        }
+
+        try{
+            fetch(`${SERVER}/interest`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({data})
+              })
+              .then((res) => res.json())
+              .then((data)=>{
+                if(data.success){
+                }
+              });
+        }
+        catch{
+            alert("Something went wrong on our end. Please try again later")
+            return;
+        }
     }
 
     return(
         <section id='section4l'>
             <div className='sector'>
                 <form className='contact-form' onSubmit={handleSubmit} action="">
-                    <input type="text" placeholder='Company Name' required/>
+                    <input type="text" onChange={(e)=>{setCompany(e.target.value)}} value={company} placeholder='Company Name' required/>
                     <div className='name'>
-                        <input type="text" placeholder='First Name' required/>
-                        <input type="text" placeholder='Last Name' required/>
+                        <input type="text" onChange={(e)=>{setfn(e.target.value)}} value={fn}  placeholder='First Name' required/>
+                        <input type="text" onChange={(e)=>{setln(e.target.value)}} value={ln} placeholder='Last Name' required/>
                     </div>
-                    <input type="text" placeholder='Email' />
-                    <input type="text" placeholder='Phone #' />
-                    <textarea name="" id="" cols="30" rows="6" placeholder='Brief Us '></textarea>
+                    <input type="text" onChange={(e)=>{setEmail(e.target.value)}} value={email} placeholder='Email' required />
+                    <input type="text" onChange={(e)=>{setPhone(e.target.value)}} value={phone} placeholder='Phone #' required />
+                    <textarea name="" onChange={(e) =>{setBrief(e.target.value)}} value={brief} id="" cols="30" rows="6" placeholder='Brief Us' required/>
                     <button className='submit-btn'>Send</button>
                 </form>
             </div>
@@ -33,4 +69,4 @@ function section4(){
     )
 }
 
-export default section4;
+export default Section4;

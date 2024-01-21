@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 var nodemailer = require('nodemailer');
 var http = require('http');
 var url = require('url');
+const fs = require('fs');
 
 // nodemon run 'nodemon ./server.js' for auto updates
 
@@ -13,11 +14,13 @@ const PORT = process.env.PORT || 9999;
 const app = express();
 
 var transporter = nodemailer.createTransport({
-  service:'Gmail',
+  host: "ecngx348.inmotionhosting.com",
+  port: "465",
+  secure: true,
   auth: {
-      user: process.env.EMAIL,
-      pass: process.env.APPKEY
- }
+     user: "support@otimaweb.com", 
+     pass: "850423Ab_INMOTION"
+  }
 });
 
 app.use(cors());
@@ -27,21 +30,25 @@ app.use(bodyParser.json());
 app.post("/api/interest", async (req, res) => {
   const data = req.body.data; // This will contain the JSON data sent in the request
 
+const templatePath = './clientEmail.html';
+const htmlTemplate = fs.readFileSync(templatePath, 'utf8');
+
+// Replace dynamic data
+const personalizedHtml = htmlTemplate.replace('/NAME/', data.firstName);
+
+
   var receipt = {
     from: process.env.EMAIL,
     to: `${data.email}`,
-    subject: 'Fanatical Detailing',
-    html:`<p>Hey <strong>${data.firstName}</strong>,</p>
-    <p>We're excited to set you up on a beautiful cruise onboard the SunSeeker</p>
-    <p>If you haven't yet, feel free to call or text us at ${process.env.PHONE}.</p>
-    <p>We look foward to chatting with you soon.</p>
-    <p></br>Sincerely, Dolce Vita Charter Service</p>`
+    subject: 'Otima Web Team',
+    html:personalizedHtml
   }
   var loggingData = {
     from: process.env.EMAIL,
     to: process.env.EMAIL,
-    subject: 'Fanatical Detailing (Interest Request)',
+    subject: 'Otima Web (Interest Request)',
     html:`<p>Client Name: <strong>${data.firstName} ${data.lastName}</strong> </p>
+    <p>Company: ${data.company}</p>
     <p>Email: ${data.email}</p>
     <p>Phone: ${data.phone}</p>`
 }
@@ -89,9 +96,9 @@ app.post("/api/text", async (req, res) => {
     case 1:
       options = ['< 1 Month', '1-3 Months', '1-3+ Months']
       question = 'Time Window for production build'
-selected
+      
       if(selected === 0){
-        price += 350;
+        price += 420;
       }
       else if(selected === 1){
         price += 1100;

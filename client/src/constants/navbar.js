@@ -9,7 +9,7 @@ function navbar(){
                 <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link>
                 {/* <img src="./logo.png" alt="" /> */}
             </div>
-            <Link className='btn-container'>
+            <Link className='btn-container' to={'/api'}>
                 <p className='nav-btn' >API's</p>
             </Link>
             <Link className='btn-container' to={'/services'}>
