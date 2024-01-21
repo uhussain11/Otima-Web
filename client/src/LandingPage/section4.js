@@ -4,12 +4,12 @@ import React, {useState} from 'react';
 const SERVER = 'http://localhost:8080/api'
 
 function Section4(){
-    const [fn, setfn] = useState('Bob');
-    const [ln, setln] = useState('Randel');
-    const [company, setCompany] = useState('Tester');
-    const [email, setEmail] = useState('Taco@gmail.com');
-    const [phone, setPhone] = useState('123456789');
-    const [brief, setBrief] = useState('Something brief');
+    const [fn, setfn] = useState('');
+    const [ln, setln] = useState('');
+    const [company, setCompany] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [brief, setBrief] = useState('');
 
 
     const handleSubmit = event =>{
