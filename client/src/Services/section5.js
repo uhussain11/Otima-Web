@@ -7,6 +7,7 @@ function Section5(){
     const [question3, showQuestion3] = useState(false);
     const [question4, showQuestion4] = useState(false);
     const [question5, showQuestion5] = useState(false);
+    const [question6, showQuestion6] = useState(false);
 
     return(
         <section id="section5s">
@@ -48,8 +49,14 @@ function Section5(){
                 <dd className={question5 ? 'header-down': 'header'} onClick={()=>{showQuestion5(!question5)}}> <span class="material-symbols-outlined"> arrow_drop_down </span> <h3>Paying for prototype</h3> </dd>
                 <p className={question5 ? 'content': 'hide-content'}>
                     Your <strong>Initial fee includes the protype fee</strong> you must pay prior to us creating the production build. This price is typically less than 10% of the entire
-                    initial payment fee. For this price we provide you with a prototype of what the website would look and function like. If you would like, you may choose to opt out of the prototype payment, however
-                    you will be required to accept the entire initial payment at the end of the development cycle.
+                    initial payment fee. For this price we provide you with a prototype of what the website would look and function like. If you would like, you may choose to pay the full initial price prior to final production build.
+                </p>
+                <dl className='line'></dl>
+            </div>
+            <div className='option'>
+                <dd className={question6 ? 'header-down': 'header'} onClick={()=>{showQuestion6(!question6)}}> <span class="material-symbols-outlined"> arrow_drop_down </span> <h3>I want to Update My Website after production build</h3> </dd>
+                <p className={question6 ? 'content': 'hide-content'}>
+                    That is totally possible! Reach out to us so we can see what information you'd like to add to your website. Depending on how significant the update is we may charge you a fee.
                 </p>
                 <dl className='line'></dl>
             </div>

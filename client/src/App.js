@@ -5,6 +5,7 @@ import Main from './LandingPage/home';
 import Service from './Services/main';
 import Career from './Career/main';
 import Application from './Career/application';
+import Meeting from './Schedule Meeting/main';
 import Api from './API/main';
 
 import Navbar from './constants/navbar';
@@ -23,6 +24,7 @@ function App() {
           <Route path='/career' element={<Career/>} />
           <Route path='/api' element={<Api/>} />
           <Route path='/application' element={<Application/>} />
+          <Route path='/schedule-Meeting' element={<Meeting/>} />
         </Routes>
         <Footer/>
       </Router>

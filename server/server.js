@@ -153,7 +153,6 @@ app.post("/api/text", async (req, res) => {
       break;
 
     case 4:
-      console.log(selected);
       if(selected === 1){
         maitnance += 30;
         price += 20;

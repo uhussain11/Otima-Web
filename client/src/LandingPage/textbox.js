@@ -1,6 +1,6 @@
 import section1 from './section1';
 import './textbox.css'
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 
 const SERVER = 'http://localhost:8080/api'
 const TOTALQUESTIONS = 4;
@@ -11,17 +11,22 @@ function TextBox({setViewBox}){
     const [question, setQuestion] = useState(1);
     const [price, setPrice] = useState(0);
     const [complete, setComplete] = useState(false);
-    const [maitnancefee, setMaitnance] = useState(60);
+    const [maitnancefee, setMaitnance] = useState(75);
     const [multiSelect, setMultiSelect] = useState(false);
-
+    const [progress, setProgress] = useState(0)
     const multiOptions = new Map();
+
+
+    useEffect(()=>{
+        const value = (progress/TOTALQUESTIONS)*100
+        document.querySelector('.progressBar').style.width = `${value}%`
+    }, [progress])
 
     function removeBubble(){
         setViewBox(false);
     }
 
     function selected(e){
-        console.log(e)
 
         const data = {
             selected: e.target.value,
@@ -46,6 +51,7 @@ function TextBox({setViewBox}){
                    setOptions(data.options)
                    setMaitnance(data.maitnance)
                    setMultiSelect(data.multiSelect)
+                   setProgress(progress+1);
                 }
               });
         }
@@ -56,9 +62,7 @@ function TextBox({setViewBox}){
         setQuestion(question+1)
     }
 
-    function toggle(e){
-        console.log(e.target);
-        
+    function toggle(e){        
         if(e.target.value === 'true'){
             multiOptions.set(e.target.id, false);
             e.target.className = 'selection';
@@ -84,6 +88,8 @@ function TextBox({setViewBox}){
             }
         }
 
+        console.log(question)
+
         const data = {
             selected: selected,
             price: price,
@@ -102,11 +108,12 @@ function TextBox({setViewBox}){
               .then((res) => res.json())
               .then((data)=>{
                 if(data.success){
-                   setPrice(data.price)
-                   setCurrQuestion(data.question)
-                   setOptions(data.options)
-                   setMaitnance(data.maitnance)
-                   setMultiSelect(data.multiSelect)
+                   setPrice(data.price);
+                   setCurrQuestion(data.question);
+                   setOptions(data.options);
+                   setMaitnance(data.maitnance);
+                   setMultiSelect(data.multiSelect);
+                   setProgress(progress+1);
                 }
               });
         }
@@ -140,12 +147,13 @@ function TextBox({setViewBox}){
                         </div>
                         }
                     </section>:
-                    <section>
+                    <section id='content'>
                         <h3 className='result'>Your inital Payment Estimate is ~ <strong>${price}</strong></h3>
                         <h3 className='result'>Your yearly Maintnace Estimate is ~ <strong>${maitnancefee}</strong></h3>
                         <p className='warn'>These values are meant to offer an estimate, prices are not exact and will most likely vary</p>
                     </section>
                 }
+                <dl className='progressBar'></dl>
             </span>
         </div>
     )
