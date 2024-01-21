@@ -63,7 +63,7 @@ function Section4(){
                 <h2>Contact <br /> Us</h2>
                 <p>lets get you started</p>
                 <a href="">561-990-6831</a>
-                <a href="">Brian03032003@gmail.com</a>
+                <a href="">support@otimaweb.com</a>
             </div>
         </section>
     )
