@@ -10,8 +10,8 @@ function Section4(){
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [brief, setBrief] = useState('');
-
-
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false)
     const handleSubmit = event =>{
         event.preventDefault();
 
@@ -22,7 +22,7 @@ function Section4(){
             email: email,
             phone:phone
         }
-
+        setLoading(true);
         try{
             fetch(`${SERVER}/interest`, {
                 method: 'POST',
@@ -34,6 +34,8 @@ function Section4(){
               .then((res) => res.json())
               .then((data)=>{
                 if(data.success){
+                    setLoading(false);
+                    setSuccess(true)
                 }
               });
         }
@@ -41,11 +43,18 @@ function Section4(){
             alert("Something went wrong on our end. Please try again later")
             return;
         }
+        setLoading(false);
     }
 
     return(
         <section id='section4l'>
             <div className='sector'>
+                {success?
+                <div>
+                    <h2>We got it!</h2>
+                    <p><strong>Next Step</strong>, Make sure to check you inbox and schedule a meeting with us.</p>
+                </div>
+                :
                 <form className='contact-form' onSubmit={handleSubmit} action="">
                     <input type="text" onChange={(e)=>{setCompany(e.target.value)}} value={company} placeholder='Company Name' required/>
                     <div className='name'>
@@ -57,6 +66,14 @@ function Section4(){
                     <textarea name="" onChange={(e) =>{setBrief(e.target.value)}} value={brief} id="" cols="30" rows="6" placeholder='Brief Us' required/>
                     <button className='submit-btn'>Send</button>
                 </form>
+                }
+                {loading?
+                    <div className='loading'>
+                        <span class="material-symbols-outlined">progress_activity</span>
+                    </div>:
+                    null
+                
+                }
             </div>
 
             <div className='title-sector'>

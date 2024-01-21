@@ -14,6 +14,7 @@
     & .sector{
         display: flex;
         margin-left: 6%;
+        position: relative;
 
         & h2{
             font-size: 70px;
@@ -108,6 +109,26 @@
             gap: 10px;
             width: 100%;
         }
+
+        & .loading{
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            height: 110%;
+            width: 110%;
+            z-index: 5;
+
+            & span{
+                animation: spin 1s linear 0s infinite forwards;
+                font-size: 50px;
+                color: rgb(153, 96, 181);
+            }
+        }
     }
     & .title-sector{
         display: flex;
@@ -132,5 +153,14 @@
             text-align: right;
             margin-block:5px;
         }
+    }
+}
+
+@keyframes spin{
+    0%{
+        rotate: 0deg;
+    }
+    100%{
+        rotate:360deg;
     }
 }
