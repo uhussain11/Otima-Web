@@ -8,7 +8,7 @@ var url = require('url');
 const fs = require('fs');
 const {google} = require('googleapis')
 // nodemon run 'nodemon ./server.js' for auto updates
-const { Pool } = require('pg');
+const { Client } = require('pg');
 
 const PORT = process.env.PORT || 9999;
 
@@ -29,23 +29,23 @@ var transporter = nodemailer.createTransport({
 app.use(cors());
 app.use(bodyParser.json());
 
-const pool = new Pool({
-  user: 'b9f34c5_Admin',
-  host: '198.46.91.127',
-  database: 'OTIMAWEB_admin',
-  password: '850423AbINMOTION',
-  port: 5432,
-});
+// const pool = new Client({
+//   user: 'b9f34c5_Admin',
+//   host: '198.46.91.127',
+//   database: 'OTIMAWEB_admin',
+//   password: '850423AbINMOTION',
+//   port: 5432,
+// });
 
-pool.connect((error) => {
-  if (error) {
-    console.error('Error connecting to the database', error);
-    pool.end(); // Close the pool if connection fails
-  } else {
-    console.log('Connected to the database');
+// pool.connect((error) => {
+//   if (error) {
+//     console.error('Error connecting to the database', error);
+//     pool.end(); // Close the pool if connection fails
+//   } else {
+//     console.log('Connected to the database');
     
-  }
-});
+//   }
+// });
 
 
 app.post("/api/interest", async (req, res) => {
@@ -195,11 +195,14 @@ app.post("/api/text", async (req, res) => {
 
 });
 
-app.post("/api/create-tokens", async (req, res) => {
+app.post("/api/login", async (req, res) => {
+  console.log(req.body.data)
+
   try{
-    const { code } = req.data
-    const response = await oAuth2Client.getToken(code)
-    res.send(response)
+    const data = req.body.data
+
+    // const response = await oAuth2Client.getToken(code)
+    // return res.json({response}) 
 
   }
   catch (error){
@@ -210,7 +213,8 @@ app.post("/api/create-tokens", async (req, res) => {
 
 });
 
-app.post("/api/calender", async (req, res) => {
+app.post("/api/appointment", async (req, res) => {
+
   try{
 
   }
