@@ -6,12 +6,15 @@ var nodemailer = require('nodemailer');
 var http = require('http');
 var url = require('url');
 const fs = require('fs');
-
+const {google} = require('googleapis')
 // nodemon run 'nodemon ./server.js' for auto updates
+const { Pool } = require('pg');
 
 const PORT = process.env.PORT || 9999;
 
 const app = express();
+
+const oAuth2Client = new google.auth.OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, process.env.GOOGLE_REDIRECT)
 
 var transporter = nodemailer.createTransport({
   host: "ecngx348.inmotionhosting.com",
@@ -25,6 +28,24 @@ var transporter = nodemailer.createTransport({
 
 app.use(cors());
 app.use(bodyParser.json());
+
+const pool = new Pool({
+  user: 'b9f34c5_Admin',
+  host: '198.46.91.127',
+  database: 'OTIMAWEB_admin',
+  password: '850423AbINMOTION',
+  port: 5432,
+});
+
+pool.connect((error) => {
+  if (error) {
+    console.error('Error connecting to the database', error);
+    pool.end(); // Close the pool if connection fails
+  } else {
+    console.log('Connected to the database');
+    
+  }
+});
 
 
 app.post("/api/interest", async (req, res) => {
@@ -173,6 +194,37 @@ app.post("/api/text", async (req, res) => {
   }) 
 
 });
+
+app.post("/api/create-tokens", async (req, res) => {
+  try{
+    const { code } = req.data
+    const response = await oAuth2Client.getToken(code)
+    res.send(response)
+
+  }
+  catch (error){
+    console.log(error)
+  }
+
+  return res.json({'success':true}) 
+
+});
+
+app.post("/api/calender", async (req, res) => {
+  try{
+
+  }
+  catch (error){
+    console.log(error)
+  }
+
+  return res.json({'success':true}) 
+
+});
+
+
+
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
