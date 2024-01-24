@@ -83,7 +83,7 @@ function Main(){
                     </div>
 
                     <p>This Meeting will be brief (15-30 minutes)</p>
-                    <p>Availability is Tues, Thur, Sat, Sun; 9am-8pm EST</p>
+                    <p>Availability is Tues, Thur, Sat, Sun; <strong>9am-8pm</strong> EST</p>
                     <input className='submit-btn' type="submit" value={"Schedule"} />
                 </form>:  
                 <section action="" id='login'>
@@ -95,7 +95,7 @@ function Main(){
                         <input type="email" placeholder='Email' required/>
                         <input type="password" placeholder='Password' required/>
                         <input type="password" placeholder='Confrim Password' required/>
-                        <input type="submit" value='Create Account' />
+                        <input type="submit" value='Continue' />
                     </form>
                     <div>or</div>
                     <div id='buttonDiv'></div>
