@@ -1,0 +1,142 @@
+#login{
+    background-color: white;
+    box-shadow: 0 0 7px 1px rgba(110, 49, 154, 0.563);
+    padding: 15px;
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    gap: 20px;
+
+    & .manual{
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        gap: 20px;
+        font-size: 20px;
+
+        & .input{
+            position: relative;
+            padding: 10px;
+            height: fit-content;
+            background-color: rgba(0, 0, 0, 0.055);
+            border-radius: 3px;
+            width: 90%;
+            margin:auto;
+            border: 2px solid transparent;
+            transition: 200ms;
+            cursor: text;
+            z-index: 2;
+
+            &:focus-within{
+                border: 2px solid rgb(81, 0, 128);
+
+                & .placeholder, .placeholder-empty{
+                    bottom: 100%;
+                    font-size: 14px;
+                    opacity: 1;
+
+                    & p{
+                        position: relative;
+                        background-color: rgb(255, 255, 255);
+                        height: fit-content;
+                        border: 2px solid rgb(81, 0, 128);
+                        border-radius: 3px;
+                        padding: 3px;
+                        padding-inline:5px;
+                        margin-bottom: -10px;
+                        z-index: 5;
+                    }
+                }
+            }
+
+            input {
+                font-size: 18px;
+                border: none;
+                width: 100%;
+                background-color: transparent;
+                z-index: 3;
+                outline: none;
+              }
+
+            & .placeholder, .placeholder-empty{
+                display: flex;
+                position: absolute;
+                pointer-events: none;
+                left:10px;
+                font-family: 'Outfit';
+                opacity: 0.5;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                bottom: 0%;
+                height: 100%;
+                transition: 200ms;
+
+                & p{
+                    border: 2px solid transparent;
+                    position: relative;
+                    height: fit-content;
+                    margin: auto;
+                    z-index: 1;
+                }
+            }
+            & .placeholder{
+                opacity: 0;
+            }
+        }
+
+        & #error{
+            border: 2px solid red;
+        }
+
+        & .name{
+            display: flex;
+            gap: 10px;
+        }
+
+        & .submit-btn{
+            margin-inline: auto;
+            width: fit-content;
+            background-color: rgb(107, 39, 159);
+            box-shadow: inset 0px -30px 0px 0px black;
+            color: whitesmoke;
+            font-weight: 600;
+            font-size: 18px;
+            padding: 4px;
+            padding-inline:12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 200ms;
+
+            &:hover{
+                box-shadow: inset 0px -2px 0px 0px black;
+            }
+         }
+   }
+
+   & .alternate{
+    display: flex;
+    width: 90%;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-family: 'Outfit';
+
+    .line{
+        height: 2px;
+        width: 100%;
+        background-color: black;
+    }
+   }
+
+    & #buttonDiv{
+        margin-inline:auto;
+        margin-block: 10px;
+        width: fit-content;
+        transition:300ms;
+    }
+}
