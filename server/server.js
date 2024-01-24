@@ -3,12 +3,12 @@ require('dotenv').config();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 var nodemailer = require('nodemailer');
-var http = require('http');
-var url = require('url');
+// var http = require('http');
+// var url = require('url');
 const fs = require('fs');
 const {google} = require('googleapis')
 // nodemon run 'nodemon ./server.js' for auto updates
-const { Client } = require('pg');
+const db = require("./database.js")   
 
 const PORT = process.env.PORT || 9999;
 
@@ -25,28 +25,10 @@ var transporter = nodemailer.createTransport({
      pass: "850423Ab_INMOTION"
   }
 });
+var con;
 
 app.use(cors());
 app.use(bodyParser.json());
-
-// const pool = new Client({
-//   user: 'b9f34c5_Admin',
-//   host: '198.46.91.127',
-//   database: 'OTIMAWEB_admin',
-//   password: '850423AbINMOTION',
-//   port: 5432,
-// });
-
-// pool.connect((error) => {
-//   if (error) {
-//     console.error('Error connecting to the database', error);
-//     pool.end(); // Close the pool if connection fails
-//   } else {
-//     console.log('Connected to the database');
-    
-//   }
-// });
-
 
 app.post("/api/interest", async (req, res) => {
   const data = req.body.data; // This will contain the JSON data sent in the request
