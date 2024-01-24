@@ -129,7 +129,8 @@
     .line{
         height: 2px;
         width: 100%;
-        background-color: black;
+        background-color: rgb(71, 29, 126);
+        border-radius: 5px;
     }
    }
 

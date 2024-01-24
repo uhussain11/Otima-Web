@@ -54,6 +54,10 @@ function Login({loggedIn, setLoading, setName, setLoggedIn}){
         }
     }
 
+    function register(){
+        
+    }
+
 
     return(
         <section id='login'>
