@@ -27,7 +27,7 @@
     #form{
         justify-content: center;
         align-items: center;
-
+        
         & p{
             width: fit-content;
             margin-inline: auto;
@@ -127,7 +127,6 @@
             background-color: rgb(107, 39, 159);
             box-shadow: inset 0px -30px 0px 0px black;
             color: whitesmoke;
-            font-family: "Quattrocento Sans";
             font-weight: 600;
             font-size: 18px;
             padding: 4px;
@@ -136,6 +135,7 @@
             border-radius: 10px;
             cursor: pointer;
             transition: 200ms;
+            margin-block: 20px;
 
             &:hover{
                 box-shadow: inset 0px -2px 0px 0px black;

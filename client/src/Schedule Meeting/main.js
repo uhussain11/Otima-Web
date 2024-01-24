@@ -25,6 +25,10 @@ function Main(){
                     <h4 className='name-tag'>Lets get started <strong>{name}</strong></h4>
                     <p className='info'> Please select a date and time for a brief online zoom meeting</p>
                     <Calendar onChange = {changeDate} value = {date}/>
+
+                    <p>This Meeting will be brief (15-30 minutes)</p>
+                    <p>Availability is Tues, Thur, Sat, Sun; <strong>9am-8pm</strong> EST</p>
+
                     <p className='selectedDate'>{date.toLocaleDateString()}</p>
                     <div className='time-selection'>
                         <p>Select a Time:</p>
@@ -38,9 +42,6 @@ function Main(){
 
                         </select>
                     </div>
-
-                    <p>This Meeting will be brief (15-30 minutes)</p>
-                    <p>Availability is Tues, Thur, Sat, Sun; <strong>9am-8pm</strong> EST</p>
                     <input className='submit-btn' type="submit" value={"Schedule"} />
                 </form>:
                 <Login
