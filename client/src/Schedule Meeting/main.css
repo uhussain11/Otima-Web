@@ -5,6 +5,7 @@
     background-color: rgb(238, 238, 248);
     display: flex;
     flex-direction: column;
+    text-align: center;
     align-items: center;
 
     & .home-btn{
@@ -119,14 +120,43 @@
                 }
             }
          }
+
+         & .submit-btn{
+            margin-inline: auto;
+            width: fit-content;
+            background-color: white;
+            font-size: 20px;
+            padding: 4px;
+            padding-inline:8px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+         }
     }
 
-    & #buttonDiv{
+    #login{
+        background-color: white;
         box-shadow: 0 0 7px 1px rgb(110, 49, 154);
-        margin:auto;
-        transition:300ms;
-    }
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 10px;
+        gap: 10px;
 
+        & .manual{
+            display: flex;
+            flex-direction: column; 
+            gap: 10px;
+            font-size: 20px;
+       }
+
+        & #buttonDiv{
+            margin:auto;
+            width: fit-content;
+            transition:300ms;
+        }
+    }
 
     & h1{
         text-align: center;

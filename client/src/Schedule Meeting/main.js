@@ -9,7 +9,7 @@ const SERVER = 'http://localhost:8080/api'
 function Main(){
     const [loading, setLoading] = useState(false)
     const [date, changeDate] = useState(new Date());
-    const [loggedIn, setLoggedIn] = useState(true)
+    const [loggedIn, setLoggedIn] = useState(false)
     const [name, setName] = useState('tester')
 
     useEffect(() =>{
@@ -64,14 +64,14 @@ function Main(){
             <a className='home-btn' href="/">Otima Web</a>
             <h1>Schedule Meeting</h1>
             {loggedIn? 
-                <section id='form'>
+                <form id='form'>
                     <h4 className='name-tag'>Lets get started <strong>{name}</strong></h4>
                     <p className='info'> Please select a date and time for a brief online zoom meeting</p>
                     <Calendar onChange = {changeDate} value = {date}/>
                     <p className='selectedDate'>{date.toLocaleDateString()}</p>
                     <div className='time-selection'>
                         <p>Select a Time:</p>
-                        <input  type="time" className='time-selection'/>
+                        <input  type="time" max="20:00" min="09:00" className='time-selection' required/>
                         <select name="timeZone" id="timezone"> 
                             <option value="EST">EST</option>
                             <option value="ECT">ECT</option>
@@ -83,7 +83,23 @@ function Main(){
                     </div>
 
                     <p>This Meeting will be brief (15-30 minutes)</p>
-                </section>:  <div id='buttonDiv'></div>
+                    <p>Availability is Tues, Thur, Sat, Sun; 9am-8pm EST</p>
+                    <input className='submit-btn' type="submit" value={"Schedule"} />
+                </form>:  
+                <section action="" id='login'>
+                    <form className='manual' action="">
+                        <div className='name'>
+                            <input type="text" placeholder='First Name' required/>
+                            <input type="text" placeholder='Last Name' required/>
+                        </div>
+                        <input type="email" placeholder='Email' required/>
+                        <input type="password" placeholder='Password' required/>
+                        <input type="password" placeholder='Confrim Password' required/>
+                        <input type="submit" value='Create Account' />
+                    </form>
+                    <div>or</div>
+                    <div id='buttonDiv'></div>
+                </section>
             }
         </section>
     )
