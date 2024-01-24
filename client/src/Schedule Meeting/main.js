@@ -82,7 +82,7 @@ function Main(){
                         </select>
                     </div>
 
-                    <p>This Meeting should</p>
+                    <p>This Meeting will be brief (15-30 minutes)</p>
                 </section>:  <div id='buttonDiv'></div>
             }
         </section>
