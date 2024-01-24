@@ -136,7 +136,7 @@
 
     #login{
         background-color: white;
-        box-shadow: 0 0 7px 1px rgb(110, 49, 154);
+        box-shadow: 0 0 7px 1px rgba(110, 49, 154, 0.563);
         padding: 10px;
         display: flex;
         flex-direction: column;
