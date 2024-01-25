@@ -11,11 +11,7 @@ import Api from './API/main';
 import Navbar from './constants/navbar';
 import Footer from './constants/footer';
 
-import { CookiesProvider, useCookies } from "react-cookie";
-
 function App() {
-  const [cookies, setCookie] = useCookies(["user"]);
-
   
   return (
     <>

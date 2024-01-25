@@ -1,7 +1,7 @@
 import * as jose from 'jose'
 import './login.css'
 import React, {useState, useEffect} from 'react'
-import { CookiesProvider, useCookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 
 
 const SERVER = 'http://localhost:8080/api'
@@ -51,6 +51,7 @@ function Login({loggedIn, setName, setLoggedIn}){
               .then((data)=>{
                 setLoggedIn(true);
                 console.log(data)
+                // setCookie('name', data.id);
               });
         }
         catch{
