@@ -3,7 +3,6 @@ import './login.css'
 import React, {useState, useEffect} from 'react'
 import { useCookies } from "react-cookie";
 
-
 const SERVER = 'http://localhost:8080/api'
 
 function Login({loggedIn, setName, setLoggedIn}){
@@ -15,6 +14,7 @@ function Login({loggedIn, setName, setLoggedIn}){
     const [login, setLogin] = useState(true)
     const [loading, setLoading] = useState(false)
 
+    const [cookies, setCookie] = useCookies(['SessionID']);
 
     useEffect(() =>{
         if(!loggedIn){
@@ -51,7 +51,7 @@ function Login({loggedIn, setName, setLoggedIn}){
               .then((data)=>{
                 setLoggedIn(true);
                 console.log(data)
-                // setCookie('name', data.id);
+                setCookie('SessionID', 12345678);
               });
         }
         catch{
@@ -61,14 +61,18 @@ function Login({loggedIn, setName, setLoggedIn}){
     }
 
     function register(){
+        setCookie('SessionID', 12345678);
+    }
 
+    function signIn(){
+        setCookie('SessionID', 12345678);
     }
 
 
     return(
         <section id='login'>
             {login ?
-                <form className='manual' action="">
+                <form className='manual' action="" onSubmit={signIn}>
                     <div className='input'>
                         <label className={email !== "" ? 'placeholder':'placeholder-empty'}> <p>Email</p> </label>
                         <input type="text" onChange={(e)=>{setEmail(e.target.value)}} value={email} required/>
@@ -79,7 +83,7 @@ function Login({loggedIn, setName, setLoggedIn}){
                     </div>
                     <input type="submit" value='Login' className='submit-btn' />
                 </form>:
-                        <form className='manual' action="">
+                        <form className='manual' action="" onSubmit={register}>
                             <div className='name'>
                                 <div className='input'>
                                     <label className={fn !== "" ? 'placeholder':'placeholder-empty'}> <p>First Name</p> </label>
