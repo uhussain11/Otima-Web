@@ -6,12 +6,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
     border-radius: 10px;
     gap: 20px;
+    min-width: 450px;
 
     & .manual{
         display: flex;
         flex-direction: column;
+        width: 100%;
         height: fit-content;
         gap: 20px;
         font-size: 20px;
@@ -23,7 +26,7 @@
             background-color: rgba(0, 0, 0, 0.055);
             border-radius: 3px;
             width: 90%;
-            margin:auto;
+            margin: auto;
             border: 2px solid transparent;
             transition: 200ms;
             cursor: text;
@@ -139,5 +142,12 @@
         margin-block: 10px;
         width: fit-content;
         transition:300ms;
+    }
+    
+    .swap{
+        text-decoration: underline;
+        font-size: 14px;
+        color: rgb(87, 34, 130);
+        cursor: pointer;
     }
 }

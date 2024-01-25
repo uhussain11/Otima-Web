@@ -7,7 +7,6 @@ import React, {useState, useEffect} from 'react'
 const SERVER = 'http://localhost:8080/api'
 
 function Main(){
-    const [loading, setLoading] = useState(false)
     const [date, changeDate] = useState(new Date());
     const [loggedIn, setLoggedIn] = useState(false)
     const [name, setName] = useState('tester')
@@ -46,7 +45,6 @@ function Main(){
                 </form>:
                 <Login
                 loggedIn = {loggedIn}
-                setLoading = {setLoading}
                 setName = {setName}
                 setLoggedIn = {setLoggedIn}
                 />

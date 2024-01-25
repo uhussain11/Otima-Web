@@ -195,6 +195,24 @@ app.post("/api/login", async (req, res) => {
 
 });
 
+app.post("/api/register", async (req, res) => {
+  console.log(req.body.data)
+
+  try{
+    const data = req.body.data
+
+    // const response = await oAuth2Client.getToken(code)
+    // return res.json({response}) 
+
+  }
+  catch (error){
+    console.log(error)
+  }
+
+  return res.json({'success':true}) 
+
+});
+
 app.post("/api/appointment", async (req, res) => {
 
   try{

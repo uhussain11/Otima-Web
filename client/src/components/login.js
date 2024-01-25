@@ -1,14 +1,19 @@
 import * as jose from 'jose'
 import './login.css'
 import React, {useState, useEffect} from 'react'
+import { CookiesProvider, useCookies } from "react-cookie";
+
+
 const SERVER = 'http://localhost:8080/api'
 
-function Login({loggedIn, setLoading, setName, setLoggedIn}){
+function Login({loggedIn, setName, setLoggedIn}){
     const [fn, setFN] = useState('')
     const [ln, setLN] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmation, setConfirmation] = useState('')
+    const [login, setLogin] = useState(true)
+    const [loading, setLoading] = useState(false)
 
 
     useEffect(() =>{
@@ -34,7 +39,7 @@ function Login({loggedIn, setLoading, setName, setLoggedIn}){
             console.log(data)
             setName(data.name);
 
-            fetch(`${SERVER}/login/`, {
+            fetch(`${SERVER}/register/`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -61,34 +66,46 @@ function Login({loggedIn, setLoading, setName, setLoggedIn}){
 
     return(
         <section id='login'>
-            <form className='manual' action="">
-                <div className='name'>
-                <div className='input'>
-                    <label className={fn !== "" ? 'placeholder':'placeholder-empty'}> <p>First Name</p> </label>
-                    <input type="text" onChange={(e)=>{setFN(e.target.value)}} value={fn} required/>
-                </div>
+            {login ?
+                <form className='manual' action="">
                     <div className='input'>
-                    <label className={ln !== "" ? 'placeholder':'placeholder-empty'}> <p>Last Name</p> </label>
-                    <input type="text" onChange={(e)=>{setLN(e.target.value)}} value={ln} required/>
-                </div>
-                </div>
-                <div className='input'>
-                    <label className={email !== "" ? 'placeholder':'placeholder-empty'}> <p>Email</p> </label>
-                    <input type="text" onChange={(e)=>{setEmail(e.target.value)}} value={email} required/>
-                </div>
-                <div className='input' id={password !== confirmation ? 'error' : null}>
-                    <label className={password !== "" ? 'placeholder':'placeholder-empty'}> <p>Password</p> </label>
-                    <input type="password" onChange={(e)=>{setPassword(e.target.value)}} value={password} required/>
-                </div>
-                <div className='input' id={password !== confirmation ? 'error' : null}>
-                    <label className={confirmation !== "" ? 'placeholder':'placeholder-empty'}> <p>Confirm Password</p> </label>
-                    <input type="password" onChange={(e)=>{setConfirmation(e.target.value)}} value={confirmation} required/>
-                </div>
-                
-                <input type="submit" value='Register' className='submit-btn' />
-            </form>
+                        <label className={email !== "" ? 'placeholder':'placeholder-empty'}> <p>Email</p> </label>
+                        <input type="text" onChange={(e)=>{setEmail(e.target.value)}} value={email} required/>
+                    </div>
+                    <div className='input'>
+                        <label className={password !== "" ? 'placeholder':'placeholder-empty'}> <p>Password</p> </label>
+                        <input type="password" onChange={(e)=>{setPassword(e.target.value)}} value={password} required/>
+                    </div>
+                    <input type="submit" value='Login' className='submit-btn' />
+                </form>:
+                        <form className='manual' action="">
+                            <div className='name'>
+                                <div className='input'>
+                                    <label className={fn !== "" ? 'placeholder':'placeholder-empty'}> <p>First Name</p> </label>
+                                    <input type="text" onChange={(e)=>{setFN(e.target.value)}} value={fn} required/>
+                                </div>
+                                    <div className='input'>
+                                    <label className={ln !== "" ? 'placeholder':'placeholder-empty'}> <p>Last Name</p> </label>
+                                    <input type="text" onChange={(e)=>{setLN(e.target.value)}} value={ln} required/>
+                                </div>
+                                </div>
+                                <div className='input'>
+                                    <label className={email !== "" ? 'placeholder':'placeholder-empty'}> <p>Email</p> </label>
+                                    <input type="text" onChange={(e)=>{setEmail(e.target.value)}} value={email} required/>
+                                </div>
+                                <div className='input' id={password !== confirmation ? 'error' : null}>
+                                    <label className={password !== "" ? 'placeholder':'placeholder-empty'}> <p>Password</p> </label>
+                                    <input type="password" onChange={(e)=>{setPassword(e.target.value)}} value={password} required/>
+                                </div>
+                                <div className='input' id={password !== confirmation ? 'error' : null}>
+                                    <label className={confirmation !== "" ? 'placeholder':'placeholder-empty'}> <p>Confirm Password</p> </label>
+                                    <input type="password" onChange={(e)=>{setConfirmation(e.target.value)}} value={confirmation} required/>
+                                </div>
+                                <input type="submit" value='Register' className='submit-btn' />
+                            </form>}
             <div className='alternate'><dl className='line'></dl> or <dl className='line'></dl></div>
             <div id='buttonDiv'></div>
+            <a className='swap' onClick={()=>{setLogin(!login)}}> {!login ? 'Already have an Account? Login': 'Create an Account'}</a>
         </section>
     )
 
