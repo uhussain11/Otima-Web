@@ -1,6 +1,8 @@
 #main{
     z-index: 6;
     height: 100%;
+    max-height: 80vh;
+    overflow: scroll;
     width: 100%;
     background-color: rgb(238, 238, 248);
     display: flex;
@@ -60,7 +62,9 @@
             max-width:500px;
             overflow: hidden;
             box-shadow: 0 0 5px 0 black;
-            margin:auto;
+            margin-inline:auto;
+            opacity: 0;
+            animation: schedule-In 800ms ease 100ms 1 forwards;
     
             /* & .react-calendar__tile, .react-calendar__month-view__days__day{
             } */
@@ -78,6 +82,15 @@
             }
          }
 
+         & .first-text{
+            opacity: 0;
+            animation: schedule-In 800ms ease-out 250ms 1 forwards;
+         }
+         & .second-text{
+            opacity: 0;
+            animation: schedule-In 800ms ease-out 350ms 1 forwards;
+         }
+
          & .selectedDate{
             background-color: white;
             color:black;
@@ -89,6 +102,8 @@
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
             font-weight: 400;
+            opacity: 0;
+            animation: schedule-In 800ms ease-out 450ms 1 forwards;
          }
 
          & .time-selection{
@@ -154,5 +169,16 @@
         text-align: center;
         color: rgb(63, 24, 78);
         font-size: 40px;
+    }
+}
+
+
+@keyframes schedule-In {
+    0%{
+        margin-top: 20%;
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
     }
 }

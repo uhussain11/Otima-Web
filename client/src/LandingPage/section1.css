@@ -44,7 +44,6 @@
                 text-shadow: 0 0 10px black;
                 color: whitesmoke;
                 margin-bottom: 0;
-
             }
 
             & .bottom{
@@ -54,14 +53,36 @@
                 display: flex;
                 margin: auto;
 
-                & p{
+                & a{
+                    text-decoration: none;
                     font-size: 22px;
+                    display: flex;
+                    gap: 10px;
+                    position: relative;
                     height: fit-content;
                     width: fit-content;
                     background-color: white;
                     padding: 8px;
+                    justify-content: center;
+                    text-align: center;
+                    align-items: center;
                     padding-inline: 14px;
                     border-radius: 10px;
+                    border: none;
+                    color: #584082;
+                    cursor: pointer;
+                    box-shadow: inset 0px -3px 0px 0px #584082;
+                    transition: 300ms;
+
+                    &:hover{
+                        box-shadow: inset 0px -50px 0px 0px #584082;
+                        color: whitesmoke;
+                    }
+
+                    & span{
+                        margin: auto;
+                        height: fit-content;
+                    }
                 }
             }
         }

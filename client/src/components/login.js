@@ -19,7 +19,7 @@ function Login({loggedIn, setLoading, setName, setLoggedIn}){
               });
               window.google.accounts.id.renderButton(
                   document.getElementById('buttonDiv'),
-                  {theme: "outline", size: "large"}
+                  {theme: "filled", size: "large"}
               )
               window.google.accounts.id.prompt();
         }
@@ -55,7 +55,7 @@ function Login({loggedIn, setLoading, setName, setLoggedIn}){
     }
 
     function register(){
-        
+
     }
 
 
