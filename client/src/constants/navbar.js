@@ -18,8 +18,8 @@ function navbar(){
             <Link className='btn-container' to={'/career'}>
                 <p className='nav-btn'>Career</p>
             </Link>
-            <div className='about-container'>
-                <Link className='nav-btn'>About Us</Link>
+            <div className='about-container' >
+                <Link className='nav-btn' to={'/about'}>About Us</Link>
             </div>
         </section>
     )

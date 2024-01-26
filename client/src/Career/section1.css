@@ -2,7 +2,6 @@
     height: fit-content;
     position: relative;
     height: 40vh;
-    padding-top: 70px;
 
     & .triangle{
         background-color: #402d62;

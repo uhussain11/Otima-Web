@@ -1,7 +1,8 @@
 #root{
     display: grid;
-    min-height: 100vh;
+    min-height: calc(100vh - 70px);
     grid-template-rows: 1fr;
+    padding-top: 70px;
 }
 
 body{

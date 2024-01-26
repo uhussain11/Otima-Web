@@ -11,7 +11,7 @@ function Login({loggedIn, setName, setLoggedIn}){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmation, setConfirmation] = useState('')
-    const [login, setLogin] = useState(true)
+    const [login, setLogin] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const [cookies, setCookie] = useCookies(['SessionID']);
@@ -110,7 +110,7 @@ function Login({loggedIn, setName, setLoggedIn}){
                             </form>}
             <div className='alternate'><dl className='line'></dl> or <dl className='line'></dl></div>
             <div id='buttonDiv'></div>
-            <a className='swap' onClick={()=>{setLogin(!login)}}> {!login ? 'Already have an Account? Login': 'Create an Account'}</a>
+            <a className='swap' onClick={()=>{setLogin(!login)}}> {!login ? 'Already have an Account? Login': 'Dont Have an Account? Create one'}</a>
         </section>
     )
 

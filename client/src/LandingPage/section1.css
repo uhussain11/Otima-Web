@@ -4,7 +4,6 @@
     background: linear-gradient(to bottom, #584082, #3f2b60);
     position: relative;
     padding-block: 30px;
-    padding-top: 84px;
     overflow: hidden;
     width: 100vw;
 
@@ -13,7 +12,6 @@
         height: fit-content;
         display: flex;
         flex-direction: column;
-        margin: 20px;
         margin: auto;
         max-height: 60vh;
         border-radius: 20px;

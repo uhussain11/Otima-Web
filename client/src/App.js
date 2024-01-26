@@ -7,6 +7,7 @@ import Career from './Career/main';
 import Application from './Career/application';
 import Meeting from './Schedule Meeting/main';
 import Api from './API/main';
+import About from './About/main';
 
 import Navbar from './constants/navbar';
 import Footer from './constants/footer';
@@ -38,6 +39,7 @@ function App() {
           <Route path='/services' element={<Service/>} />
           <Route path='/career' element={<Career/>} />
           <Route path='/api' element={<Api/>} />
+          <Route path='/about' element={<About/>} />
           <Route path='/application' element={<Application/>} />
           <Route path='/schedule-Meeting' element={<Meeting/>} />
         </Routes>
