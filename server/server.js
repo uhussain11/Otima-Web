@@ -3,10 +3,10 @@ require('dotenv').config();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 var nodemailer = require('nodemailer');
+const fs = require('fs');
+const {google} = require('googleapis');
 // var http = require('http');
 // var url = require('url');
-const fs = require('fs');
-const {google} = require('googleapis')
 // nodemon run 'nodemon ./server.js' for auto updates
 const db = require("./database.js")   
 
@@ -196,13 +196,48 @@ app.post("/api/login", async (req, res) => {
 });
 
 app.post("/api/register", async (req, res) => {
-  console.log(req.body.data)
 
   try{
     const data = req.body.data
 
-    // const response = await oAuth2Client.getToken(code)
-    // return res.json({response}) 
+    let date_time = new Date();
+
+
+    let values;
+
+    if(data.googleID === null){
+      // manual register
+      values = [
+        '',
+        `${data.fn}`,
+        `${data.ln}`,
+        `${data.email}`,
+        '',
+        `${data.pswrd}`,
+        `NOW()`,
+        '',
+      ];
+    }
+    else{
+      // google register
+      values = [
+        '',
+        `${data.fn}`,
+        `${data.ln}`,
+        `${data.email}`,
+        `${data.googleID}`,
+        '',
+        '',
+        '',
+      ];
+    }
+  
+    const sql = 'INSERT INTO `User`(`ID`, `First Name`, `Last Name`, `Email`, `Google ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+
+    const success = db.saveData(sql, values);
+    console.log(success)
+
+    return res.json({success}) 
 
   }
   catch (error){

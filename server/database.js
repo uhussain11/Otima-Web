@@ -1,47 +1,46 @@
 var mysql = require('mysql');
 
-function RetrieveData(sql, data) {
+function saveData(sql, values) {
 
-    con = mysql.createConnection({
+  let success = false;
+
+  console.log(sql)
+  console.log(values)
+
+    database = mysql.createConnection({
       "database": "b9f34c5_OtimaWeb",
       "user": "b9f34c5_Admin",
       "password": "OTIMAWEB_admin",
-      "host": "198.46.91.127",
+      "host": "198.46.91.127"
       // "debug":true
     });
   
-    con.connect(function(err) {
-  
+    database.connect(function(err) {
       if(err){
-        return data(err)
+        console.error('error connecting: ' + err.stack);
+        return;
       }
+      
       else{
-      
-        // Getting
-        // const sql = `SELECT *
-        // FROM test
-        // WHERE title = 'Learn how to insert a new row'`;
-      
-        // con.query(sql, (err, result) => {
-        //   if (err) throw err;
-      
-        //   // Print the result
-        //   console.log('Completed:', result);
-      
-        //   // Close the connection
-        //   con.end();
-        // });
+        console.log('connected as id ' + database.threadId);
+
+        database.query(sql, values, (err, results) => {
+          if (err) {
+            success = false;
+          } else {
+            success = true;
+          }
+        });
+        database.end();
       }
-    
-      con.end()
     }); 
     
-  
+    return success;
   }
   
-function SaveData(sql) {
+function retrieveData(sql, data) {
   
-    con = mysql.createConnection({
+    database = mysql.createConnection({
       "database": "b9f34c5_OtimaWeb",
       "user": "b9f34c5_Admin",
       "password": "OTIMAWEB_admin",
@@ -49,7 +48,7 @@ function SaveData(sql) {
       // "debug":true
     });
   
-    con.connect(function(err) {
+    database.connect(function(err) {
   
       if(err){
         return data(err)
@@ -61,7 +60,9 @@ function SaveData(sql) {
         
         // con.query(sql);
       }
-      con.end()  
+      database.end()  
     }); 
     return;
 }
+
+module.exports = { saveData, retrieveData };

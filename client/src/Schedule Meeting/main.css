@@ -2,8 +2,7 @@
     z-index: 10;
     height: calc(100% + 70px);
     margin-top: -70px;
-    max-height: 80vh;
-    overflow: scroll;
+    height: fit-content;
     width: 100%;
     background-color: rgb(238, 238, 248);
     display: flex;
