@@ -1,7 +1,7 @@
 #section1c{
     height: fit-content;
     position: relative;
-    height: 40vh;
+    height: 44vh;
 
     & .triangle{
         background-color: #402d62;
@@ -18,9 +18,9 @@
             position: absolute;
             font-family: 'Outfit';
             left: 5%;
-            bottom: 30%;
+            bottom: 20%;
             font-size: 30px;
-            width: 24%;
+            width: 30%;
             gap: 10px;
             line-height: 2;
         }
@@ -37,8 +37,8 @@
         color: black;
         position: absolute;
         width: fit-content;
-        right: 8%;
-        top: 20%;
+        right: 5%;
+        top: 0%;
         justify-content: center;
         align-items: center;
         font-family: 'Outfit';

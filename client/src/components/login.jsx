@@ -14,6 +14,8 @@ function Login({loggedIn, setName, setLoggedIn}){
     const [login, setLogin] = useState(false)
     const [loading, setLoading] = useState(false)
 
+    const [failedLogin, setFailedLogin] = useState(false);
+
     const [cookies, setCookie] = useCookies(['SessionID']);
 
     useEffect(() =>{
@@ -28,7 +30,7 @@ function Login({loggedIn, setName, setLoggedIn}){
               )
               window.google.accounts.id.prompt();
         }
-      }, [window.performance.navigation.type]) 
+      }, [window.onload]) 
 
     const responseGoogle = response =>{
         try{
@@ -39,7 +41,7 @@ function Login({loggedIn, setName, setLoggedIn}){
             console.log(data)
             setName(data.name);
 
-            fetch(`${SERVER}/register/`, {
+            fetch(`${SERVER}/google-signin/`, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {
@@ -81,20 +83,47 @@ function Login({loggedIn, setName, setLoggedIn}){
           })
           .then((res) => res.json())
           .then((data)=>{
+            console.log(data)
             if(data.success){
                 setLoggedIn(true);
-                console.log(data)
+                setCookie('SessionID', data.sessionID, { path: '/' });
             }
             else{
-                console.log('failed')
+                setFailedLogin(true);
             }
           });
           
         return true;
     }
 
-    function signIn(){
-        setCookie('SessionID', 12345678);
+    function signIn(e){
+        e.preventDefault();
+
+        const credentials = {
+            email: email,
+            pswrd: password
+        }
+
+        fetch(`${SERVER}/login/`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({credentials})
+          })
+          .then((res) => res.json())
+          .then((data)=>{
+            console.log(data)
+            if(data.success){
+                setLoggedIn(true);
+            }
+            else{
+                setFailedLogin(true);
+            }
+          });
+          
+        return true;
     }
 
 
@@ -110,9 +139,9 @@ function Login({loggedIn, setName, setLoggedIn}){
                         <label className={password !== "" ? 'placeholder':'placeholder-empty'}> <p>Password</p> </label>
                         <input type="password" onChange={(e)=>{setPassword(e.target.value)}} value={password} required/>
                     </div>
+                    {failedLogin ? <p className='invalid'>Invalid Credentials</p>: null}
                     <input type="submit" value='Login' className='submit-btn' />
-                </form>
-                :
+                </form>:
                 <form className='manual' onSubmit={register}>
                     <div className='name'>
                         <div className='input'>
@@ -136,6 +165,7 @@ function Login({loggedIn, setName, setLoggedIn}){
                         <label className={confirmation !== "" ? 'placeholder':'placeholder-empty'}> <p>Confirm Password</p> </label>
                         <input type="password" onChange={(e)=>{setConfirmation(e.target.value)}} value={confirmation} required/>
                     </div>
+                    {failedLogin ? <p className='failed'>The Provided Email is already in Use</p>: null}
                     <input type="submit" onClick={(e) =>register} value='Register' className='submit-btn' />
                 </form>}
             <div className='alternate'><dl className='line'></dl> or <dl className='line'></dl></div>

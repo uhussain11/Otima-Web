@@ -9,6 +9,8 @@ const {google} = require('googleapis');
 // var url = require('url');
 // nodemon run 'nodemon ./server.js' for auto updates
 const db = require("./database.js")   
+var mysql = require('mysql');
+const crypto = require('crypto');
 
 const PORT = process.env.PORT || 9999;
 
@@ -25,7 +27,6 @@ var transporter = nodemailer.createTransport({
      pass: "850423Ab_INMOTION"
   }
 });
-var con;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -178,20 +179,33 @@ app.post("/api/text", async (req, res) => {
 });
 
 app.post("/api/login", async (req, res) => {
-  console.log(req.body.data)
-
   try{
-    const data = req.body.data
+    const data = req.body.credentials
 
-    // const response = await oAuth2Client.getToken(code)
-    // return res.json({response}) 
+    const cryptPswrd = crypto.createHash('sha256').update(data.pswrd).digest('hex');
+  
+    const sql = `SELECT ID, 'First Name', Email, 'Last Name' FROM User WHERE Email = '${data.email}' AND Password = '${cryptPswrd}'`;
+  
+    const userData = await db.retrieveData(sql, true);
 
+    console.log(userData[0])
+
+    if(userData === null){
+      return res.json({ success: false, sessionID: null, newSession:false, user: null}) 
+    }
+    else{
+      const status =  await db.setSession(userData[0].ID);
+      // return sessionID and if it was updated or not
+
+      console.log(status);
+
+      return res.json({ success: true, sessionID: status.sessionID, newSession: status.new, user: userData[0]}) 
+    }
   }
-  catch (error){
-    console.log(error)
+  catch(err){
+    console.log(err)
+    return res.json({success: false}) 
   }
-
-  return res.json({'success':true}) 
 
 });
 
@@ -200,8 +214,50 @@ app.post("/api/register", async (req, res) => {
   try{
     const data = req.body.data
 
-    let date_time = new Date();
+    const cryptPswrd = crypto.createHash('sha256').update(data.pswrd).digest('hex');
 
+    const values = [
+      '',
+      `${data.fn}`,
+      `${data.ln}`,
+      `${data.email}`,
+      '',
+      `${cryptPswrd}`,
+      '',
+    ];
+  
+    const sql = "INSERT INTO `User`(`ID`, `First Name`, `Last Name`, `Email`, `Google ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)";
+
+    const userData = await db.saveData(sql, values);
+
+    // check if user was created
+    if(userData === null){
+      return res.json({success: false, sessionID: null})   
+    }
+
+    // get Session ID
+    const sessionID = await db.setSession(userData.insertId).token;
+
+    console.log('sessionID iS: ' + sessionID)
+
+    if(!sessionID){
+      return res.json({ success: false, sessionID: null}) 
+    }
+    else{
+      return res.json({ success: true, sessionID: sessionID}) 
+    }
+  }
+  catch (error){
+    console.log(error)
+    return res.json({success: false, sessionID: null})   
+  }
+
+});
+
+app.post("/api/google-signin", async (req, res) => {
+
+  try{
+    const data = req.body.data
 
     let values;
 
@@ -235,7 +291,6 @@ app.post("/api/register", async (req, res) => {
     const sql = 'INSERT INTO `User`(`ID`, `First Name`, `Last Name`, `Email`, `Google ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
     const success = db.saveData(sql, values);
-    console.log(success)
 
     return res.json({success}) 
 
@@ -265,3 +320,36 @@ app.post("/api/appointment", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+
+// constantly check for sessions
+setInterval(function(){
+   const sql ='DELETE FROM `Sessions` WHERE `Creation` < NOW() - INTERVAL 2 HOUR';
+
+  database = mysql.createConnection({
+    "database": "b9f34c5_OtimaWeb",
+    "user": "b9f34c5_Admin",
+    "password": "OTIMAWEB_admin",
+    "host": "198.46.91.127",
+    // "debug":true
+  });
+
+  database.connect(function(err) {
+    if(err){
+      console.error('error connecting: ' + err.stack);
+      return;
+    }
+    
+    else{
+      database.query(sql, (err) => {
+        if (err) {
+          console.log('failed')
+        } else {
+          console.log('clearing')
+        }
+      });
+      database.end();
+    }
+  }); 
+
+  },600000)

@@ -19,6 +19,13 @@
         gap: 20px;
         font-size: 20px;
 
+        & .failed{
+            color: rgb(205, 31, 31);
+            margin-block: 0;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
         & .input{
             position: relative;
             padding: 10px;
@@ -149,5 +156,12 @@
         font-size: 14px;
         color: rgb(87, 34, 130);
         cursor: pointer;
+    }
+
+    .invalid{
+        color: rgb(206, 33, 33);
+        margin-block: 0px;
+        font-weight: 600;
+        font-size: 14px;
     }
 }
