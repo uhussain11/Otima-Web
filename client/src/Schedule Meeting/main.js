@@ -17,7 +17,6 @@ function Main(){
 
     return(
         <section id='main'>
-            <a className='home-btn' href="/">Otima Web</a>
             <h1>Schedule Meeting</h1>
             {loggedIn? 
                 <form id='form'>
