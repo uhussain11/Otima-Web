@@ -3,12 +3,14 @@ require('dotenv').config();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 var nodemailer = require('nodemailer');
+const fs = require('fs');
+const {google} = require('googleapis');
 // var http = require('http');
 // var url = require('url');
-const fs = require('fs');
-const {google} = require('googleapis')
 // nodemon run 'nodemon ./server.js' for auto updates
 const db = require("./database.js")   
+var mysql = require('mysql');
+const crypto = require('crypto');
 
 const PORT = process.env.PORT || 9999;
 
@@ -25,7 +27,6 @@ var transporter = nodemailer.createTransport({
      pass: "850423Ab_INMOTION"
   }
 });
-var con;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -178,13 +179,124 @@ app.post("/api/text", async (req, res) => {
 });
 
 app.post("/api/login", async (req, res) => {
-  console.log(req.body.data)
+  try{
+    const data = req.body.credentials
+
+    const cryptPswrd = crypto.createHash('sha256').update(data.pswrd).digest('hex');
+  
+    const sql = `SELECT ID, 'First Name', Email, 'Last Name' FROM User WHERE Email = '${data.email}' AND Password = '${cryptPswrd}'`;
+  
+    const userData = await db.retrieveData(sql, true);
+
+    console.log(userData[0])
+
+    if(userData === null){
+      return res.json({ success: false, sessionID: null, newSession:false, user: null}) 
+    }
+    else{
+      const status =  await db.setSession(userData[0].ID);
+      // return sessionID and if it was updated or not
+
+      console.log(status);
+
+      return res.json({ success: true, sessionID: status.sessionID, newSession: status.new, user: userData[0]}) 
+    }
+  }
+  catch(err){
+    console.log(err)
+    return res.json({success: false}) 
+  }
+
+});
+
+app.post("/api/register", async (req, res) => {
 
   try{
     const data = req.body.data
 
-    // const response = await oAuth2Client.getToken(code)
-    // return res.json({response}) 
+    const cryptPswrd = crypto.createHash('sha256').update(data.pswrd).digest('hex');
+
+    const values = [
+      '',
+      `${data.fn}`,
+      `${data.ln}`,
+      `${data.email}`,
+      '',
+      `${cryptPswrd}`,
+      '',
+    ];
+  
+    const sql = "INSERT INTO `User`(`ID`, `First Name`, `Last Name`, `Email`, `Google ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)";
+
+    const userData = await db.saveData(sql, values);
+
+    // check if user was created
+    if(userData === null){
+      return res.json({success: false, sessionID: null})   
+    }
+
+    console.log('USERDATA iS: ')
+    console.log(userData)
+
+    // get Session ID
+    const session = await db.setSession(userData.insertId);
+
+    console.log('sessionID iS: ')
+    console.log(session.new)
+
+    if(!session.new){
+      return res.json({ success: false, sessionID: null}) 
+    }
+    else{
+      return res.json({ success: true, sessionID: session.sessionID}) 
+    }
+  }
+  catch (error){
+    console.log(error)
+    return res.json({success: false, sessionID: null})   
+  }
+
+});
+
+app.post("/api/google-signin", async (req, res) => {
+// Signin with google
+  try{
+    const data = req.body.data
+
+    let values;
+
+    if(data.googleID === null){
+      // manual register
+      values = [
+        '',
+        `${data.fn}`,
+        `${data.ln}`,
+        `${data.email}`,
+        '',
+        `${data.pswrd}`,
+        `NOW()`,
+        '',
+      ];
+    }
+    else{
+      // google register
+      values = [
+        '',
+        `${data.fn}`,
+        `${data.ln}`,
+        `${data.email}`,
+        `${data.googleID}`,
+        '',
+        '',
+        '',
+      ];
+    }
+  
+    const sql = 'INSERT INTO `User`(`ID`, `First Name`, `Last Name`, `Email`, `Google ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+
+    const success = db.saveData(sql, values);
+
+    return res.json({success}) 
 
   }
   catch (error){
@@ -196,6 +308,7 @@ app.post("/api/login", async (req, res) => {
 });
 
 app.post("/api/appointment", async (req, res) => {
+// Book appointment (send email to user with Zoom Link)
 
   try{
 
@@ -208,7 +321,51 @@ app.post("/api/appointment", async (req, res) => {
 
 });
 
+app.get("/api/sessionValidation", async (req, res) => {
+// check if session is valid or not
+  const sessionID = req.query.session;
+
+  const sql = `SELECT * FROM Sessions WHERE sessionID = '${sessionID}'`;
+
+  const response = await db.checkSession(sql);
+
+  return res.json({'success':response}) ;
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+
+// constantly check for expired sessions
+setInterval(function(){
+   const sql ='DELETE FROM `Sessions` WHERE `Creation` < NOW() - INTERVAL 2 HOUR';
+
+  database = mysql.createConnection({
+    "database": "b9f34c5_OtimaWeb",
+    "user": "b9f34c5_Admin",
+    "password": "OTIMAWEB_admin",
+    "host": "198.46.91.127",
+    // "debug":true
+  });
+
+  database.connect(function(err) {
+    if(err){
+      console.error('error connecting: ' + err.stack);
+      return;
+    }
+    
+    else{
+      database.query(sql, (err) => {
+        if (err) {
+          console.log('failed')
+        } else {
+          console.log('clearing')
+        }
+      });
+      database.end();
+    }
+  }); 
+
+  },600000)

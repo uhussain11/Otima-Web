@@ -2,7 +2,6 @@
 background: linear-gradient(to right,#2f1f48, 35%,#584082);
 height: 70px;
 width: 100vw;
-position: relative;
 position: fixed;
 display: grid;
 grid-template-columns: 1fr repeat(4, auto);

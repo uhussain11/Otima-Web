@@ -1,43 +1,27 @@
 #main{
-    z-index: 6;
+    z-index: 10;
+    height: calc(100% + 70px);
     height: 100%;
-    max-height: 80vh;
-    overflow: scroll;
     width: 100%;
+    margin-bottom: 50px ;
     background-color: rgb(238, 238, 248);
     display: flex;
     flex-direction: column;
     text-align: center;
     align-items: center;
 
-    & .home-btn{
-        text-decoration: none;
-        position: absolute;
-        left: 0;
-        border-bottom-right-radius: 10px;
-        top: 0;
-        font-size: 25px;
-        font-family: sans-serif;
-        font-weight: 600;
-        box-shadow: 0 0 10px rgba(98, 98, 98, 0.652);  
-        background-color: white;     
-        width: fit-content;
-        padding: 15px;
-        color:rgb(66, 37, 93);
-        transition: 200ms;
-        cursor: pointer;
-
-        &:hover{
-            padding-left:25px;
-            padding-top:25px;
-        }
-    }
-
     #form{
         justify-content: center;
         align-items: center;
+        background: linear-gradient(to top,#563F7D, #3A2E4E);
+        border-radius: 10px;
+        height: fit-content;
+        overflow: hidden;
+        padding: 5%;
+        box-shadow: 0 0 10px 0px black;
         
         & p{
+            color: whitesmoke;
             width: fit-content;
             margin-inline: auto;
         }
@@ -48,6 +32,7 @@
             font-size: 22px;
             font-weight:400;
             font-family: 'Outfit';
+            color: whitesmoke;
         }
 
         & .info{
@@ -66,17 +51,32 @@
             opacity: 0;
             animation: schedule-In 800ms ease 100ms 1 forwards;
     
-            /* & .react-calendar__tile, .react-calendar__month-view__days__day{
-            } */
+            & .react-calendar__tile, .react-calendar__month-view__days__day{
+                transition: 100ms;
+                font-family: 'Outfit';
+            }
     
             & .react-calendar__month-view__days{
                 display:flex;
                 flex-wrap: wrap;
     
                 & .react-calendar__tile:nth-child(7n-6), .react-calendar__tile:nth-child(7n-2), .react-calendar__tile:nth-child(7n-4){
-                    background-color: rgba(0, 0, 0, 0.439);
                     cursor:not-allowed;
                     pointer-events: none;
+                    color: rgb(235, 61, 61);
+                    
+                    & abbr{
+                        text-decoration: line-through;
+                    }
+                }
+
+                /* <button class="react-calendar__tile react-calendar__tile--active react-calendar__tile--range react-calendar__tile--rangeStart react-calendar__tile--rangeEnd react-calendar__tile--rangeBothEnds react-calendar__month-view__days__day react-calendar__month-view__days__day--weekend" type="button" style="flex: 0 0 14.285714%; overflow: hidden; margin-inline-end: 0px;"><abbr aria-label="27 January 2024">27</abbr></button> */
+                & .react-calendar__month-view__days__day--weekend{
+                    color: black;
+                }
+
+                & .react-calendar__tile--active{
+                    color: whitesmoke;
                 }
     
             }
@@ -117,10 +117,13 @@
             padding: 10px;
             padding-inline: 20px;
             border-radius: 10px;
+            opacity: 0;
+            animation: schedule-In2 800ms ease-out 450ms 1 forwards;
 
             & p{
                 font-family: 'Outfit';
                 height:fit-content ;
+                color: rgb(21, 21, 21);
                 margin: auto;
             }
 
@@ -146,9 +149,9 @@
          & .submit-btn{
             margin-inline: auto;
             width: fit-content;
-            background-color: rgb(107, 39, 159);
-            box-shadow: inset 0px -30px 0px 0px black;
-            color: whitesmoke;
+            background-color: rgb(131, 84, 168);
+            box-shadow: inset 0px -30px 0px 0px whitesmoke;
+            color: black;
             font-weight: 600;
             font-size: 18px;
             padding: 4px;
@@ -158,9 +161,12 @@
             cursor: pointer;
             transition: 200ms;
             margin-block: 20px;
-
+            opacity: 0;
+            animation: schedule-In 800ms ease-out 450ms 1 forwards;
+            
             &:hover{
-                box-shadow: inset 0px -2px 0px 0px black;
+                box-shadow: inset 0px 0px 0px 0px whitesmoke;
+                color: whitesmoke;
             }
          }
     }
@@ -168,7 +174,13 @@
     & h1{
         text-align: center;
         color: rgb(63, 24, 78);
-        font-size: 40px;
+        font-size: 32px;
+    }
+
+    & .schedule-acc{
+        color: rgb(44, 14, 55);
+        margin-top: 0px;
+        font-size: 22px;
     }
 }
 
@@ -176,6 +188,15 @@
 @keyframes schedule-In {
     0%{
         margin-top: 20%;
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes schedule-In2 {
+    0%{
         opacity: 0;
     }
     100%{

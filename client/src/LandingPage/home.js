@@ -7,10 +7,11 @@ import Section4 from './section4'
 import Section5 from './section5'
 import TextBox from './textbox'
 import './home.css'
+import { useCookies } from "react-cookie";
 
 function Home(){
     const [viewBox, setViewBox] = useState(false);
-    
+    const [cookies, setCookie] = useCookies(['SessionID']);
         
     window.addEventListener('scroll', onScroll);
     function onScroll(){
@@ -19,12 +20,12 @@ function Home(){
             if(window.scrollY >= showAt){
                     document.querySelector('.triangle').style.animationPlayState='running';
             }
-    
         }
     }
 
     function removeBubble(){
         document.querySelector('#const').style.display='none';
+        console.log(cookies)
     }
 
     function openTextBox(){
