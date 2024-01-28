@@ -1,6 +1,6 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import React, {useEffect} from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React from 'react';
 import Main from './LandingPage/home';
 import Service from './Services/main';
 import Career from './Career/main';
@@ -11,6 +11,9 @@ import About from './About/main';
 
 import Navbar from './constants/navbar';
 import Footer from './constants/footer';
+import DashBoard from './DashBoard/dashboard'
+import Signin from './DashBoard/signin'
+
 import { useCookies } from "react-cookie";
 
 function App() {
@@ -41,6 +44,8 @@ function App() {
           <Route path='/api' element={<Api/>} />
           <Route path='/about' element={<About/>} />
           <Route path='/application' element={<Application/>} />
+          <Route path='/Sign-in' element={<Signin/>} />
+          <Route path='/Dashboard' element={<DashBoard/>} />
           <Route path='/schedule-Meeting' element={<Meeting/>} />
         </Routes>
         <Footer/>

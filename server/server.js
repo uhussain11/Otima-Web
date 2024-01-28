@@ -235,16 +235,20 @@ app.post("/api/register", async (req, res) => {
       return res.json({success: false, sessionID: null})   
     }
 
+    console.log('USERDATA iS: ')
+    console.log(userData)
+
     // get Session ID
-    const sessionID = await db.setSession(userData.insertId).token;
+    const session = await db.setSession(userData.insertId);
 
-    console.log('sessionID iS: ' + sessionID)
+    console.log('sessionID iS: ')
+    console.log(session.new)
 
-    if(!sessionID){
+    if(!session.new){
       return res.json({ success: false, sessionID: null}) 
     }
     else{
-      return res.json({ success: true, sessionID: sessionID}) 
+      return res.json({ success: true, sessionID: session.sessionID}) 
     }
   }
   catch (error){
@@ -316,13 +320,54 @@ app.post("/api/appointment", async (req, res) => {
 
 });
 
+app.get("/api/sessionValidation", async (req, res) => {
+// check if session is valid if not redirect to signin
+const sessionID = req.query.session;
+const sql = `SELECT * FROM Sessions WHERE sessionID = '${sessionID}'`;
+
+  database = mysql.createConnection({
+    "database": "b9f34c5_OtimaWeb",
+    "user": "b9f34c5_Admin",
+    "password": "OTIMAWEB_admin",
+    "host": "198.46.91.127",
+    // "debug":true
+  });
+
+  database.connect(async (err) => {
+    if(err){
+      console.error('error connecting: ' + err.stack);
+      return;
+    }
+    
+    else{
+      database.query(sql, (err, results) => {
+        if (err) {
+          console.error(err)
+          database.end();
+          return res.json({'valid':false}) 
+        } 
+        else {
+          console.log(results)
+          if(results.length > 0){
+            database.end();
+            return res.json({'success':true}) 
+          }else{
+            database.end();
+            return res.json({'valid':false}) 
+          }
+        }
+      });
+    }
+  }); 
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
 
-// constantly check for sessions
+// constantly check for expired sessions
 setInterval(function(){
    const sql ='DELETE FROM `Sessions` WHERE `Creation` < NOW() - INTERVAL 2 HOUR';
 

@@ -2,16 +2,15 @@ import * as jose from 'jose'
 import './login.css'
 import React, {useState, useEffect} from 'react'
 import { useCookies } from "react-cookie";
+import { SERVER } from '../config';
 
-const SERVER = 'http://localhost:8080/api'
-
-function Login({loggedIn, setName, setLoggedIn}){
+function Login({ setName, setLoggedIn, showLogin}){
     const [fn, setFN] = useState('test')
     const [ln, setLN] = useState('test')
     const [email, setEmail] = useState('test')
     const [password, setPassword] = useState('test')
     const [confirmation, setConfirmation] = useState('test')
-    const [login, setLogin] = useState(false)
+    const [login, setLogin] = useState(showLogin)
     const [loading, setLoading] = useState(false)
 
     const [failedLogin, setFailedLogin] = useState(false);
@@ -19,17 +18,15 @@ function Login({loggedIn, setName, setLoggedIn}){
     const [cookies, setCookie] = useCookies(['SessionID']);
 
     useEffect(() =>{
-        if(!loggedIn){
-            window.google.accounts.id.initialize({
-                client_id: '131856816778-kgbf58dn5r2uql5fgdvmmrvcmb40ded4.apps.googleusercontent.com',
-                callback: responseGoogle
-              });
-              window.google.accounts.id.renderButton(
-                  document.getElementById('buttonDiv'),
-                  {theme: "filled", size: "large"}
-              )
-              window.google.accounts.id.prompt();
-        }
+        window.google.accounts.id.initialize({
+            client_id: '131856816778-kgbf58dn5r2uql5fgdvmmrvcmb40ded4.apps.googleusercontent.com',
+            callback: responseGoogle
+          });
+          window.google.accounts.id.renderButton(
+              document.getElementById('buttonDiv'),
+              {theme: "filled", size: "large"}
+          )
+          window.google.accounts.id.prompt();
       }, [window.onload]) 
 
     const responseGoogle = response =>{
@@ -83,9 +80,9 @@ function Login({loggedIn, setName, setLoggedIn}){
           })
           .then((res) => res.json())
           .then((data)=>{
-            console.log(data)
             if(data.success){
                 setLoggedIn(true);
+                setFailedLogin(false);
                 setCookie('SessionID', data.sessionID, { path: '/' });
             }
             else{
@@ -115,7 +112,8 @@ function Login({loggedIn, setName, setLoggedIn}){
           .then((res) => res.json())
           .then((data)=>{
             console.log(data)
-            if(data.success){
+            if(data.success && data.newSession){
+                setCookie('SessionID', data.sessionID, { path: '/' });
                 setLoggedIn(true);
             }
             else{
