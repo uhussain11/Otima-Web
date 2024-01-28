@@ -85,7 +85,7 @@ function setSession(userID){
     ];
 
   const update = `UPDATE Sessions SET Creation = CURRENT_TIMESTAMP WHERE user_id = ${userID}`;
-  const add = 'INSERT INTO `Sessions`(`user_id`, `token`, `Creation`) VALUES (?,?,NOW())';
+  const add = 'INSERT INTO `Sessions`(`user_id`, `sessionID`, `Creation`) VALUES (?,?,NOW())';
 
   database =  mysql.createConnection({
     "database": "b9f34c5_OtimaWeb",
@@ -137,10 +137,43 @@ function setSession(userID){
 });
 }
 
-function checkSession(userID){
-  // check to see if session is Still Valid
+function checkSession(sql){
+  return new Promise((resolve, reject) =>{
+    database = mysql.createConnection({
+      "database": "b9f34c5_OtimaWeb",
+      "user": "b9f34c5_Admin",
+      "password": "OTIMAWEB_admin",
+      "host": "198.46.91.127",
+      // "debug":true
+    });
+  
+    database.connect(async (err) => {
+      if(err){
+        console.error('error connecting: ' + err.stack);
+        reject(err);
+        database.end();
+      }
+      
+      else{
+        database.query(sql, (err, results) => {
+          if (err) {
+            resolve(false)
+            database.end();
+          } 
+          else {
+            if(results.length > 0){
+              resolve(true)
+              database.end();
+            }else{
+              resolve(false)
+              database.end();
 
-  // if not, logout
+            }
+          }
+        });
+      }
+    }); 
+  })
 }
 
-module.exports = { saveData, retrieveData, setSession };
+module.exports = { saveData, retrieveData, setSession, checkSession };

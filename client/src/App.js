@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import React from 'react';
 import Main from './LandingPage/home';
 import Service from './Services/main';
 import Career from './Career/main';
@@ -12,18 +11,36 @@ import About from './About/main';
 import Navbar from './constants/navbar';
 import Footer from './constants/footer';
 import DashBoard from './DashBoard/dashboard'
-import Signin from './DashBoard/signin'
+import Signin from './SignIn Page/signin'
 
 import { useCookies } from "react-cookie";
+import React, {useState, useEffect} from 'react'
+import { validSession } from './config';
 
 function App() {
   const [cookies, setCookie] = useCookies(['terms']);
+  const [loggedIn, setLoggedIn] = useState(null);
 
   function accept(){
     document.getElementById('cookies').style.animation = 'cookie-remove 600ms ease 0s 1 forwards';
     setTimeout(() => {
       setCookie('terms', true);
     }, 600);  }
+
+    useEffect(() => {
+      async function validateSession() {
+        console.log('loading')
+        try {
+            const isValid = await validSession();
+            setLoggedIn(isValid);
+        } catch (error) {
+            console.error('Error validating session:', error);
+            setLoggedIn(false);
+        }
+        console.log('loaded')
+      }
+      validateSession();
+    }, []); 
   
   return (
     <>
@@ -36,8 +53,10 @@ function App() {
           </div>:
           null
       }
-        <Navbar/>
+        <Navbar loggedInn={loggedIn}/>
         <Routes>
+          {loggedIn ? <Route path='/Dashboard' element={<DashBoard/>} />: <Route path='/Dashboard' element={<Navigate to='/SignIn' />} />}
+          <Route path='/schedule-Meeting' element={<Meeting loggedInn={loggedIn} />}  />
           <Route path='/' element={<Main/>} />
           <Route path='/services' element={<Service/>} />
           <Route path='/career' element={<Career/>} />
@@ -45,8 +64,6 @@ function App() {
           <Route path='/about' element={<About/>} />
           <Route path='/application' element={<Application/>} />
           <Route path='/Sign-in' element={<Signin/>} />
-          <Route path='/Dashboard' element={<DashBoard/>} />
-          <Route path='/schedule-Meeting' element={<Meeting/>} />
         </Routes>
         <Footer/>
       </Router>

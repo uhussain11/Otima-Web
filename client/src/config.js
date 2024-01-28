@@ -6,19 +6,23 @@ async function validSession(){
     const sessionID = Cookies.get('SessionID')
     const url = new URL(`${SERVER}/sessionValidation/`);
     url.searchParams.append('session', sessionID);
-
-    await fetch(url, {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
-    .then((res) => res.json())
-    .then((data)=>{
+    
+    try {
+        const response = await fetch(url, {
+          method: 'GET',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+    
+        const data = await response.json();
         console.log(data)
-        return true;
-    });
+        return data.success;
+      } catch (error) {
+        console.error('Error during session validation:', error);
+        return false;
+      }
   }
 
 export {SERVER, validSession};

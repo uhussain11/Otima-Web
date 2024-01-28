@@ -259,7 +259,7 @@ app.post("/api/register", async (req, res) => {
 });
 
 app.post("/api/google-signin", async (req, res) => {
-
+// Signin with google
   try{
     const data = req.body.data
 
@@ -308,6 +308,7 @@ app.post("/api/google-signin", async (req, res) => {
 });
 
 app.post("/api/appointment", async (req, res) => {
+// Book appointment (send email to user with Zoom Link)
 
   try{
 
@@ -321,44 +322,14 @@ app.post("/api/appointment", async (req, res) => {
 });
 
 app.get("/api/sessionValidation", async (req, res) => {
-// check if session is valid if not redirect to signin
-const sessionID = req.query.session;
-const sql = `SELECT * FROM Sessions WHERE sessionID = '${sessionID}'`;
+// check if session is valid or not
+  const sessionID = req.query.session;
 
-  database = mysql.createConnection({
-    "database": "b9f34c5_OtimaWeb",
-    "user": "b9f34c5_Admin",
-    "password": "OTIMAWEB_admin",
-    "host": "198.46.91.127",
-    // "debug":true
-  });
+  const sql = `SELECT * FROM Sessions WHERE sessionID = '${sessionID}'`;
 
-  database.connect(async (err) => {
-    if(err){
-      console.error('error connecting: ' + err.stack);
-      return;
-    }
-    
-    else{
-      database.query(sql, (err, results) => {
-        if (err) {
-          console.error(err)
-          database.end();
-          return res.json({'valid':false}) 
-        } 
-        else {
-          console.log(results)
-          if(results.length > 0){
-            database.end();
-            return res.json({'success':true}) 
-          }else{
-            database.end();
-            return res.json({'valid':false}) 
-          }
-        }
-      });
-    }
-  }); 
+  const response = await db.checkSession(sql);
+
+  return res.json({'success':response}) ;
 });
 
 

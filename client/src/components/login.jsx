@@ -4,7 +4,10 @@ import React, {useState, useEffect} from 'react'
 import { useCookies } from "react-cookie";
 import { SERVER } from '../config';
 
-function Login({ setName, setLoggedIn, showLogin}){
+// setoggedIn, usetate to tell if login successful or not
+// showLogin show register or login page first
+// navigate, where to go upon login in
+function Login({ setLoggedIn, showLogin, navigate}){
     const [fn, setFN] = useState('test')
     const [ln, setLN] = useState('test')
     const [email, setEmail] = useState('test')
@@ -33,10 +36,7 @@ function Login({ setName, setLoggedIn, showLogin}){
         try{
             setLoading(true);
             const code = response;
-
             const data = jose.decodeJwt(code.credential)
-            console.log(data)
-            setName(data.name);
 
             fetch(`${SERVER}/google-signin/`, {
                 method: 'POST',
@@ -48,9 +48,10 @@ function Login({ setName, setLoggedIn, showLogin}){
               })
               .then((res) => res.json())
               .then((data)=>{
-                setLoggedIn(true);
                 console.log(data)
-                setCookie('SessionID', 12345678);
+                if(data.success){
+                    setLoggedIn(true);
+                }
               });
         }
         catch{
@@ -84,6 +85,7 @@ function Login({ setName, setLoggedIn, showLogin}){
                 setLoggedIn(true);
                 setFailedLogin(false);
                 setCookie('SessionID', data.sessionID, { path: '/' });
+                window.location.href = `${navigate}`;
             }
             else{
                 setFailedLogin(true);
@@ -115,6 +117,7 @@ function Login({ setName, setLoggedIn, showLogin}){
             if(data.success && data.newSession){
                 setCookie('SessionID', data.sessionID, { path: '/' });
                 setLoggedIn(true);
+                window.location.href = `${navigate}`;
             }
             else{
                 setFailedLogin(true);
