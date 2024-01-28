@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import React, {useEffect} from 'react';
 import Main from './LandingPage/home';
 import Service from './Services/main';
@@ -11,7 +11,11 @@ import About from './About/main';
 
 import Navbar from './constants/navbar';
 import Footer from './constants/footer';
+import DashBoard from './DashBoard/dashboard'
+import Signin from './DashBoard/signin'
+
 import { useCookies } from "react-cookie";
+import { SERVER, validSession } from './config';
 
 function App() {
   const [cookies, setCookie] = useCookies(['terms']);
@@ -41,8 +45,21 @@ function App() {
           <Route path='/api' element={<Api/>} />
           <Route path='/about' element={<About/>} />
           <Route path='/application' element={<Application/>} />
-          <Route path='/schedule-Meeting' element={<Meeting/>} />
         </Routes>
+        {/* Signed in vs not signed in */}
+        {validSession(cookies.SessionID) ? 
+          <Routes>
+            <Route path='/Dashboard' element={<DashBoard/>} />
+            <Route path='/schedule-Meeting' element={<Meeting validated={true}/>} />
+
+          </Routes>
+          : 
+          <Routes>
+            <Route path='/Sign-in' element={<Signin/>} />
+            <Route path='/Dashboard' element={<Navigate to='/sign-in' />} />
+            <Route path='/schedule-Meeting' element={<Meeting/>} />
+          </Routes>
+          }
         <Footer/>
       </Router>
     </>

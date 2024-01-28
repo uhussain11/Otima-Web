@@ -235,16 +235,20 @@ app.post("/api/register", async (req, res) => {
       return res.json({success: false, sessionID: null})   
     }
 
+    console.log('USERDATA iS: ')
+    console.log(userData)
+
     // get Session ID
-    const sessionID = await db.setSession(userData.insertId).token;
+    const session = await db.setSession(userData.insertId);
 
-    console.log('sessionID iS: ' + sessionID)
+    console.log('sessionID iS: ')
+    console.log(session.new)
 
-    if(!sessionID){
+    if(!session.new){
       return res.json({ success: false, sessionID: null}) 
     }
     else{
-      return res.json({ success: true, sessionID: sessionID}) 
+      return res.json({ success: true, sessionID: session.sessionID}) 
     }
   }
   catch (error){
@@ -313,6 +317,22 @@ app.post("/api/appointment", async (req, res) => {
   }
 
   return res.json({'success':true}) 
+
+});
+
+app.get("/api/sessionValidation", async (req, res) => {
+// check if session is valid if not redirect to signin
+const session = req.query.session;
+
+  try{
+    console.log('Validating')
+
+  }
+  catch (error){
+    console.log(error)
+  }
+
+  return res.json({'valid':true}) 
 
 });
 
