@@ -322,18 +322,43 @@ app.post("/api/appointment", async (req, res) => {
 
 app.get("/api/sessionValidation", async (req, res) => {
 // check if session is valid if not redirect to signin
-const session = req.query.session;
+const sessionID = req.query.session;
+const sql = `SELECT * FROM Sessions WHERE sessionID = '${sessionID}'`;
 
-  try{
-    console.log('Validating')
+  database = mysql.createConnection({
+    "database": "b9f34c5_OtimaWeb",
+    "user": "b9f34c5_Admin",
+    "password": "OTIMAWEB_admin",
+    "host": "198.46.91.127",
+    // "debug":true
+  });
 
-  }
-  catch (error){
-    console.log(error)
-  }
-
-  return res.json({'valid':true}) 
-
+  database.connect(async (err) => {
+    if(err){
+      console.error('error connecting: ' + err.stack);
+      return;
+    }
+    
+    else{
+      database.query(sql, (err, results) => {
+        if (err) {
+          console.error(err)
+          database.end();
+          return res.json({'valid':false}) 
+        } 
+        else {
+          console.log(results)
+          if(results.length > 0){
+            database.end();
+            return res.json({'success':true}) 
+          }else{
+            database.end();
+            return res.json({'valid':false}) 
+          }
+        }
+      });
+    }
+  }); 
 });
 
 
@@ -342,7 +367,7 @@ app.listen(PORT, () => {
 });
 
 
-// constantly check for sessions
+// constantly check for expired sessions
 setInterval(function(){
    const sql ='DELETE FROM `Sessions` WHERE `Creation` < NOW() - INTERVAL 2 HOUR';
 

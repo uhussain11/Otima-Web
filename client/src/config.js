@@ -1,12 +1,13 @@
+import Cookies from 'js-cookie';
+
 const SERVER = 'http://localhost:8080/api'
 
-async function validSession({sessionID}){
+async function validSession(){
+    const sessionID = Cookies.get('SessionID')
     const url = new URL(`${SERVER}/sessionValidation/`);
     url.searchParams.append('session', sessionID);
 
-    console.log('VALIDAION CHECK')
-
-    fetch(url, {
+    await fetch(url, {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -15,7 +16,8 @@ async function validSession({sessionID}){
     })
     .then((res) => res.json())
     .then((data)=>{
-      return data.valid
+        console.log(data)
+        return true;
     });
   }
 

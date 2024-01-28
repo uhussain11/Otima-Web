@@ -2,11 +2,27 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './main.css'
 import Login from '../components/login'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import { validSession } from '../config';
 
-function Main(validated){
+function Main(){
     const [date, changeDate] = useState(new Date());
-    const [loggedIn, setLoggedIn] = useState(validated)
+    const [loggedIn, setLoggedIn] = useState(null)
+
+    useEffect(() => {
+      async function validateSession() {
+        try {
+          const isValid = await validSession();
+          setLoggedIn(isValid);
+        } catch (error) {
+          console.error('Error validating session:', error);
+          setLoggedIn(false);
+        }
+      }
+  
+      validateSession();
+    }, []); 
+  
 
     function changeValue(val) {
         changeDate(val);
