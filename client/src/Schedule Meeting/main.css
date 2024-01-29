@@ -138,6 +138,7 @@
             & input{
                 height:fit-content ;
                 margin: auto;
+                font-size: 18px;
                 border: none;
                 background-color: whitesmoke;
             }

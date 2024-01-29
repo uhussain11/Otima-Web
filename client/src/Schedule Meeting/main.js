@@ -32,7 +32,8 @@ function Main({loggedInn}){
                         <select name="timeZone" id="timezone"> 
                             <option value="EST">EST</option>
                             <option value="ECT">ECT</option>
-                            <option value="PST">PST</option>                                        <option value="UTC">UTC</option>
+                            <option value="PST">PST</option>                                        
+                            <option value="UTC">UTC</option>
                             <option value="EST">EST</option>
                         </select>
                     </div>
