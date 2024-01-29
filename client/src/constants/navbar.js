@@ -35,7 +35,7 @@ function Navbar({loggedInn}){
                 if(data.success){
                     localStorage.setItem('loggedOut', 'true');
                     setLoggedOutAlert(true);
-                    removeCookie("sessionID");
+                    setCookie('SessionID', null, { path: '/' });
                     window.location.href = `/`;
                 }
               });

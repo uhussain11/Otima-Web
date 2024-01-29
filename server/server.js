@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 9999;
 
 const app = express();
 
-const oAuth2Client = new google.auth.OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, process.env.GOOGLE_REDIRECT)
+// const oAuth2Client = new google.auth.OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, process.env.GOOGLE_REDIRECT)
 
 var transporter = nodemailer.createTransport({
   host: "ecngx348.inmotionhosting.com",
@@ -31,6 +31,8 @@ var transporter = nodemailer.createTransport({
 app.use(cors());
 app.use(bodyParser.json());
 
+
+// handles Registering users
 async function register(sql, values){
   const userData = await db.saveData(sql, values);
 
@@ -45,6 +47,7 @@ async function register(sql, values){
   return session;
 }
 
+// handles logging in users
 async function login(sql){
   const userData = await db.retrieveData(sql, true);
 
@@ -206,8 +209,8 @@ app.post("/api/text", async (req, res) => {
 
 });
 
-// login users, returns sessionID
 app.post("/api/login", async (req, res) => {
+  // returns sessionID or failed attempt to login
   try{
     const data = req.body.credentials
 
@@ -243,7 +246,7 @@ app.post("/api/register", async (req, res) => {
       '',
     ];
   
-    const sql = "INSERT INTO `User`(`ID`, `First Name`, `Last Name`, `Email`, `Google ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)";
+    const sql = "INSERT INTO `User`(`ID`, `First_Name`, `Last_Name`, `Email`, `Google_ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)";
 
     const session = await register(sql, values);
 
@@ -276,10 +279,12 @@ app.post("/api/google-signin", async (req, res) => {
       '',
     ];
   
-    const loginSQL = `SELECT ID, 'First Name', Email, 'Last Name' FROM User WHERE 'Google ID' = '${data.sub}' `;
-    const registerSQL = 'INSERT INTO `User`(`ID`, `First Name`, `Last Name`, `Email`, `Google ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)';
+    const loginSQL = `SELECT ID, 'First Name', Email, 'Last Name' FROM User WHERE Google_ID = '${data.sub}' `;
+    const registerSQL = 'INSERT INTO `User`(`ID`, `First_Name`, `Last_Name`, `Email`, `Google_ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)';
 
     const loginResult  = await login(loginSQL);
+
+
 
     if(loginResult.success){
       return res.json(loginResult)

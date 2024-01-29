@@ -29,7 +29,6 @@ function App() {
 
     useEffect(() => {
       async function validateSession() {
-        console.log('loading')
         try {
             const isValid = await validSession();
             setLoggedIn(isValid);
@@ -37,7 +36,6 @@ function App() {
             console.error('Error validating session:', error);
             setLoggedIn(false);
         }
-        console.log('loaded')
       }
       validateSession();
     }, []); 

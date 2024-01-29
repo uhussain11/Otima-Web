@@ -7,7 +7,7 @@ import { SERVER } from '../config';
 // setoggedIn, usetate to tell if login successful or not
 // showLogin show register or login page first
 // navigate, where to go upon login in
-function Login({ setLoggedIn, showLogin, navigate}){
+function Login({ setLoggedIn, showLogin, navigate, loggedIn}){
     const [fn, setFN] = useState('test')
     const [ln, setLN] = useState('test')
     const [email, setEmail] = useState('test')
@@ -21,15 +21,18 @@ function Login({ setLoggedIn, showLogin, navigate}){
     const [cookies, setCookie] = useCookies(['SessionID']);
 
     useEffect(() =>{
-        window.google.accounts.id.initialize({
-            client_id: '131856816778-kgbf58dn5r2uql5fgdvmmrvcmb40ded4.apps.googleusercontent.com',
-            callback: responseGoogle
-          });
-          window.google.accounts.id.renderButton(
-              document.getElementById('buttonDiv'),
-              {theme: "filled", size: "large"}
-          )
-          window.google.accounts.id.prompt();
+        console.log(cookies.SessionID)
+        if(cookies.SessionID === undefined || cookies.SessionID === null){
+            window.google.accounts.id.initialize({
+                client_id: '131856816778-kgbf58dn5r2uql5fgdvmmrvcmb40ded4.apps.googleusercontent.com',
+                callback: responseGoogle
+              });
+              window.google.accounts.id.renderButton(
+                  document.getElementById('buttonDiv'),
+                  {theme: "filled", size: "large"}
+              )
+              window.google.accounts.id.prompt();
+        }
       }, [window.onload]) 
 
     const responseGoogle = response =>{
@@ -54,6 +57,9 @@ function Login({ setLoggedIn, showLogin, navigate}){
                     setFailedLogin(false);
                     setCookie('SessionID', data.sessionID, { path: '/' });
                     window.location.href = `${navigate}`;
+                }
+                else{
+                    setFailedLogin(true);
                 }
               });
         }
@@ -92,6 +98,7 @@ function Login({ setLoggedIn, showLogin, navigate}){
             }
             else{
                 setFailedLogin(true);
+                setCookie('SessionID', null, { path: '/' });
             }
           });
           
@@ -124,6 +131,7 @@ function Login({ setLoggedIn, showLogin, navigate}){
             }
             else{
                 setFailedLogin(true);
+                setCookie('SessionID', null, { path: '/' });
             }
           });
           
@@ -173,7 +181,7 @@ function Login({ setLoggedIn, showLogin, navigate}){
                     <input type="submit" onClick={(e) =>register} value='Register' className='submit-btn' />
                 </form>}
             <div className='alternate'><dl className='line'></dl> or <dl className='line'></dl></div>
-            <div id='buttonDiv'></div>
+            {!loggedIn && <div id='buttonDiv'></div>}
             <a className='swap' onClick={()=>{setLogin(!login)}}> {!login ? 'Already have an Account? Login': 'Dont Have an Account? Create one'}</a>
         </section>
     )
