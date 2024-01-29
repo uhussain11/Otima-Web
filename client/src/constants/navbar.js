@@ -7,7 +7,7 @@ import Alert from '../components/alert';
 
 function Navbar({loggedInn}){
     const [cookies, setCookie, removeCookie] = useCookies(["sessionID"]);
-    const [loggedOut, setLoggedOut] = useState(false)
+    const [loggedOutAlert, setLoggedOutAlert] = useState(false)
 
     useEffect(() => {
         const isLoggedOut = localStorage.getItem('loggedOut');
@@ -15,7 +15,7 @@ function Navbar({loggedInn}){
         if (isLoggedOut) {
           localStorage.removeItem('loggedOut');
           
-          setLoggedOut(true);
+          setLoggedOutAlert(true);
         }
       }, []);
 
@@ -34,7 +34,7 @@ function Navbar({loggedInn}){
                 console.log(data)
                 if(data.success){
                     localStorage.setItem('loggedOut', 'true');
-                    setLoggedOut(true);
+                    setLoggedOutAlert(true);
                     removeCookie("sessionID");
                     window.location.href = `/`;
                 }
@@ -48,16 +48,16 @@ function Navbar({loggedInn}){
 
     return(
         <div className='navigation-container'>
-            {loggedOut? <Alert message={'Successfully Logged Out'}/>:null}
+            {loggedOutAlert? <Alert message={'Successfully Logged Out'}/>:null}
             {loggedInn?
             <section id='navbar-logged-in'>
                 <Link className='btn-container-logout' to={'/'} onClick={logout}>
                     <p className='nav-btn' >LogOut</p>
                 </Link>
-                <div className='title-container'>
-                    <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link>
-                    {/* <img src="./logo.png" alt="" /> */}
-                </div>
+                <Link className='title-container' to={'/'}>
+                    {/* <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link> */}
+                    <img className='nav-btn' src="./logo.png" alt="" />
+                </Link>
                 <Link className='btn-container' to={'/api'}>
                     <p className='nav-btn' >API's</p>
                 </Link>
@@ -67,25 +67,26 @@ function Navbar({loggedInn}){
                 <Link className='btn-container' to={'/career'}>
                     <p className='nav-btn'>Career</p>
                 </Link>
-                <div className='about-container' >
+                <div className='symbol-container' >
                     <Link className='nav-btn' to={'/dashboard'}><span class="material-symbols-outlined">dashboard</span></Link>
                 </div>
             </section>:
                 <section id='navbar'>
-                    <div className='title-container'>
-                        <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link>
-                        </div>
-                        <Link className='btn-container' to={'/api'}>
-                            <p className='nav-btn' >API's</p>
-                        </Link>
-                        <Link className='btn-container' to={'/services'}>
-                            <p className='nav-btn' >Services</p>
-                        </Link>
-                        <Link className='btn-container' to={'/career'}>
-                            <p className='nav-btn'>Career</p>
-                        </Link>
-                        <div className='about-container' >
-                            <Link className='nav-btn' to={'/about'}>About Us</Link>
+                    <Link className='title-container' to={'/'}>
+                    {/* <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link> */}
+                        <img className='nav-btn' src="./logo.png" alt="" />
+                    </Link>
+                    <Link className='btn-container' to={'/api'}>
+                        <p className='nav-btn' >API's</p>
+                    </Link>
+                    <Link className='btn-container' to={'/services'}>
+                        <p className='nav-btn' >Services</p>
+                    </Link>
+                    <Link className='btn-container' to={'/career'}>
+                        <p className='nav-btn'>Career</p>
+                    </Link>
+                    <div className='symbol-container' >
+                        <Link className='nav-btn' to={'/Sign-in'}> <span class="material-symbols-outlined">person</span></Link>
                     </div>
                 </section>
             }

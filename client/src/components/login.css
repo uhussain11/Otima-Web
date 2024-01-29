@@ -163,6 +163,7 @@
     .invalid{
         color: rgb(206, 33, 33);
         margin-block: 0px;
+        margin-inline: auto;
         font-weight: 600;
         font-size: 14px;
     }

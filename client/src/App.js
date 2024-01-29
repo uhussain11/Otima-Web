@@ -55,7 +55,7 @@ function App() {
       }
         <Navbar loggedInn={loggedIn}/>
         <Routes>
-          {loggedIn ? <Route path='/Dashboard' element={<DashBoard/>} />: <Route path='/Dashboard' element={<Navigate to='/SignIn' />} />}
+          {loggedIn ? <Route path='/Dashboard' element={<DashBoard/>} />: <Route path='/Dashboard' element={<Navigate to='/Sign-in' />} />}
           <Route path='/schedule-Meeting' element={<Meeting loggedInn={loggedIn} />}  />
           <Route path='/' element={<Main/>} />
           <Route path='/services' element={<Service/>} />
@@ -63,7 +63,7 @@ function App() {
           <Route path='/api' element={<Api/>} />
           <Route path='/about' element={<About/>} />
           <Route path='/application' element={<Application/>} />
-          <Route path='/Sign-in' element={<Signin/>} />
+          <Route path='/Sign-in' element={loggedIn ? <Navigate to='/Dashboard'/> : <Signin/>} />
         </Routes>
         <Footer/>
       </Router>
