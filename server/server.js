@@ -31,6 +31,34 @@ var transporter = nodemailer.createTransport({
 app.use(cors());
 app.use(bodyParser.json());
 
+async function register(sql, values){
+  const userData = await db.saveData(sql, values);
+
+  // check if user was created
+  if(userData === null){
+    return res.json({success: false, sessionID: null})   
+  }
+
+  // get Session ID
+  const session = await db.setSession(userData.insertId, null);
+
+  return session;
+}
+
+async function login(sql){
+  const userData = await db.retrieveData(sql, true);
+
+    if(userData === null){
+      return ({ success: false, sessionID: null, newSession:false, user: null}) 
+    }
+    else{
+      const status =  await db.setSession(userData[0].ID, null);
+      // return sessionID and if it was updated or not
+
+      return ({ success: true, sessionID: status.sessionID, newSession: status.new, user: userData[0]}) 
+    }
+}
+
 app.post("/api/interest", async (req, res) => {
   const data = req.body.data; // This will contain the JSON data sent in the request
 
@@ -187,17 +215,9 @@ app.post("/api/login", async (req, res) => {
   
     const sql = `SELECT ID, 'First Name', Email, 'Last Name' FROM User WHERE Email = '${data.email}' AND Password = '${cryptPswrd}'`;
   
-    const userData = await db.retrieveData(sql, true);
+    const result  = await login(sql);
 
-    if(userData === null){
-      return res.json({ success: false, sessionID: null, newSession:false, user: null}) 
-    }
-    else{
-      const status =  await db.setSession(userData[0].ID);
-      // return sessionID and if it was updated or not
-
-      return res.json({ success: true, sessionID: status.sessionID, newSession: status.new, user: userData[0]}) 
-    }
+    return res.json(result);
   }
   catch(err){
     console.log(err)
@@ -225,21 +245,7 @@ app.post("/api/register", async (req, res) => {
   
     const sql = "INSERT INTO `User`(`ID`, `First Name`, `Last Name`, `Email`, `Google ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)";
 
-    const userData = await db.saveData(sql, values);
-
-    // check if user was created
-    if(userData === null){
-      return res.json({success: false, sessionID: null})   
-    }
-
-    console.log('USERDATA iS: ')
-    console.log(userData)
-
-    // get Session ID
-    const session = await db.setSession(userData.insertId);
-
-    console.log('sessionID iS: ')
-    console.log(session.new)
+    const session = await register(sql, values);
 
     if(!session.new){
       return res.json({ success: false, sessionID: null}) 
@@ -260,41 +266,34 @@ app.post("/api/google-signin", async (req, res) => {
   try{
     const data = req.body.data
 
-    let values;
+    const values = [
+      '',
+      `${data.given_name}`,
+      `${data.family_name}`,
+      `${data.email}`,
+      `${data.sub}`,
+      ``,
+      '',
+    ];
+  
+    const loginSQL = `SELECT ID, 'First Name', Email, 'Last Name' FROM User WHERE 'Google ID' = '${data.sub}' `;
+    const registerSQL = 'INSERT INTO `User`(`ID`, `First Name`, `Last Name`, `Email`, `Google ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)';
 
-    if(data.googleID === null){
-      // manual register
-      values = [
-        '',
-        `${data.fn}`,
-        `${data.ln}`,
-        `${data.email}`,
-        '',
-        `${data.pswrd}`,
-        `NOW()`,
-        '',
-      ];
+    const loginResult  = await login(loginSQL);
+
+    if(loginResult.success){
+      return res.json(loginResult)
     }
     else{
-      // google register
-      values = [
-        '',
-        `${data.fn}`,
-        `${data.ln}`,
-        `${data.email}`,
-        `${data.googleID}`,
-        '',
-        '',
-        '',
-      ];
+      const session = await register(registerSQL, values);
+
+      if(!session.new){
+        return res.json({ success: false, sessionID: null}) 
+      }
+      else{
+        return res.json({ success: true, sessionID: session.sessionID}) 
+      }
     }
-  
-    const sql = 'INSERT INTO `User`(`ID`, `First Name`, `Last Name`, `Email`, `Google ID`, `Password`, `Account Creation`, `Business`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-
-    const success = db.saveData(sql, values);
-
-    return res.json({success}) 
-
   }
   catch (error){
     console.log(error)

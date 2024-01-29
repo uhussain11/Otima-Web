@@ -51,6 +51,9 @@ function Login({ setLoggedIn, showLogin, navigate}){
                 console.log(data)
                 if(data.success){
                     setLoggedIn(true);
+                    setFailedLogin(false);
+                    setCookie('SessionID', data.sessionID, { path: '/' });
+                    window.location.href = `${navigate}`;
                 }
               });
         }

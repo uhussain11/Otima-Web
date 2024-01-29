@@ -69,12 +69,19 @@ function retrieveData(sql) {
   });
 }
 
-function setSession(userID){
+function setSession(userID, newSessionID){
   // update session value if valid, create new one if not
   return new Promise((resolve, reject) => {
-  const token = randomstring.generate(40);
+  let token;
 
-  values = [
+  if(newSessionID === null){
+    token = randomstring.generate(40);
+  }else{
+    token = newSessionID;
+  }
+
+
+  const values = [
     `${userID}`,
     `${token}`
     ];
@@ -105,7 +112,7 @@ function setSession(userID){
 
         } else {
           if(results.changedRows >=1){
-            resolve({new:false, sessionID:null})
+            resolve({new:false, sessionID:token})
             database.end();
           }
           else{
