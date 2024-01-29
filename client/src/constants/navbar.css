@@ -109,6 +109,11 @@ z-index: 5;
 
 }
 
+.navigation-container{
+    position: relative;
+    height: fit-content;
+}
+
 #navbar-logged-in{
     background: linear-gradient(to right,#2f1f48, 35%,#584082);
     height: 70px;

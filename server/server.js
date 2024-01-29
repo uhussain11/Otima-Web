@@ -178,6 +178,7 @@ app.post("/api/text", async (req, res) => {
 
 });
 
+// login users, returns sessionID
 app.post("/api/login", async (req, res) => {
   try{
     const data = req.body.credentials
@@ -188,16 +189,12 @@ app.post("/api/login", async (req, res) => {
   
     const userData = await db.retrieveData(sql, true);
 
-    console.log(userData[0])
-
     if(userData === null){
       return res.json({ success: false, sessionID: null, newSession:false, user: null}) 
     }
     else{
       const status =  await db.setSession(userData[0].ID);
       // return sessionID and if it was updated or not
-
-      console.log(status);
 
       return res.json({ success: true, sessionID: status.sessionID, newSession: status.new, user: userData[0]}) 
     }
@@ -332,8 +329,13 @@ app.get("/api/sessionValidation", async (req, res) => {
   return res.json({'success':response}) ;
 });
 
-app.post("/api/logout", async (req, res) =>{
-  const sessionID = req.sessionID;
+app.delete("/api/logout", async (req, res) =>{
+  const sessionID = req.body.sessionID;
+
+  //  delete session
+  const success = await db.deleteSession(sessionID);
+
+  return res.json({success: success})
 });
 
 

@@ -1,31 +1,44 @@
 import { Link } from 'react-router-dom'
 import './navbar.css'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useCookies } from "react-cookie";
 import { SERVER } from '../config';
+import Alert from '../components/alert';
 
 function Navbar({loggedInn}){
     const [cookies, setCookie, removeCookie] = useCookies(["sessionID"]);
+    const [loggedOut, setLoggedOut] = useState(false)
+
+    useEffect(() => {
+        const isLoggedOut = localStorage.getItem('loggedOut');
+        
+        if (isLoggedOut) {
+          localStorage.removeItem('loggedOut');
+          
+          setLoggedOut(true);
+        }
+      }, []);
 
     function logout(){
-        const sessionID = cookies.SessionID;
         try{
-
-        //     fetch(`${SERVER}/google-signin/`, {
-        //         method: 'POST',
-        //         mode: 'cors',
-        //         headers: {
-        //           'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({sessionID: sessionID})
-        //       })
-        //       .then((res) => res.json())
-        //       .then((data)=>{
-        //         console.log(data)
-        //         if(data.success){
-        //             setLoggedIn(true);
-        //         }
-        //       });
+            fetch(`${SERVER}/logout`, {
+                method: 'DELETE',
+                mode: 'cors',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({sessionID: cookies.SessionID})
+              })
+              .then((res) => res.json())
+              .then((data)=>{
+                console.log(data)
+                if(data.success){
+                    localStorage.setItem('loggedOut', 'true');
+                    setLoggedOut(true);
+                    removeCookie("sessionID");
+                    window.location.href = `/`;
+                }
+              });
         }
         catch{
             alert("Something went wrong on our end. Please try again later")
@@ -33,53 +46,51 @@ function Navbar({loggedInn}){
         }
     }
 
-    if(loggedInn){
-        return(
+    return(
+        <div className='navigation-container'>
+            {loggedOut? <Alert message={'Successfully Logged Out'}/>:null}
+            {loggedInn?
             <section id='navbar-logged-in'>
-            <Link className='btn-container-logout' to={'/'} onClick={logout}>
-                <p className='nav-btn' >LogOut</p>
-            </Link>
-            <div className='title-container'>
-                <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link>
-                {/* <img src="./logo.png" alt="" /> */}
-            </div>
-            <Link className='btn-container' to={'/api'}>
-                <p className='nav-btn' >API's</p>
-            </Link>
-            <Link className='btn-container' to={'/services'}>
-                <p className='nav-btn' >Services</p>
-            </Link>
-            <Link className='btn-container' to={'/career'}>
-                <p className='nav-btn'>Career</p>
-            </Link>
-            <div className='about-container' >
-                <Link className='nav-btn' to={'/dashboard'}><span class="material-symbols-outlined">dashboard</span></Link>
-            </div>
-        </section>
-        )
-    }
-    else{
-        return(
-            <section id='navbar'>
-            <div className='title-container'>
-                <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link>
-                {/* <img src="./logo.png" alt="" /> */}
-            </div>
-            <Link className='btn-container' to={'/api'}>
-                <p className='nav-btn' >API's</p>
-            </Link>
-            <Link className='btn-container' to={'/services'}>
-                <p className='nav-btn' >Services</p>
-            </Link>
-            <Link className='btn-container' to={'/career'}>
-                <p className='nav-btn'>Career</p>
-            </Link>
-            <div className='about-container' >
-                <Link className='nav-btn' to={'/about'}>About Us</Link>
-            </div>
-        </section>
-        )
-    }
+                <Link className='btn-container-logout' to={'/'} onClick={logout}>
+                    <p className='nav-btn' >LogOut</p>
+                </Link>
+                <div className='title-container'>
+                    <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link>
+                    {/* <img src="./logo.png" alt="" /> */}
+                </div>
+                <Link className='btn-container' to={'/api'}>
+                    <p className='nav-btn' >API's</p>
+                </Link>
+                <Link className='btn-container' to={'/services'}>
+                    <p className='nav-btn' >Services</p>
+                </Link>
+                <Link className='btn-container' to={'/career'}>
+                    <p className='nav-btn'>Career</p>
+                </Link>
+                <div className='about-container' >
+                    <Link className='nav-btn' to={'/dashboard'}><span class="material-symbols-outlined">dashboard</span></Link>
+                </div>
+            </section>:
+                <section id='navbar'>
+                    <div className='title-container'>
+                        <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link>
+                        </div>
+                        <Link className='btn-container' to={'/api'}>
+                            <p className='nav-btn' >API's</p>
+                        </Link>
+                        <Link className='btn-container' to={'/services'}>
+                            <p className='nav-btn' >Services</p>
+                        </Link>
+                        <Link className='btn-container' to={'/career'}>
+                            <p className='nav-btn'>Career</p>
+                        </Link>
+                        <div className='about-container' >
+                            <Link className='nav-btn' to={'/about'}>About Us</Link>
+                    </div>
+                </section>
+            }
+        </div>
+    )
 }
 
 export default Navbar;
