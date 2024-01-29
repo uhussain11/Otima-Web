@@ -332,6 +332,10 @@ app.get("/api/sessionValidation", async (req, res) => {
   return res.json({'success':response}) ;
 });
 
+app.post("/api/logout", async (req, res) =>{
+  const sessionID = req.sessionID;
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

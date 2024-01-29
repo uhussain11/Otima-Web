@@ -3,31 +3,11 @@ import 'react-calendar/dist/Calendar.css';
 import './main.css'
 import Login from '../components/login'
 import React, {useState, useEffect} from 'react'
-import { validSession } from '../config';
+import { ThreeDots } from 'react-loading-icons'
 
 function Main({loggedInn}){
     const [date, changeDate] = useState(new Date());
-    const [loggedIn, setLoggedIn] = useState(loggedInn);
-    const [loading, setLoading] = useState(false)
-
-    console.log("is User logged in? " + loggedInn)
-
-    // useEffect(() => {
-    //   async function validateSession() {
-    //     setLoading(true)
-    //     try {
-    //         const isValid = await validSession();
-    //         setLoggedIn(isValid);
-    //     } catch (error) {
-    //         console.error('Error validating session:', error);
-    //         setLoggedIn(false);
-    //     }
-    //     setLoading(false)
-    //   }
-  
-    //   validateSession();
-    // }, []); 
-  
+    const [loggedIn, setLoggedIn] = useState(loggedInn);  
 
     function changeValue(val) {
         changeDate(val);
@@ -36,7 +16,9 @@ function Main({loggedInn}){
     return(
         <section id='main'>
             <h1>Schedule a Meeting</h1>
-            {loggedInn? 
+            {loggedInn !== null ? null:<ThreeDots stroke="whitesmoke" fill='#584082' speed={1.15}/>}
+            
+            {loggedInn !== null && loggedInn ? 
                 <form id='form'>
                     <h4 className='name-tag'> Lets get started </h4>
                     <p className='info'> Please select a date and time for a brief online zoom meeting</p>
@@ -56,15 +38,17 @@ function Main({loggedInn}){
                     </div>
                     <input className='submit-btn' type="submit" value={"Schedule"} />
                 </form>:
-                <div>
-                <h4 className='schedule-acc'> Create an Account </h4>
-                <Login
-                setLoggedIn = {setLoggedIn}
-                showLogin = {false}
-                navigate = {'/schedule-meeting'}
-                />
-                </div>
+                null
             }
+            {loggedInn !== null && !loggedInn ?
+                <div>
+                    <h4 className='schedule-acc'> Create an Account </h4>
+                    <Login
+                    setLoggedIn = {setLoggedIn}
+                    showLogin = {false}
+                    navigate = {'/schedule-meeting'}
+                    />
+                </div>: null}
         </section>
     )
 }

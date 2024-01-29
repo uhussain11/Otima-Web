@@ -1,13 +1,44 @@
 import { Link } from 'react-router-dom'
 import './navbar.css'
-import React, {useState, useEffect} from 'react'
-import { validSession } from '../config';
+import React from 'react'
+import { useCookies } from "react-cookie";
+import { SERVER } from '../config';
 
 function Navbar({loggedInn}){
+    const [cookies, setCookie, removeCookie] = useCookies(["sessionID"]);
+
+    function logout(){
+        const sessionID = cookies.SessionID;
+        try{
+
+        //     fetch(`${SERVER}/google-signin/`, {
+        //         method: 'POST',
+        //         mode: 'cors',
+        //         headers: {
+        //           'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({sessionID: sessionID})
+        //       })
+        //       .then((res) => res.json())
+        //       .then((data)=>{
+        //         console.log(data)
+        //         if(data.success){
+        //             setLoggedIn(true);
+        //         }
+        //       });
+        }
+        catch{
+            alert("Something went wrong on our end. Please try again later")
+            return;
+        }
+    }
 
     if(loggedInn){
         return(
-            <section id='navbar'>
+            <section id='navbar-logged-in'>
+            <Link className='btn-container-logout' to={'/'} onClick={logout}>
+                <p className='nav-btn' >LogOut</p>
+            </Link>
             <div className='title-container'>
                 <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link>
                 {/* <img src="./logo.png" alt="" /> */}
@@ -22,7 +53,7 @@ function Navbar({loggedInn}){
                 <p className='nav-btn'>Career</p>
             </Link>
             <div className='about-container' >
-                <Link className='nav-btn' to={'/about'}>Sign Out</Link>
+                <Link className='nav-btn' to={'/dashboard'}><span class="material-symbols-outlined">dashboard</span></Link>
             </div>
         </section>
         )
