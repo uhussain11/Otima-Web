@@ -1,0 +1,190 @@
+#overView .loaded, .loading{
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+    transition: 300ms;
+
+    & .top{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        text-align: right;
+        gap: 10px;
+
+        & p, h1{
+            height: fit-content;
+            margin: 0px;
+            width: 100%;
+            margin-block:0px;
+            margin-left: auto;
+        }
+
+
+
+        & h1{
+            font-size: 44px;
+        }
+
+        & p{
+            font-size: 24px;
+        }
+    }
+
+    & .middle{
+        width: 95%;
+        background-color: #584082;
+        color: whitesmoke;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border-radius: 5px;
+        padding: 15px;
+
+        & h2, p{
+            text-align: left;
+            margin: 0px;
+        }
+
+        & p{
+            font-size: 22px;
+        }
+
+        & h2{
+            font-size: 30px;
+        }
+    }
+
+    & .bottom{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        & h2{
+            text-align: left;
+            font-size: 30px;
+            margin-block: 0px;
+        }
+
+        & .projects{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            gap: 3vw;
+            
+            & .card{
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                padding: 20px;
+                border-radius: 14px;
+                box-shadow: 0 0 8px 0px #584082;
+                width: fit-content;
+                background-color: rgb(255, 255, 255);
+                width: 90%;
+                gap: 10px;
+                max-width: 400px;
+                font-family: 'Outfit';
+                position: relative;
+
+                & h2{
+                    font-weight: 400;
+                    font-size: 20px;
+                }
+
+                & .info{
+                    display: flex;
+                    justify-content: space-evenly;
+
+
+                    & .stack{
+                        display: flex;
+                        flex-direction: column;
+
+                        & .price{
+                            font-size: 30px;
+                        }
+
+                        & h3, p{
+                            margin: 0;
+                        }
+                    }
+                }
+
+                & .cancel{
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
+                    margin: 2%;
+                    background-color: #584082;
+                    color: whitesmoke;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 15px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+#overView .loading{
+    & .top{
+        & p, h1{
+            background-color: black;
+            animation: load 1.5s linear 0s infinite forwards;
+            border-radius: 5px;
+            width: fit-content;
+        }
+    }
+
+    & .middle{
+        & h2, p{
+            color: transparent;
+            background-color: black;
+            animation: load 1.5s linear 0s infinite forwards;
+            border-radius: 5px;
+        }
+    }
+
+    & .bottom{
+        & h2{
+            background-color: black;
+            animation: load 1.5s linear 0s infinite forwards;
+            border-radius: 5px;
+        }
+
+        & .projects{
+            & .card{
+                color: transparent;
+                & h2{
+                    background-color: black;
+                    animation: load 1.5s linear 0s infinite forwards;
+                    border-radius: 5px;
+                }
+
+                & .info{
+                    background-color: black;
+                    animation: load 1.5s linear 0s infinite forwards;
+                    border-radius: 5px;
+                }
+                & .cancel{
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@keyframes load {
+    0%{
+       opacity: 0.2;
+    }
+    50%{
+        opacity: 0.4;
+    }
+    100%{
+        opacity: 0.2;
+     }
+}
