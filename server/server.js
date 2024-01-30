@@ -7,7 +7,6 @@ const fs = require('fs');
 const {google} = require('googleapis');
 // var http = require('http');
 // var url = require('url');
-// nodemon run 'nodemon ./server.js' for auto updates
 const db = require("./database.js")   
 var mysql = require('mysql');
 const crypto = require('crypto');
@@ -17,6 +16,9 @@ const PORT = process.env.PORT || 9999;
 const app = express();
 
 // const oAuth2Client = new google.auth.OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, process.env.GOOGLE_REDIRECT)
+
+// nodemon run 'nodemon ./server.js' for auto updates
+// pm2 start server.js
 
 var transporter = nodemailer.createTransport({
   host: "ecngx348.inmotionhosting.com",
@@ -348,47 +350,25 @@ app.listen(PORT, () => {
 });
 
 
-
-
-// constantly check for expired sessions
-const database = mysql.createConnection({
+const ruotineCleaning = mysql.createConnection({
   "database": "b9f34c5_OtimaWeb",
   "user": "b9f34c5_Admin",
   "password": "OTIMAWEB_admin",
   "host": "198.46.91.127",
   // "debug": true
 });
-database.connect(function(err) {
-  if (err) {
-    console.error('Error connecting: ' + err.stack);
-    process.exit(1); // Exit the process if connection fails
-  }
 
-  console.log('Connected to the database');
 
-  // Run the operation every minute
-  setInterval(function() {
-    const sql = 'DELETE FROM `Sessions` WHERE `Creation` < NOW() - INTERVAL 2 HOUR';
+// constantly check for expired sessions
+setInterval(function() {
+      const sql = 'DELETE FROM `Sessions` WHERE `Creation` < NOW() - INTERVAL 2 HOUR';
+  
+      ruotineCleaning.query(sql, function(err) {
+        if (err) {
+          console.log('Query failed:', err);
+        } else {
+          console.log('Query successful');
+        }
+      });
+},60000);
 
-    database.query(sql, function(err) {
-      if (err) {
-        console.log('Query failed:', err);
-      } else {
-        console.log('Query successful');
-      }
-    });
-
-  }, 60000); // Run every minute (60,000 milliseconds)
-});
-
-// process.on('SIGINT', function() {
-//   console.log('Closing the database connection...');
-//   database.end(function(err) {
-//     if (err) {
-//       console.error('Error closing connection: ' + err.stack);
-//     } else {
-//       console.log('Connection closed');
-//     }
-//     process.exit(0);
-//   });
-// });

@@ -20,6 +20,8 @@ function Login({ setLoggedIn, showLogin, navigate, loggedIn}){
 
     const [cookies, setCookie] = useCookies(['SessionID']);
 
+    console.log(cookies)
+
     useEffect(() =>{
         console.log(cookies.SessionID)
         if(cookies.SessionID === undefined || cookies.SessionID === null){

@@ -19,6 +19,8 @@ import { validSession } from './config';
 
 function App() {
   const [cookies, setCookie] = useCookies(['terms']);
+  const [sessionCookie, setSessionCookie] = useCookies(['SessionID']);
+
   const [loggedIn, setLoggedIn] = useState(null);
 
   function accept(){
@@ -31,7 +33,12 @@ function App() {
       async function validateSession() {
         try {
             const isValid = await validSession();
+            console.log(isValid)
             setLoggedIn(isValid);
+            if(!isValid){
+              setSessionCookie('SessionID', null, { path: '/' })
+            }
+
         } catch (error) {
             console.error('Error validating session:', error);
             setLoggedIn(false);
