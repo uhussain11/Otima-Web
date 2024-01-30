@@ -3,6 +3,7 @@
     box-shadow: 0 0 7px 1px rgba(110, 49, 154, 0.563);
     padding: 15px;
     padding-top: 25px;
+    width: 80vw;
     max-width: 550px;
     display: flex;
     flex-direction: column;
@@ -11,7 +12,7 @@
     position: relative;
     border-radius: 10px;
     gap: 20px;
-    min-width: 450px;
+    min-width: 300px;
 
     & .manual{
         display: flex;

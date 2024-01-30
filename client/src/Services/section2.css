@@ -1,30 +1,63 @@
-#service-section2{
-    display: flex;
-    flex-direction: column;
-    background-color: transparent;
-    position: relative;
-    padding: 2%;
-    padding-inline:4%;
-    justify-content:flex-end;
-    text-align: right;
-    animation: flow-right 1s ease 0s 1 alternate;
-
-    & h2{
-        font-size: 50px;
-        font-family: 'Outfit';
-        color: #4C3672;
-        width: 100%;
-        text-align: right;
-
-    }
-
-    & p{
+@media(min-width:901px){
+    #service-section2{
         display: flex;
-        font-size: 20px;
-        width: 70%;
-        font-family: 'Khula';
-        margin-inline: auto;
-        margin-right: 0px;
+        flex-direction: column;
+        background-color: transparent;
+        position: relative;
+        padding: 2%;
+        padding-inline:4%;
+        justify-content:flex-end;
+        text-align: right;
+        animation: flow-right 1s ease 0s 1 alternate;
+    
+        & h2{
+            font-size: 50px;
+            font-family: 'Outfit';
+            color: #4C3672;
+            width: 100%;
+            text-align: right;
+    
+        }
+    
+        & p{
+            display: flex;
+            font-size: 20px;
+            width: 70%;
+            font-family: 'Khula';
+            margin-inline: auto;
+            margin-right: 0px;
+        }
+    }
+}
+@media(max-width:900px){
+    #service-section2{
+        display: flex;
+        flex-direction: column;
+        background-color: transparent;
+        position: relative;
+        padding: 2%;
+        padding-inline:4%;
+        justify-content:flex-end;
+        text-align: right;
+        animation: flow-right 1s ease 0s 1 alternate;
+    
+        & h2{
+            font-size: 40px;
+            font-family: 'Outfit';
+            color: #4C3672;
+            width: 100%;
+            text-align: right;
+    
+        }
+    
+        & p{
+            display: flex;
+            font-size: 15px;
+            width: 70%;
+            font-family: 'Khula';
+            margin-inline: auto;
+            margin-right: 0px;
+        }
     }
 }
 

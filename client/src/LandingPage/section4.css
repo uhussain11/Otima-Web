@@ -1,158 +1,328 @@
-#section4l{
-    display: flex;
-    justify-content: space-between;
-    padding: 3vw;
-    padding-inline: 5vw;
-
-    & .contact-form{
+@media (min-width:901px){
+    #section4l{
         display: flex;
-        flex-direction: column;
-        width: fit-content;
-        margin: auto;
-    }
-
-    & .sector{
-        display: flex;
-        margin-left: 6%;
-        position: relative;
-
-        & h2{
-            font-size: 70px;
-            text-align: right;
-        }
-
+        justify-content: space-between;
+        padding: 3vw;
+        padding-inline: 5vw;
+    
         & .contact-form{
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            font-family: 'Outfit';
-
-            & input{
-                font-size: 20px;
-                border: none;
-                padding: 8px;
-                border-radius: 0px;
-                border-bottom: 2px solid #352354;
-                transition: 200ms;
-                background-color: transparent;
-
-                &::placeholder{
-                    color: #57407ecf;
-                }
-
-                &:focus{
-                    background-color: #5a477c;
-                    color: whitesmoke;
-                    border-radius: 3px;
-                    border-bottom: 2px solid transparent;
-                    outline: none;
-                    box-shadow: 0 0 2pc rgb(55, 40, 92);
-                    &::placeholder{
-                        color: rgba(255, 255, 255, 0.748);
-                    }
-                }
+            width: fit-content;
+            margin: auto;
+        }
+    
+        & .sector{
+            display: flex;
+            margin-left: 6%;
+            position: relative;
+    
+            & h2{
+                font-size: 70px;
+                text-align: right;
             }
-
-            & textarea{
-                resize: none;
-                border: 3px solid transparent;
-                padding: 6px;
-                border-radius: 5px;
-                background-color: #5a477c;
-                transition: 200ms;
-                text-align: left;
-                font-size: 18px;
-                cursor: pointer;
-                color: whitesmoke;
-
-                &::placeholder{
-                    color: rgba(255, 255, 255, 0.802);
-                    font-size: 26px;
-                    transition: 300ms;
-                }
-
-                &:focus{
+    
+            & .contact-form{
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+                font-family: 'Outfit';
+    
+                & input{
+                    font-size: 20px;
+                    border: none;
+                    padding: 8px;
+                    border-radius: 0px;
+                    border-bottom: 2px solid #352354;
+                    transition: 200ms;
                     background-color: transparent;
-                    color: #5a477c;
-                    border: 3px solid #5a477c;
-                    text-align: left;
-                    cursor:text;
-                    outline: none;
-
+    
                     &::placeholder{
-                        color: #5a477c;
-                        font-size: 18px;
+                        color: #57407ecf;
                     }
-
+    
+                    &:focus{
+                        background-color: #5a477c;
+                        color: whitesmoke;
+                        border-radius: 3px;
+                        border-bottom: 2px solid transparent;
+                        outline: none;
+                        box-shadow: 0 0 2pc rgb(55, 40, 92);
+                        &::placeholder{
+                            color: rgba(255, 255, 255, 0.748);
+                        }
+                    }
+                }
+    
+                & textarea{
+                    resize: none;
+                    border: 3px solid transparent;
+                    padding: 6px;
+                    border-radius: 5px;
+                    background-color: #5a477c;
+                    transition: 200ms;
+                    text-align: left;
+                    font-size: 18px;
+                    cursor: pointer;
+                    color: whitesmoke;
+    
+                    &::placeholder{
+                        color: rgba(255, 255, 255, 0.802);
+                        font-size: 26px;
+                        transition: 300ms;
+                    }
+    
+                    &:focus{
+                        background-color: transparent;
+                        color: #5a477c;
+                        border: 3px solid #5a477c;
+                        text-align: left;
+                        cursor:text;
+                        outline: none;
+    
+                        &::placeholder{
+                            color: #5a477c;
+                            font-size: 18px;
+                        }
+    
+                    }
+                }
+    
+                & .submit-btn{
+                    width:fit-content;
+                    margin: auto;
+                    background-color: rgba(0, 0, 0, 0.085);
+                    font-weight: 700;
+                    font-size: 20px;
+                    border: none;
+                    cursor: pointer;
+                    padding: 10px;
+                    transition: 300ms;
+    
+                    &:hover{
+                    background-color: rgba(0, 0, 0, 0.15);
+                    }
                 }
             }
-
-            & .submit-btn{
-                width:fit-content;
-                margin: auto;
-                background-color: rgba(0, 0, 0, 0.085);
-                font-weight: 700;
+    
+            & .name{
+                display: flex;
+                gap: 10px;
+                width: 100%;
+            }
+    
+            & .loading{
+                position: absolute;
+                top: -5%;
+                left: -5%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                backdrop-filter: blur(5px);
+                border-radius: 10px;
+                height: 110%;
+                width: 110%;
+                z-index: 5;
+    
+                & span{
+                    animation: spin 1s linear 0s infinite forwards;
+                    font-size: 50px;
+                    color: rgb(153, 96, 181);
+                }
+            }
+        }
+        & .title-sector{
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+    
+            & h2{
+                font-size: 70px;
+                font-family: 'Outfit';
+                color: #352354;
+                font-weight: 900;
+                text-align: right;
+                margin-bottom: 0;
+            }
+    
+            & p{
                 font-size: 20px;
-                border: none;
-                cursor: pointer;
-                padding: 10px;
-                transition: 300ms;
-
-                &:hover{
-                background-color: rgba(0, 0, 0, 0.15);
-                }
+                text-align: right;
+                margin-top: 0;
             }
-        }
-
-        & .name{
-            display: flex;
-            gap: 10px;
-            width: 100%;
-        }
-
-        & .loading{
-            position: absolute;
-            top: -5%;
-            left: -5%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-            border-radius: 10px;
-            height: 110%;
-            width: 110%;
-            z-index: 5;
-
-            & span{
-                animation: spin 1s linear 0s infinite forwards;
-                font-size: 50px;
-                color: rgb(153, 96, 181);
+    
+            & a{
+                text-align: right;
+                margin-block:5px;
             }
         }
     }
-    & .title-sector{
+}
+
+@media (max-width:900px){
+    #section4l{
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
+        width: 100%;
+        gap: 5vh;
+        padding: 3vw;
+        padding-inline: 1vw;
 
-        & h2{
-            font-size: 70px;
-            font-family: 'Outfit';
-            color: #352354;
-            font-weight: 900;
-            text-align: right;
-            margin-bottom: 0;
+        & .sector{
+            display: flex;
+            position: relative;
+            width: 100%;
+    
+            & h2{
+                font-size: 70px;
+                text-align: right;
+            }
+    
+            & .contact-form{
+                display: flex;
+                width: 90%;
+                position: relative;
+                flex-direction: column;
+                gap: 15px;
+                margin: auto;
+                font-family: 'Outfit';
+
+                & .name{
+                    display: flex;
+                    gap: 10px;
+                    position: relative;
+                    width: 100%;
+
+                    & input{
+                        width: 100%;
+                    }
+                }
+    
+                & input{
+                    font-size: 20px;
+                    border: none;
+                    padding: 8px;
+                    border-radius: 0px;
+                    border-bottom: 2px solid #352354;
+                    transition: 200ms;
+                    background-color: transparent;
+    
+                    &::placeholder{
+                        color: #57407ecf;
+                    }
+    
+                    &:focus{
+                        background-color: #5a477c;
+                        color: whitesmoke;
+                        border-radius: 3px;
+                        border-bottom: 2px solid transparent;
+                        outline: none;
+                        box-shadow: 0 0 2pc rgb(55, 40, 92);
+                        &::placeholder{
+                            color: rgba(255, 255, 255, 0.748);
+                        }
+                    }
+                }
+    
+                & textarea{
+                    resize: none;
+                    border: 3px solid transparent;
+                    padding: 6px;
+                    border-radius: 5px;
+                    background-color: #5a477c;
+                    transition: 200ms;
+                    text-align: left;
+                    font-size: 18px;
+                    cursor: pointer;
+                    color: whitesmoke;
+    
+                    &::placeholder{
+                        color: rgba(255, 255, 255, 0.802);
+                        font-size: 26px;
+                        transition: 300ms;
+                    }
+    
+                    &:focus{
+                        background-color: transparent;
+                        color: #5a477c;
+                        border: 3px solid #5a477c;
+                        text-align: left;
+                        cursor:text;
+                        outline: none;
+    
+                        &::placeholder{
+                            color: #5a477c;
+                            font-size: 18px;
+                        }
+    
+                    }
+                }
+    
+                & .submit-btn{
+                    width:fit-content;
+                    margin: auto;
+                    background-color: rgba(0, 0, 0, 0.085);
+                    color: #5a477c;
+                    font-weight: 700;
+                    font-size: 20px;
+                    border: none;
+                    cursor: pointer;
+                    padding: 10px;
+                    transition: 300ms;
+    
+                    &:hover{
+                    background-color: rgba(0, 0, 0, 0.15);
+                    }
+                }
+            }
+    
+            & .loading{
+                position: absolute;
+                top: -5%;
+                left: -5%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                backdrop-filter: blur(5px);
+                border-radius: 10px;
+                height: 110%;
+                width: 110%;
+                z-index: 5;
+    
+                & span{
+                    animation: spin 1s linear 0s infinite forwards;
+                    font-size: 50px;
+                    color: rgb(153, 96, 181);
+                }
+            }
+        }
+        & .title-sector{
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+    
+            & h2{
+                font-size: 70px;
+                font-family: 'Outfit';
+                color: #352354;
+                font-weight: 900;
+                text-align: right;
+                margin-bottom: 0;
+            }
+    
+            & p{
+                font-size: 20px;
+                text-align: right;
+                margin-top: 0;
+            }
+    
+            & a{
+                text-align: right;
+                margin-block:5px;
+            }
         }
 
-        & p{
-            font-size: 20px;
-            text-align: right;
-            margin-top: 0;
-        }
-
-        & a{
-            text-align: right;
-            margin-block:5px;
-        }
     }
 }
 

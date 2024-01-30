@@ -1,11 +1,11 @@
-
+import './dashboard.css'
 
 function Dashboard(){
 
     return(
-        <section>
-            DASHBOARD
-        </section>
+        <body id='dashboard'>
+            <p>DASHBOARD</p>
+        </body>
     )
 
 }
