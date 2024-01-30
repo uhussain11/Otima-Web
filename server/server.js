@@ -350,18 +350,17 @@ app.listen(PORT, () => {
 });
 
 
-const ruotineCleaning = mysql.createConnection({
-  "database": "b9f34c5_OtimaWeb",
-  "user": "b9f34c5_Admin",
-  "password": "OTIMAWEB_admin",
-  "host": "198.46.91.127",
-  // "debug": true
-});
-
-
 // constantly check for expired sessions
 setInterval(function() {
       const sql = 'DELETE FROM `Sessions` WHERE `Creation` < NOW() - INTERVAL 2 HOUR';
+
+      const ruotineCleaning = mysql.createConnection({
+        "database": "b9f34c5_OtimaWeb",
+        "user": "b9f34c5_Admin",
+        "password": "OTIMAWEB_admin",
+        "host": "198.46.91.127",
+        // "debug": true
+      });
   
       ruotineCleaning.query(sql, function(err) {
         if (err) {
@@ -370,5 +369,6 @@ setInterval(function() {
           console.log('Query successful');
         }
       });
+      ruotineCleaning.end()
 },60000);
 

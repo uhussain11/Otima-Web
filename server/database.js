@@ -80,13 +80,12 @@ function setSession(userID, newSessionID){
     token = newSessionID;
   }
 
-
   const values = [
     `${userID}`,
     `${token}`
     ];
 
-  const update = `UPDATE Sessions SET Creation = CURRENT_TIMESTAMP WHERE user_id = ${userID}`;
+  const update = `UPDATE Sessions SET sessionID = '${token}', Creation = CURRENT_TIMESTAMP WHERE user_id = ${userID}`;
   const add = 'INSERT INTO `Sessions`(`user_id`, `sessionID`, `Creation`) VALUES (?,?,NOW())';
 
   database =  mysql.createConnection({
@@ -112,7 +111,7 @@ function setSession(userID, newSessionID){
 
         } else {
           if(results.changedRows >=1){
-            resolve({new:false, sessionID:token})
+            resolve({new:true, sessionID:token})
             database.end();
           }
           else{
