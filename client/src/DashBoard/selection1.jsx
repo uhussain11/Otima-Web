@@ -1,6 +1,17 @@
 import './selection1.css'
+import React, {useState} from 'react';
 
 function Selection1({first, last, email, business, loading, projects}){
+    const [showConfirmation, setShowConfirmation] = useState(null)
+
+    function confirmation(id){
+        setShowConfirmation(id)
+        console.log(id)
+    }
+
+    function cancel(){
+        setShowConfirmation(null)
+    }
 
     return(
         <section id="overView">
@@ -17,8 +28,16 @@ function Selection1({first, last, email, business, loading, projects}){
            <div className="bottom">
                <h2>Projects</h2>
                <ul className='projects'>
-                   {projects.map(project => (
+                   {projects.map((project, index )=> (
                        <li className='card'>
+                            <div className={showConfirmation === project.id ?'confirmation-shown':'confirmation-hidden'}>
+                                <p>Are you Sure?</p>
+                                <p>Website will go bye bye</p>
+                                <div className='options'>
+                                    <button className='nay'> Yes Please</button>
+                                    <button className='yay' onClick={cancel}>NO, I like my website</button>
+                                </div>
+                            </div>
                            <div>
                                <h2>ID: {project.id}</h2>
                            </div>
@@ -28,11 +47,11 @@ function Selection1({first, last, email, business, loading, projects}){
                                     <p>Yearly</p>
                                 </dl>
                                 <dl className='stack'>
-                                    <h3>Renewal Date:</h3>
+                                    <h3>Renewal Date</h3>
                                     <p>{project.renewal}</p>
                                 </dl>
                            </div>
-                           <button className='cancel'>Un-Deploy</button>
+                           <button className='cancel' onClick={(id) =>{confirmation(project.id)}}>Un-Deploy</button>
                        </li>
                    ))}
                </ul>

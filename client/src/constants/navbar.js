@@ -83,7 +83,7 @@ function Navbar({loggedInn}){
                                 <p className='nav-btn'>DashBoard <span class="material-symbols-outlined">dashboard</span></p>
                             </Link>
                             <Link className='btn-container-logout' to={'/'} onClick={logout}>
-                                <p className='nav-btn' >LogOut</p>
+                                <p className='nav-btn' ><span class="material-symbols-outlined">logout</span></p>
                             </Link>
                         </div>
                 </section>:
@@ -122,7 +122,7 @@ function Navbar({loggedInn}){
                 {loggedInn?
                 <section id='navbar-logged-in'>
                     <Link className='btn-container-logout' to={'/'} onClick={logout}>
-                        <p className='nav-btn' >LogOut</p>
+                        <p className='nav-btn' ><span class="material-symbols-outlined">logout</span></p>
                     </Link>
                     <Link className='title-container' to={'/'}>
                         {/* <Link className='nav-btn' to={'/'}><p>Otima Web</p></Link> */}
