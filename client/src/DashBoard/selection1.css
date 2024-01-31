@@ -78,6 +78,7 @@
                 display: flex;
                 flex-direction: column;
                 padding: 20px;
+                padding-top: 10px;
                 border-radius: 5px;
                 box-shadow: 0 0 8px 0px #584082;
                 width: fit-content;
@@ -89,9 +90,30 @@
                 font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                 position: relative;
 
-                & h2{
-                    font-weight: 400;
-                    font-size: 20px;
+                & .top-info{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: left;
+                    align-items: left;
+                    text-align: left;
+                    gap: 5px;
+                    
+                    & .id{
+                        margin: 0px;
+                        width: fit-content;
+                        height: fit-content;
+                        font-weight: 300;
+                        font-size: 15px;
+                    }
+    
+                    & .link{
+                        margin: 0px;
+                        height: fit-content;
+                        width: fit-content;
+                        font-weight: 500;
+                        font-size: 20px;
+                        cursor: pointer;
+                    }    
                 }
 
                 & .info{
@@ -127,9 +149,13 @@
                 }
 
                 & .confirmation-hidden{
+                    position: absolute;
+                    display: none;
                     transition: opacity 200ms ease-out;
                     opacity: 0;
-                    height: 0px;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
                     overflow: hidden;
                 }
 
@@ -208,7 +234,10 @@
         & .projects{
             & .card{
                 color: transparent;
-                & h2{
+
+                & .link, .id{
+                    color: transparent;
+                    text-decoration: none;
                     background-color: black;
                     animation: load 1.5s linear 0s infinite forwards;
                     border-radius: 5px;
