@@ -12,7 +12,7 @@ function Dashboard(){
     const [first, setFirst] = useState('Bobby');
     const [last, setLast] = useState('Shmurda');
     const [email, setEmail] = useState('test@gmail.com');
-    const [projects, setProjects] = useState([{id:0, price: 200, renewal: '05/02/2024'}, {id:0, price: 200, renewal: '05/02/2024'}, {id:0, price: 200, renewal: '05/02/2024'}, {id:0, price: 200, renewal: '05/02/2024'}])
+    const [projects, setProjects] = useState([{id:0, price: 200, renewal: '05/02/2024'}, {id:1, price: 200, renewal: '05/02/2024'}, {id:2, price: 200, renewal: '05/02/2024'}, {id:3, price: 200, renewal: '05/02/2024'}])
 
     const select = (selected) => {
         console.log('Display: ' + selected)
@@ -38,8 +38,18 @@ function Dashboard(){
         }, 3000)
     })
 
+    function hideNotice(e){
+
+        const notice = document.querySelector('.notice');
+        notice.className = 'notice-disappear';
+
+    }
     return(
         <body id='dashboard'>
+            <div className='notice'>
+                <p> Un-Deploys must be requested at least 1 month following the renewal date to be eligible for a refund </p>
+                <span onClick={(e) =>hideNotice(e)} class="material-symbols-outlined">close</span>
+            </div>
             <section className='left'>
                 <ul className='column'>
                     <dl className={selection === 0 ? 'selected':null} onClick={() =>{select(0)}}>

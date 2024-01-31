@@ -363,12 +363,13 @@ setInterval(function() {
       });
   
       ruotineCleaning.query(sql, function(err) {
+        ruotineCleaning.end()
+
         if (err) {
           console.log('Query failed:', err);
         } else {
           console.log('Query successful');
         }
       });
-      ruotineCleaning.end()
 },60000);
 

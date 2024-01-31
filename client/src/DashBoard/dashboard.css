@@ -187,3 +187,63 @@
         }
     }
 }
+
+.notice{
+    position: absolute;
+    display: flex;
+    background-color: black;
+    color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+    top: -100%;
+    width: 100%;
+    padding: 10px;
+    font-family: 'Outfit';
+    gap: 5vw;
+    font-weight: 600;
+    transition: 200ms;
+    animation: drop-in 1s ease 3s 1 forwards;
+
+    & p{
+        margin: 0px;
+    }
+    & span{
+        margin: auto;
+        cursor: pointer;
+        margin-inline:0px;
+    }
+}
+.notice-disappear{
+    position: absolute;
+    display: none;
+    background-color: black;
+    color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+    top: -100px;
+    width: 100%;
+    padding: 10px;
+    font-family: 'Outfit';
+    gap: 5vw;
+    font-weight: 600;
+    transition: 200ms;
+
+    & p{
+        margin: 0px;
+    }
+    & span{
+        margin: auto;
+        cursor: pointer;
+        margin-inline:0px;
+    }
+}
+
+
+@keyframes drop-in{
+    0%{
+        top: -100%;
+    }
+    100%{
+        top: 0%;
+    }
+}
