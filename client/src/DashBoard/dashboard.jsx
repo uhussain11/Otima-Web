@@ -12,7 +12,7 @@ function Dashboard(){
     const [first, setFirst] = useState('Bobby');
     const [last, setLast] = useState('Shmurda');
     const [email, setEmail] = useState('test@gmail.com');
-    const [projects, setProjects] = useState([{id:0, domain:'fanaticaldetailing.com', price: 200, renewal: '05/02/2024'}, {id:1, domain:'test.com', price: 200, renewal: '05/02/2024'}, {id:2, domain:'test.com', price: 200, renewal: '05/02/2024'}, {id:3, domain:'test.com', price: 200, renewal: '05/02/2024'}])
+    const [projects, setProjects] = useState([{id:0, domain:'test.com', price: 200, renewal: '05/02/2024'}, {id:1, domain:'test.com', price: 200, renewal: '05/02/2024'}, {id:2, domain:'test.com', price: 200, renewal: '05/02/2024'}, {id:3, domain:'test.com', price: 200, renewal: '05/02/2024'}])
 
     const select = (selected) => {
         console.log('Display: ' + selected)

@@ -30,7 +30,7 @@ function Selection1({first, last, email, business, loading, projects}){
                    {projects.map((project)=> (
                        <li className='card'>
                             <div className={showConfirmation === project.id ?'confirmation-shown':'confirmation-hidden'}>
-                                <p>Are you Sure?</p>
+                                <p>Confirmation</p>
                                 <p>Website will go bye bye</p>
                                 <div className='options'>
                                     <button className='nay'> Yes Please</button>
