@@ -107,12 +107,14 @@
                     }
     
                     & .link{
+                        text-decoration: none;
                         margin: 0px;
                         height: fit-content;
                         width: fit-content;
                         font-weight: 500;
                         font-size: 20px;
                         cursor: pointer;
+                        color: #584082;
                     }    
                 }
 
@@ -234,10 +236,15 @@
         & .projects{
             & .card{
                 color: transparent;
+                pointer-events: none;
+
+                & .top-info{
+                    color: transparent;
+                }
 
                 & .link, .id{
-                    color: transparent;
                     text-decoration: none;
+                    color: transparent !important;
                     background-color: black;
                     animation: load 1.5s linear 0s infinite forwards;
                     border-radius: 5px;

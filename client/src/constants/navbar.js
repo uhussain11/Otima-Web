@@ -7,7 +7,7 @@ import Alert from '../components/alert';
 import {isMobile} from 'react-device-detect';
 
 function Navbar({loggedInn}){
-    const [cookies, setCookie, removeCookie] = useCookies(["sessionID"]);
+    const [cookies, setCookie] = useCookies(["sessionID"]);
     const [loggedOutAlert, setLoggedOutAlert] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
 

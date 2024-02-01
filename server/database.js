@@ -47,7 +47,7 @@ function retrieveData(sql) {
   
     database.connect(async function(err) {
       if(err){
-        return data(err)
+        reject(err)
       }
       else{
         database.query(sql, (err, results) => {
@@ -59,7 +59,7 @@ function retrieveData(sql) {
             if(results.length === 0){
               resolve(null);
             }else{
-              resolve(results);
+              resolve(results[0]);
             }
           }
         });
@@ -155,15 +155,15 @@ function checkSession(sql){
       else{
         database.query(sql, (err, results) => {
           if (err) {
-            resolve(false)
+            resolve({success:false})
             database.end();
           } 
           else {
             if(results.length > 0){
-              resolve(true)
+              resolve({success:true, userID:results[0].user_id})
               database.end();
             }else{
-              resolve(false)
+              resolve({success:false})
               database.end();
 
             }

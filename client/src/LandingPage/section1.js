@@ -1,6 +1,6 @@
 import './section1.css'
 
-function section1(){
+function Section1(){
 
     return(
         <section id='section1'>
@@ -17,4 +17,4 @@ function section1(){
     )
 }
 
-export default section1;
+export default Section1;

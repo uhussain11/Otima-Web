@@ -51,16 +51,16 @@ async function register(sql, values){
 
 // handles logging in users
 async function login(sql){
-  const userData = await db.retrieveData(sql, true);
+  const userData = await db.retrieveData(sql);
 
     if(userData === null){
       return ({ success: false, sessionID: null, newSession:false, user: null}) 
     }
     else{
-      const status =  await db.setSession(userData[0].ID, null);
+      const status =  await db.setSession(userData.ID, null);
       // return sessionID and if it was updated or not
 
-      return ({ success: true, sessionID: status.sessionID, newSession: status.new, user: userData[0]}) 
+      return ({ success: true, sessionID: status.sessionID, newSession: status.new, user: userData}) 
     }
 }
 
@@ -328,18 +328,103 @@ app.get("/api/sessionValidation", async (req, res) => {
 // check if session is valid or not
   const sessionID = req.query.session;
 
-  const sql = `SELECT * FROM Sessions WHERE sessionID = '${sessionID}'`;
+  const sql = `SELECT user_id FROM Sessions WHERE sessionID = '${sessionID}'`;
 
   const response = await db.checkSession(sql);
 
-  return res.json({'success':response}) ;
+  return res.json({'success':response.success}) ;
 });
+
+// Data request, takes in sessionID and category (number) for what data u want
+app.get("/api/data-request", async (req, res) => {
+  // check if session is valid or not
+    const sessionID = req.query.session;
+    const category = parseInt(req.query.category, 10);
+
+    let request = null;
+
+    if(category === 0){
+      request = `User.ID,
+      User.First_Name,
+      User.Last_Name,
+      User.Business,
+      User.Email,
+      CONVERT(CONCAT('[', GROUP_CONCAT(
+        DISTINCT JSON_OBJECT(
+          'id', Project.ID,
+          'user', Project.Account,
+          'domain', Project.Domain,
+          'Upfront_Fee', Project.Upfront_Fee,
+          'price', Project.Maintenance,
+          'renewal', Project.Renewal
+        )
+      ), ']') USING utf8mb4) AS projects`;
+      
+    }else if(category === 1){
+      request = `CONVERT(CONCAT('[', GROUP_CONCAT(
+        DISTINCT JSON_OBJECT(
+        'id', Tickets.id,
+        'user', Tickets.user_id,
+        'message', Tickets.message,
+        'status', Tickets.status
+      )
+    ), ']') USING utf8mb4) AS tickets`;
+
+    }else if(category === 2){
+      request = `User.First_Name, User.Last_Name, User.Email, User.Business, User.Account_Creation, User.email_confirmed`;
+    }
+
+    const data = `
+    SELECT
+      ${request}
+    FROM
+      User
+    LEFT JOIN
+      Sessions ON User.id = Sessions.user_id
+    LEFT JOIN
+      Tickets ON User.id = Tickets.user_id
+    LEFT JOIN
+      Project ON User.id = Project.Account
+    WHERE
+      Sessions.sessionID = '${sessionID}'
+    GROUP BY
+      User.id
+      ${category === 1 ? 'HAVING COUNT(DISTINCT Tickets.id) > 0': ''}
+      ${category === 0 ? 'HAVING COUNT(DISTINCT Project.ID) > 0': ''}
+  `;
+
+    const requestedData = await db.retrieveData(data);
+
+    if(requestedData === null){
+      return {success:true, info:null}
+    }
+
+    if(category === 0){
+      formattedResult = {
+      id: requestedData.ID,
+      first: requestedData.First_Name,
+      last: requestedData.Last_Name,
+      email:requestedData.Email,
+      business: requestedData.Business,
+      projects: JSON.parse(requestedData.projects)
+    };
+      
+    }else if(category == 1){
+      formattedResult =  JSON.parse(requestedData.tickets)
+    }else if(category == 2){      
+      formattedResult = requestedData
+    }
+
+    return res.json({success:true, info:formattedResult});
+  });
 
 app.delete("/api/logout", async (req, res) =>{
   const sessionID = req.body.sessionID;
 
   //  delete session
   const success = await db.deleteSession(sessionID);
+
+  
 
   return res.json({success: success})
 });

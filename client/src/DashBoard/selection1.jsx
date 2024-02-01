@@ -1,12 +1,29 @@
 import './selection1.css'
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
-function Selection1({first, last, email, business, loading, projects}){
-    const [showConfirmation, setShowConfirmation] = useState(null)
+
+function Selection1({data}){
+    const [showConfirmation, setShowConfirmation] = useState(null);
+    const [first, setFirst] = useState('xxxx');
+    const [last, setLast] = useState('xxxxx');
+    const [email, setEmail] = useState('xxxx@otima.com');
+    const [projects, setProjects] = useState([{id:0, domain:'test.com', price: 200, renewal: '03/03/2003'}, {id:1, domain:'test.com', price: 200, renewal: '03/03/2003'}, {id:2, domain:'test.com', price: 200, renewal: '03/03/2003'}, {id:3, domain:'test.com', price: 200, renewal: '03/03/2003'}])
+    const [business, setBusiness] = useState(null)
+
+    useEffect(()=>{
+        if(data === null){
+            return;
+        }else{
+            setFirst(data.first)
+            setLast(data.last)
+            setEmail(data.email)
+            setBusiness(data.business)
+            setProjects(data.projects)
+        }
+    },[data])
 
     function confirmation(id){
         setShowConfirmation(id)
-        console.log(id)
     }
 
     function cancel(){
@@ -15,7 +32,7 @@ function Selection1({first, last, email, business, loading, projects}){
 
     return(
         <section id="overView">
-            <div className={loading?'loading':'loaded'}>
+            <div className={ data === null ?'loading':'loaded'}>
            <div className="top">
                <p>Welcome, </p>
                <h1>{first} {last}</h1>
@@ -27,10 +44,10 @@ function Selection1({first, last, email, business, loading, projects}){
            <div className="bottom">
                <h2>Projects</h2>
                <ul className='projects'>
-                   {projects.map((project)=> (
-                       <li className='card'>
+                   {projects.map((project, index)=> (
+                       <li key={index} className='card'>
                             <div className={showConfirmation === project.id ?'confirmation-shown':'confirmation-hidden'}>
-                                <p>Are you Sure?</p>
+                                <p>Confirmation</p>
                                 <p>Website will go bye bye</p>
                                 <div className='options'>
                                     <button className='nay'> Yes Please</button>

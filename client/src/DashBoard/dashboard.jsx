@@ -1,5 +1,8 @@
 import './dashboard.css'
 import React ,{useState, useEffect} from 'react'
+import Cookies from 'js-cookie';
+import { SERVER } from '../config'
+
 import Selection1 from './selection1'
 import Selection2 from './selection2'
 import Selection3 from './selection3'
@@ -9,13 +12,13 @@ function Dashboard(){
     const [selection, setSelection] = useState(0)
     const [loading, setLoading] = useState(true)
 
-    const [first, setFirst] = useState('Bobby');
-    const [last, setLast] = useState('Shmurda');
-    const [email, setEmail] = useState('test@gmail.com');
-    const [projects, setProjects] = useState([{id:0, domain:'fanaticaldetailing.com', price: 200, renewal: '05/02/2024'}, {id:1, domain:'test.com', price: 200, renewal: '05/02/2024'}, {id:2, domain:'test.com', price: 200, renewal: '05/02/2024'}, {id:3, domain:'test.com', price: 200, renewal: '05/02/2024'}])
+    const [obtained1, setObtained1] = useState(null)
+    const [obtained2, setObtained2] = useState(null)
+    const [obtained3, setObtained3] = useState(null)
+
+    const [tickets, setTickets] = useState([{id:1, message:'skdjfbkjsd fdjfbksjdf dsjfbkj dfjkbdf sdkjf sdkf dsf dskf'}, {id:3, message:'skdjfbkjsd fdjfbksjdf dsjfbkj dfjkbdf sdkjf sdkf dsf dskf'}])
 
     const select = (selected) => {
-        console.log('Display: ' + selected)
         const moveSelection = document.getElementById('shadow-selected');
         setSelection(selected);
 
@@ -32,14 +35,75 @@ function Dashboard(){
         }
     }
 
-    useEffect(()=>{
-        setInterval(function(){
-            setLoading(false)
-        }, 3000)
-    })
+    const setTabData = async (tab, sessionID) =>{
+        // defiens tab we getting
+        let fetchTab = null;
 
-    function hideNotice(e){
+        // set which tab is needed
+        fetchTab = (obtained1 === null && tab === 0) ? tab : (obtained2 === null && tab === 1) ? tab : (obtained3 === null && tab === 2) ? tab : fetchTab;
 
+        // all tabs loaded return
+        if(fetchTab === null){
+            return
+        }
+
+        const url = new URL(`${SERVER}/data-request/`);
+        url.searchParams.append('category', fetchTab);
+        url.searchParams.append('session', sessionID);
+        
+        try {
+            const response = await fetch(url, {
+              method: 'GET',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+        
+            const data = await response.json();
+
+            if(!data.success){
+                alert('Something went Wrong');
+                return
+            }
+
+            if(fetchTab === 0){
+                setObtained1(data.info)
+            }
+            else if(fetchTab === 1){
+                setObtained2(data.info)
+            }
+            else if(fetchTab === 2){
+                setObtained3(data.info)
+            }
+
+            return;
+    
+          } catch (error) {
+            console.error('Error during session validation:', error);
+            return false;
+          }
+    }
+
+    useEffect( ()=>{
+        const sessionID = Cookies.get('SessionID');
+
+        const fetchData = async () => {
+            setLoading(true);
+            await setTabData(selection, sessionID);
+            setLoading(false);
+        };
+    
+        fetchData();
+    
+        return () => {
+        };
+
+    },[selection])
+
+
+
+    function hideNotice(){
         const notice = document.querySelector('.notice');
         notice.className = 'notice-disappear';
 
@@ -60,7 +124,7 @@ function Dashboard(){
                         <p>Tickets</p>
                     </dl>
                     <dl className={selection === 2 ? 'selected':null} onClick={() =>{select(2)}}>
-                        <p>User</p>
+                        <p>Profile</p>
                     </dl>
                     <div className='note'>
                         <p>For additional information please reach out to <strong>support@otima.com</strong></p>
@@ -68,10 +132,9 @@ function Dashboard(){
                 </ul>
             </section>
             <section className='right'>
-                {selection===0 ? <Selection1 first={first} last={last} email={email} loading={loading} business={'test Org'} projects={projects} /> :null}
-                {selection===1 ? <Selection2 /> :null}
-                {selection===2 ? <Selection3 /> :null}
-
+                {selection===0 ? <Selection1 data={obtained1} /> :null}
+                {selection===1 ? <Selection2 data={obtained2} /> :null}
+                {selection===2 ? <Selection3 data={obtained3} /> :null}
             </section>
         </body>
     )
