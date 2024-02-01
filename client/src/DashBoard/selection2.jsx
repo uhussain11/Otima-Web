@@ -1,6 +1,6 @@
 
 
-function Selection2(){
+function Selection2({tickets}){
     return(
         <section>
             
