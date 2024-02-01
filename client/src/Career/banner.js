@@ -1,5 +1,5 @@
 import './banner.css'
-import React, {Link} from 'react';
+import React from 'react';
 
 function Banner({position, payment, experience, description, available, id}){
 

@@ -1,4 +1,3 @@
-import section1 from './section1';
 import './textbox.css'
 import React,{useState, useEffect} from 'react';
 
@@ -10,12 +9,10 @@ function TextBox({setViewBox}){
     const [options, setOptions] = useState(['LandingPage', 'ECommerce', 'Service Provider', 'Other']);
     const [question, setQuestion] = useState(1);
     const [price, setPrice] = useState(0);
-    const [complete, setComplete] = useState(false);
     const [maitnancefee, setMaitnance] = useState(75);
     const [multiSelect, setMultiSelect] = useState(false);
     const [progress, setProgress] = useState(0)
     const multiOptions = new Map();
-
 
     useEffect(()=>{
         const value = (progress/TOTALQUESTIONS)*100
@@ -130,7 +127,7 @@ function TextBox({setViewBox}){
             <span id='chatBox'>
                 <h2 className='welcome'>Welcome to Otima. Select your interests <br /> We'll try our best to provide you with a price estimate or more info</h2>
                 {
-                    question<=TOTALQUESTIONS && !complete ? 
+                    question<=TOTALQUESTIONS ? 
                     <section id='content'>
                         <h3 className='question'>{currQuestion}?</h3>
                         {multiSelect ?

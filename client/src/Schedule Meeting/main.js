@@ -2,12 +2,11 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './main.css'
 import Login from '../components/login'
-import React, {useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import { ThreeDots } from 'react-loading-icons'
 
-function Main({loggedInn}){
+function Main({loggedIn}){
     const [date, changeDate] = useState(new Date());
-    const [loggedIn, setLoggedIn] = useState(loggedInn);  
 
     function changeValue(val) {
         changeDate(val);
@@ -16,9 +15,9 @@ function Main({loggedInn}){
     return(
         <section id='main'>
             <h1>Schedule a Meeting</h1>
-            {loggedInn !== null ? null:<ThreeDots stroke="whitesmoke" fill='#584082' speed={1.15}/>}
+            {loggedIn !== null ? null:<ThreeDots stroke="whitesmoke" fill='#584082' speed={1.15}/>}
             
-            {loggedInn !== null && loggedInn ? 
+            {loggedIn !== null && loggedIn ? 
                 <form id='form'>
                     <h4 className='name-tag'> Lets get started </h4>
                     <p className='info'> Please select a date and time for a brief online zoom meeting</p>
@@ -41,11 +40,10 @@ function Main({loggedInn}){
                 </form>:
                 null
             }
-            {loggedInn !== null && !loggedInn ?
+            {loggedIn !== null && !loggedIn ?
                 <div>
                     <h4 className='schedule-acc'> Create an Account </h4>
                     <Login
-                    setLoggedIn = {setLoggedIn}
                     showLogin = {false}
                     navigate = {'/schedule-meeting'}
                     />

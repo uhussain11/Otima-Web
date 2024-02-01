@@ -7,20 +7,17 @@ import { SERVER } from '../config';
 // setoggedIn, usetate to tell if login successful or not
 // showLogin show register or login page first
 // navigate, where to go upon login in
-function Login({ setLoggedIn, showLogin, navigate, loggedIn}){
+function Login({ showLogin, navigate, loggedIn}){
     const [fn, setFN] = useState('test')
     const [ln, setLN] = useState('test')
     const [email, setEmail] = useState('test')
     const [password, setPassword] = useState('test')
     const [confirmation, setConfirmation] = useState('test')
     const [login, setLogin] = useState(showLogin)
-    const [loading, setLoading] = useState(false)
 
     const [failedLogin, setFailedLogin] = useState(false);
 
     const [cookies, setCookie] = useCookies(['SessionID']);
-
-    console.log(cookies)
 
     useEffect(() =>{
         console.log(cookies.SessionID)
@@ -39,7 +36,6 @@ function Login({ setLoggedIn, showLogin, navigate, loggedIn}){
 
     const responseGoogle = response =>{
         try{
-            setLoading(true);
             const code = response;
             const data = jose.decodeJwt(code.credential)
 
@@ -55,7 +51,6 @@ function Login({ setLoggedIn, showLogin, navigate, loggedIn}){
               .then((data)=>{
                 console.log(data)
                 if(data.success){
-                    setLoggedIn(true);
                     setFailedLogin(false);
                     setCookie('SessionID', data.sessionID, { path: '/' });
                     window.location.href = `${navigate}`;
@@ -93,7 +88,6 @@ function Login({ setLoggedIn, showLogin, navigate, loggedIn}){
           .then((res) => res.json())
           .then((data)=>{
             if(data.success){
-                setLoggedIn(true);
                 setFailedLogin(false);
                 setCookie('SessionID', data.sessionID, { path: '/' });
                 window.location.href = `${navigate}`;
@@ -128,8 +122,8 @@ function Login({ setLoggedIn, showLogin, navigate, loggedIn}){
             console.log(data)
             if(data.success && data.newSession){
                 setCookie('SessionID', data.sessionID, { path: '/' });
-                setLoggedIn(true);
                 window.location.href = `${navigate}`;
+                setFailedLogin(false);
             }
             else{
                 setFailedLogin(true);

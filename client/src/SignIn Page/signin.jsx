@@ -1,6 +1,6 @@
 import Login from "../components/login"
 import './signin.css'
-import React, {useEffect, useState} from "react"
+import React, { useState } from "react"
 
 function Signin(){
 const [loggedIn, setLoggedIn] = useState(false)
