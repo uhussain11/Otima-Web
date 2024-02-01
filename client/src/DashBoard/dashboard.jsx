@@ -36,7 +36,6 @@ function Dashboard(){
     }
 
     const setTabData = async (tab, sessionID) =>{
-
         // defiens tab we getting
         let fetchTab = null;
 
