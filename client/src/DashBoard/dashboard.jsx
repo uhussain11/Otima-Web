@@ -132,9 +132,9 @@ function Dashboard(){
                 </ul>
             </section>
             <section className='right'>
-                {selection===0 ? <Selection1 data={obtained1} loaded={(obtained1 !== null)} /> :null}
-                {selection===1 ? <Selection2 tickets={tickets} /> :null}
-                {selection===2 ? <Selection3 /> :null}
+                {selection===0 ? <Selection1 data={obtained1} /> :null}
+                {selection===1 ? <Selection2 data={obtained2} /> :null}
+                {selection===2 ? <Selection3 data={obtained3} /> :null}
             </section>
         </body>
     )

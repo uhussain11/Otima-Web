@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 function Selection1({data}){
     const [showConfirmation, setShowConfirmation] = useState(null);
-
     const [first, setFirst] = useState('xxxx');
     const [last, setLast] = useState('xxxxx');
     const [email, setEmail] = useState('xxxx@otima.com');
@@ -12,14 +11,15 @@ function Selection1({data}){
     const [business, setBusiness] = useState(null)
 
     useEffect(()=>{
-        if(data !== null){
+        if(data === null){
+            return;
+        }else{
             setFirst(data.first)
             setLast(data.last)
             setEmail(data.email)
             setBusiness(data.business)
             setProjects(data.projects)
         }
-
     },[data])
 
     function confirmation(id){
@@ -32,7 +32,7 @@ function Selection1({data}){
 
     return(
         <section id="overView">
-            <div className={ data===null ?'loading':'loaded'}>
+            <div className={ data === null ?'loading':'loaded'}>
            <div className="top">
                <p>Welcome, </p>
                <h1>{first} {last}</h1>
@@ -44,8 +44,8 @@ function Selection1({data}){
            <div className="bottom">
                <h2>Projects</h2>
                <ul className='projects'>
-                   {projects.map((project)=> (
-                       <li className='card'>
+                   {projects.map((project, index)=> (
+                       <li key={index} className='card'>
                             <div className={showConfirmation === project.id ?'confirmation-shown':'confirmation-hidden'}>
                                 <p>Confirmation</p>
                                 <p>Website will go bye bye</p>

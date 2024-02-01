@@ -365,7 +365,8 @@ app.get("/api/data-request", async (req, res) => {
         DISTINCT JSON_OBJECT(
         'id', Tickets.id,
         'user', Tickets.user_id,
-        'message', Tickets.message
+        'message', Tickets.message,
+        'status', Tickets.status
       )
     ), ']') USING utf8mb4) AS tickets`;
 
