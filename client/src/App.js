@@ -59,7 +59,7 @@ function App() {
       }
         <Navbar loggedInn={loggedIn}/>
         <Routes>
-          {!loggedIn ? <Route path='/Dashboard' element={<DashBoard/>} />: <Route path='/Dashboard' element={<Navigate to='/Sign-in' />} />}
+          {loggedIn ? <Route path='/Dashboard' element={<DashBoard/>} />: <Route path='/Dashboard' element={<Navigate to='/Sign-in' />} />}
           <Route path='/schedule-Meeting' element={<Meeting loggedIn={loggedIn} />}  />
           <Route path='/' element={<Main/>} />
           <Route path='/services' element={<Service/>} />

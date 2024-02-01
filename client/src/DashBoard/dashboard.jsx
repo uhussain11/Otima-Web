@@ -12,14 +12,10 @@ function Dashboard(){
     const [selection, setSelection] = useState(0)
     const [loading, setLoading] = useState(true)
 
-    const [obtained1, setObtained1] = useState(false)
-    const [obtained2, setObtained2] = useState(false)
-    const [obtained3, setObtained3] = useState(false)
+    const [obtained1, setObtained1] = useState(null)
+    const [obtained2, setObtained2] = useState(null)
+    const [obtained3, setObtained3] = useState(null)
 
-    const [first, setFirst] = useState('xxxx');
-    const [last, setLast] = useState('xxxxx');
-    const [email, setEmail] = useState('xxxx@otima.com');
-    const [projects, setProjects] = useState([{id:0, domain:'test.com', price: 200, renewal: '03/03/2003'}, {id:1, domain:'test.com', price: 200, renewal: '03/03/2003'}, {id:2, domain:'test.com', price: 200, renewal: '03/03/2003'}, {id:3, domain:'test.com', price: 200, renewal: '03/03/2003'}])
     const [tickets, setTickets] = useState([{id:1, message:'skdjfbkjsd fdjfbksjdf dsjfbkj dfjkbdf sdkjf sdkf dsf dskf'}, {id:3, message:'skdjfbkjsd fdjfbksjdf dsjfbkj dfjkbdf sdkjf sdkf dsf dskf'}])
 
     const select = (selected) => {
@@ -39,64 +35,63 @@ function Dashboard(){
         }
     }
 
-    const setTabData = async (tab) =>{
+    const setTabData = async (tab, sessionID) =>{
 
         // defiens tab we getting
         let fetchTab = null;
 
         // set which tab is needed
-        fetchTab = (!obtained1 && tab === 0) ? tab : (!obtained2 && tab === 1) ? tab : (!obtained3 && tab === 2) ? tab : fetchTab;
+        fetchTab = (obtained1 === null && tab === 0) ? tab : (obtained2 === null && tab === 1) ? tab : (obtained3 === null && tab === 2) ? tab : fetchTab;
 
         // all tabs loaded return
         if(fetchTab === null){
             return
         }
 
-        const sessionID = Cookies.get('SessionID');
         const url = new URL(`${SERVER}/data-request/`);
         url.searchParams.append('category', fetchTab);
+        url.searchParams.append('session', sessionID);
         
-        // try {
-        //     const response = await fetch(url, {
-        //       method: 'GET',
-        //       mode: 'cors',
-        //       headers: {
-        //         'Content-Type': 'application/json',
-        //       },
-        //     });
+        try {
+            const response = await fetch(url, {
+              method: 'GET',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
         
-        //     const data = await response.json();
-        //     console.log(data)
+            const data = await response.json();
 
-        //     if(!data.success){
-        //         alert('Something went Wrong');
-        //         return
-        //     }
+            if(!data.success){
+                alert('Something went Wrong');
+                return
+            }
 
-        //     if(fetchTab === 0){
+            if(fetchTab === 0){
+                setObtained1(data.info)
+            }
+            else if(fetchTab === 1){
+                setObtained2(data.info)
+            }
+            else if(fetchTab === 2){
+                setObtained3(data.info)
+            }
 
-        //     }
-        //     else if(fetchTab === 1){
-                
-        //     }
-        //     else if(fetchTab === 2){
-                
-        //     }
-
-        //     return;
+            return;
     
-        //   } catch (error) {
-        //     console.error('Error during session validation:', error);
-        //     return false;
-        //   }
-    
-        console.log(" On tab " + tab)
+          } catch (error) {
+            console.error('Error during session validation:', error);
+            return false;
+          }
     }
 
     useEffect( ()=>{
+        const sessionID = Cookies.get('SessionID');
+
         const fetchData = async () => {
             setLoading(true);
-            await setTabData(selection);
+            await setTabData(selection, sessionID);
             setLoading(false);
         };
     
@@ -106,6 +101,8 @@ function Dashboard(){
         };
 
     },[selection])
+
+
 
     function hideNotice(){
         const notice = document.querySelector('.notice');
@@ -128,7 +125,7 @@ function Dashboard(){
                         <p>Tickets</p>
                     </dl>
                     <dl className={selection === 2 ? 'selected':null} onClick={() =>{select(2)}}>
-                        <p>User</p>
+                        <p>Profile</p>
                     </dl>
                     <div className='note'>
                         <p>For additional information please reach out to <strong>support@otima.com</strong></p>
@@ -136,10 +133,9 @@ function Dashboard(){
                 </ul>
             </section>
             <section className='right'>
-                {selection===0 ? <Selection1 first={first} last={last} email={email} loading={loading} business={'test Org'} projects={projects} /> :null}
+                {selection===0 ? <Selection1 data={obtained1} loaded={(obtained1 !== null)} /> :null}
                 {selection===1 ? <Selection2 tickets={tickets} /> :null}
                 {selection===2 ? <Selection3 /> :null}
-
             </section>
         </body>
     )

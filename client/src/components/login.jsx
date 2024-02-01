@@ -20,7 +20,6 @@ function Login({ showLogin, navigate, loggedIn}){
     const [cookies, setCookie] = useCookies(['SessionID']);
 
     useEffect(() =>{
-        console.log(cookies.SessionID)
         if(cookies.SessionID === undefined || cookies.SessionID === null){
             window.google.accounts.id.initialize({
                 client_id: '131856816778-kgbf58dn5r2uql5fgdvmmrvcmb40ded4.apps.googleusercontent.com',
