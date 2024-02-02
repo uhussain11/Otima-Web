@@ -1,19 +1,11 @@
 
-
-function Selection3({tickets})
+// go Crazy Umar
+function Selection3({data})
 
 {
     return(
         <section>
-            { tickets === null ?
-            <div>
-                <h1>No Tickets at this time</h1>
-            </div>:
-            <div>
 
-            </div>
-
-            }
             
         </section>
     )
