@@ -1,5 +1,78 @@
 
-#const{
+@media (max-width: 900px) {
+  #const{
+    display: none;
+    position: sticky;
+    width: 100%;
+    height: fit-content;
+    justify-content: right;
+    align-items: center;
+    overflow: visible;
+    bottom: 2%;
+    right: 0px;
+    z-index: 5;
+    opacity: 0;
+    animation: const 500ms ease 1s 1 forwards;
+
+    & .textBox{
+      position: absolute;
+      display: flex;
+      bottom: 0px;
+      right: 3%;
+      margin-bottom: 20px;
+      color: black;
+      overflow: visible;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+
+      & #icon{
+        height: fit-content;
+        margin: 0;
+        color: whitesmoke;
+        padding: 12px;
+        font-size: 35px;
+        background-color: #57407E;
+        border-radius: 15px;
+        box-shadow: 0 0 5px black;
+        transition: 200ms;
+
+        &:hover{
+          background-color: #3e2a60;
+        }
+  
+      }
+      & .remove{
+      position: absolute;
+      display: flex;
+      left: 100%;
+      bottom: 88%;
+      background-color: transparent;
+      border: none;
+      width: 100%;
+
+      & #exit{
+        background-color: whitesmoke;
+        box-shadow: 0 0 5px 1px black;
+        color: #57407E;
+        font-weight: 600;
+        padding: 5px;
+        font-size: 18px;
+        border-top-right-radius: 100%;
+        border-top-left-radius: 100%;
+        border-bottom-right-radius: 100%;
+        cursor: pointer;
+      }
+    }
+    }
+
+  }
+}
+
+@media (min-width: 901px) {
+  #const{
     display: flex;
     position: sticky;
     width: 100%;
@@ -68,6 +141,7 @@
     }
 
   }
+}
   
   @keyframes const{
     0%{

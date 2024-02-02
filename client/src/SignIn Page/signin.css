@@ -1,0 +1,16 @@
+#signin{
+    height: fit-content;
+    flex-direction: column;
+    padding-block: 5vh;
+    display: flex;
+    gap: 50px;
+
+    & h1{
+        text-align: center;
+        width: fit-content;
+        margin: auto;
+        font-family: 'Khula';
+        font-size: 34px;
+        color: #2f1f48;
+    }
+}

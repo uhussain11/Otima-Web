@@ -15,7 +15,7 @@ function section5(){
                     duis risus fringilla torquent ut odio. Pede arcu rutrum vitae netus mollis ac potenti nunc tristique cursus  
                 </p>
                 <div className='shift-left'>
-                    <a href="">Learn More</a>
+                    <a href="/about">Learn More</a>
                 </div>
             </div>
         </section>

@@ -1,7 +1,7 @@
 #section2c{
     display: flex;
     flex-direction: column;
-    padding: 40px;
-    margin-block:4vh;
+    padding-block: 40px;
+    padding-inline:10px;
     gap: 2vh;
 }

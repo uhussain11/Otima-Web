@@ -1,6 +1,6 @@
 import './section1.css'
 
-function section1(){
+function Section1(){
 
     return(
         <section id='section1'>
@@ -9,7 +9,7 @@ function section1(){
                 <div className='header'>
                     <h1 className='text'>Modernizing Business's One Application at a time</h1>
                 <section className='bottom'>
-                    <a href='/Schedule-Meeting'><span class="material-symbols-outlined">event</span>Schedule a <strong>FREE</strong> Consultation!</a>
+                    <a href='/Schedule-Meeting'><span class="material-symbols-outlined">event</span><p>Schedule a <strong>FREE</strong> Consultation!</p></a>
                 </section>
                 </div> 
             </div>
@@ -17,4 +17,4 @@ function section1(){
     )
 }
 
-export default section1;
+export default Section1;

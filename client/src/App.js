@@ -19,6 +19,8 @@ import { validSession } from './config';
 
 function App() {
   const [cookies, setCookie] = useCookies(['terms']);
+  const [sessionCookie, setSessionCookie] = useCookies(['SessionID']);
+
   const [loggedIn, setLoggedIn] = useState(null);
 
   function accept(){
@@ -29,15 +31,17 @@ function App() {
 
     useEffect(() => {
       async function validateSession() {
-        console.log('loading')
         try {
             const isValid = await validSession();
             setLoggedIn(isValid);
+            if(!isValid){
+              setSessionCookie('SessionID', null, { path: '/' })
+            }
+
         } catch (error) {
             console.error('Error validating session:', error);
             setLoggedIn(false);
         }
-        console.log('loaded')
       }
       validateSession();
     }, []); 
@@ -55,15 +59,15 @@ function App() {
       }
         <Navbar loggedInn={loggedIn}/>
         <Routes>
-          {loggedIn ? <Route path='/Dashboard' element={<DashBoard/>} />: <Route path='/Dashboard' element={<Navigate to='/SignIn' />} />}
-          <Route path='/schedule-Meeting' element={<Meeting loggedInn={loggedIn} />}  />
+          {loggedIn ? <Route path='/Dashboard' element={<DashBoard/>} />: <Route path='/Dashboard' element={<Navigate to='/Sign-in' />} />}
+          <Route path='/schedule-Meeting' element={<Meeting loggedIn={loggedIn} />}  />
           <Route path='/' element={<Main/>} />
           <Route path='/services' element={<Service/>} />
           <Route path='/career' element={<Career/>} />
           <Route path='/api' element={<Api/>} />
           <Route path='/about' element={<About/>} />
           <Route path='/application' element={<Application/>} />
-          <Route path='/Sign-in' element={<Signin/>} />
+          <Route path='/Sign-in' element={loggedIn ? <Navigate to='/Dashboard'/> : <Signin/>} />
         </Routes>
         <Footer/>
       </Router>

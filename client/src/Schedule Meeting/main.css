@@ -1,5 +1,4 @@
 #main{
-    z-index: 10;
     height: calc(100% + 70px);
     height: 100%;
     width: 100%;
@@ -10,20 +9,23 @@
     text-align: center;
     align-items: center;
 
-    #form{
+    & #form{
         justify-content: center;
         align-items: center;
+        position: relative;
         background: linear-gradient(to top,#563F7D, #3A2E4E);
         border-radius: 10px;
         height: fit-content;
         overflow: hidden;
-        padding: 5%;
+        padding-inline: 5%;
+        padding-block:2%;
         box-shadow: 0 0 10px 0px black;
         
         & p{
             color: whitesmoke;
             width: fit-content;
             margin-inline: auto;
+            position: relative;
         }
 
         & .name-tag{
@@ -50,7 +52,8 @@
             margin-inline:auto;
             opacity: 0;
             animation: schedule-In 800ms ease 100ms 1 forwards;
-    
+            position: relative;
+
             & .react-calendar__tile, .react-calendar__month-view__days__day{
                 transition: 100ms;
                 font-family: 'Outfit';
@@ -84,10 +87,12 @@
 
          & .first-text{
             opacity: 0;
+            position: relative;
             animation: schedule-In 800ms ease-out 250ms 1 forwards;
          }
          & .second-text{
             opacity: 0;
+            position: relative;
             animation: schedule-In 800ms ease-out 350ms 1 forwards;
          }
 
@@ -103,6 +108,7 @@
             border-top-right-radius: 10px;
             font-weight: 400;
             opacity: 0;
+            position: relative;
             animation: schedule-In 800ms ease-out 450ms 1 forwards;
          }
 
@@ -118,7 +124,8 @@
             padding-inline: 20px;
             border-radius: 10px;
             opacity: 0;
-            animation: schedule-In2 800ms ease-out 450ms 1 forwards;
+            position: relative;
+            animation: schedule-In 800ms ease-out 450ms 1 forwards;
 
             & p{
                 font-family: 'Outfit';
@@ -130,6 +137,7 @@
             & input{
                 height:fit-content ;
                 margin: auto;
+                font-size: 18px;
                 border: none;
                 background-color: whitesmoke;
             }
@@ -162,8 +170,9 @@
             transition: 200ms;
             margin-block: 20px;
             opacity: 0;
-            animation: schedule-In 800ms ease-out 450ms 1 forwards;
-            
+            position: relative;
+            animation: schedule-In2 600ms ease-out 1s 1 forwards;
+
             &:hover{
                 box-shadow: inset 0px 0px 0px 0px whitesmoke;
                 color: whitesmoke;
@@ -187,10 +196,11 @@
 
 @keyframes schedule-In {
     0%{
-        margin-top: 20%;
+        top: 20%;
         opacity: 0;
     }
     100%{
+        top: 0%;
         opacity: 1;
     }
 }

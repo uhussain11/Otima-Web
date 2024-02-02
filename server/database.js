@@ -18,8 +18,6 @@ function saveData(sql, values) {
         return;
       }
 
-      console.log('connected as id ' + database.threadId);
-
       database.query(sql, values, (err, results) => {
         if (err) {
           console.error(err);
@@ -49,12 +47,9 @@ function retrieveData(sql) {
   
     database.connect(async function(err) {
       if(err){
-        return data(err)
+        reject(err)
       }
       else{
-        // Saving
-        console.log('connected as id ' + database.threadId);
-
         database.query(sql, (err, results) => {
           if (err) {
             console.log(err)
@@ -64,7 +59,7 @@ function retrieveData(sql) {
             if(results.length === 0){
               resolve(null);
             }else{
-              resolve(results);
+              resolve(results[0]);
             }
           }
         });
@@ -74,17 +69,23 @@ function retrieveData(sql) {
   });
 }
 
-function setSession(userID){
+function setSession(userID, newSessionID){
   // update session value if valid, create new one if not
   return new Promise((resolve, reject) => {
-  const token = randomstring.generate(40);
+  let token;
 
-  values = [
+  if(newSessionID === null){
+    token = randomstring.generate(40);
+  }else{
+    token = newSessionID;
+  }
+
+  const values = [
     `${userID}`,
     `${token}`
     ];
 
-  const update = `UPDATE Sessions SET Creation = CURRENT_TIMESTAMP WHERE user_id = ${userID}`;
+  const update = `UPDATE Sessions SET sessionID = '${token}', Creation = CURRENT_TIMESTAMP WHERE user_id = ${userID}`;
   const add = 'INSERT INTO `Sessions`(`user_id`, `sessionID`, `Creation`) VALUES (?,?,NOW())';
 
   database =  mysql.createConnection({
@@ -102,8 +103,6 @@ function setSession(userID){
     }
     
     else{
-      console.log('Session Creation connection as id ' + database.threadId);
-
       database.query(update, (err, results) => {
         if (err) {
           console.error(err)
@@ -112,7 +111,7 @@ function setSession(userID){
 
         } else {
           if(results.changedRows >=1){
-            resolve({new:false, sessionID:null})
+            resolve({new:true, sessionID:token})
             database.end();
           }
           else{
@@ -123,7 +122,6 @@ function setSession(userID){
       
               } else {
                 if(results){
-                  console.log('saving new data')
                   database.end();
                   resolve({new:true, sessionID:token})
                 }
@@ -157,15 +155,15 @@ function checkSession(sql){
       else{
         database.query(sql, (err, results) => {
           if (err) {
-            resolve(false)
+            resolve({success:false})
             database.end();
           } 
           else {
             if(results.length > 0){
-              resolve(true)
+              resolve({success:true, userID:results[0].user_id})
               database.end();
             }else{
-              resolve(false)
+              resolve({success:false})
               database.end();
 
             }
@@ -176,4 +174,45 @@ function checkSession(sql){
   })
 }
 
-module.exports = { saveData, retrieveData, setSession, checkSession };
+// return if successfully deleted session or not
+function deleteSession(sessionID){
+  return new Promise((resolve, reject) => {  
+    const remove = `DELETE FROM Sessions WHERE sessionID = '${sessionID}'`;
+  
+    database =  mysql.createConnection({
+      "database": "b9f34c5_OtimaWeb",
+      "user": "b9f34c5_Admin",
+      "password": "OTIMAWEB_admin",
+      "host": "198.46.91.127",
+      // "debug":true
+    });
+  
+    database.connect(async (err) => {
+      if(err){
+        console.error('error connecting: ' + err.stack);
+        return;
+      }
+      
+      else{  
+        database.query(remove, (err, results) => {
+          if (err) {
+            console.error(err)
+            database.end();
+            resolve(null)
+  
+          } else {
+            if(results.affectedRows >=1){
+              resolve(true)
+            }
+            else{
+              resolve(false)
+            }
+            database.end();
+          }
+        });
+      }
+    }); 
+  }); 
+}
+
+module.exports = { saveData, retrieveData, setSession, checkSession, deleteSession };
